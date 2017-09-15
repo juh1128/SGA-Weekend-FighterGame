@@ -1,0 +1,183 @@
+#include "stdafx.h"
+#include "testCharacter.h"
+#include "attackHitbox.h"
+
+
+HRESULT testCharacter::init(vector2D pos)
+{
+	//테스트 애니메이션은 setupYuhoon에서 만든다. (게임 시작 시 최초 1번만 만들어놓고 씀)
+	character::init("테스트 캐릭터", pos, "테스트_공격_오른쪽");
+	this->changeState(testCharacterState::RIGHT_ATTACK);
+
+	//this->setScale(3.0f, 3.0f);
+
+	//콜백 함수 등록
+	this->addCallback("changeState", [this](tagMessage msg)
+	{
+		this->changeState((testCharacterState::Enum)msg.data);
+	});
+
+
+	return S_OK;
+}
+
+void testCharacter::release()	  
+{
+	character::release();
+}
+
+void testCharacter::update()	  
+{
+	character::update();
+
+	//상태 별 업데이트 처리
+	stateUpdate(_state);
+
+}
+
+void testCharacter::render()	  
+{
+	character::render();
+}
+
+void testCharacter::changeState(testCharacterState::Enum state)
+{
+	//상태 변경 시 처리해줄 것들이 있으면 여기서
+	switch (state)
+	{
+		case testCharacterState::RIGHT_ATTACK:
+		{
+			this->setAnimation("테스트_공격_오른쪽");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, testCharacterState::RIGHT_MOVE));
+
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x + 50, _pos.y+30), vector2D(30, 30), _enemy, 0.5f);
+			WORLD->addObject(hitbox);
+		}
+		break;
+
+		case testCharacterState::LEFT_ATTACK:
+			this->setAnimation("테스트_공격_왼쪽");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, testCharacterState::LEFT_MOVE));
+		break;
+
+		case testCharacterState::RIGHT_JUMP:
+		break;
+
+		case testCharacterState::LEFT_JUMP:
+		break;
+
+		case testCharacterState::RIGHT_MOVE:
+		{
+			this->setAnimation("테스트_이동_오른쪽");
+		}
+		break;
+
+		case testCharacterState::LEFT_MOVE:
+		{
+			this->setAnimation("테스트_이동_왼쪽");
+		}
+		break;
+
+		case testCharacterState::RIGHT_RUN:
+		break;
+
+		case testCharacterState::LEFT_RUN:
+		break;
+
+		case testCharacterState::RIGHT_JUMPATTACK:
+		break;
+
+		case testCharacterState::LEFT_JUMPATTACK:
+		break;
+	}
+	_state = state;
+}
+
+void testCharacter::stateUpdate(testCharacterState::Enum state)
+{
+	switch (state)
+	{
+		case testCharacterState::RIGHT_ATTACK:
+		{
+
+		}
+		break;
+
+		case testCharacterState::LEFT_ATTACK:
+		{
+
+		}
+		break;
+
+		case testCharacterState::RIGHT_JUMP:
+		{
+
+		}
+		break;
+
+		case testCharacterState::LEFT_JUMP:
+		{
+
+		}
+		break;
+
+		case testCharacterState::RIGHT_MOVE:
+		{
+			if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+			{
+				_pos.x += 5;
+			}
+			if (KEYMANAGER->isStayKeyDown(keyList[key::ATTACK]))
+			{
+				changeState(testCharacterState::RIGHT_ATTACK);
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))
+			{
+				changeState(testCharacterState::LEFT_MOVE);
+			}
+		}
+		break;
+
+		case testCharacterState::LEFT_MOVE:
+		{
+			if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+			{
+				_pos.x -= 5;
+			}
+			if (KEYMANAGER->isStayKeyDown(keyList[key::ATTACK]))
+			{
+				changeState(testCharacterState::LEFT_ATTACK);
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::RIGHT]))
+			{
+				changeState(testCharacterState::RIGHT_MOVE);
+			}
+		}
+		break;
+
+		case testCharacterState::RIGHT_RUN:
+		{
+
+		}
+		break;
+
+		case testCharacterState::LEFT_RUN:
+		{
+
+		}
+		break;
+
+		case testCharacterState::RIGHT_JUMPATTACK:
+		{
+
+		}
+		break;
+
+		case testCharacterState::LEFT_JUMPATTACK:
+		{
+
+		}
+		break;
+	}
+}
