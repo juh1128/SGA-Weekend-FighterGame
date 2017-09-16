@@ -1,4 +1,5 @@
 #pragma once
+#include <deque>
 
 //캐릭터 키
 namespace key
@@ -9,11 +10,24 @@ namespace key
 	};
 }
 
+#define COMMAND_RESET_TIME 0.6f
+#define MAX_COMMAND_NUM	5
+
+#define GROUND_LINE 700
+
 class character : public gameObject
 {
+private:
+	float								_commandResetTimer;
+	bool								_historyCheck;
+	deque<int>							_commandHistory;
+	vector<pair<vector<int>, string>>	_commandList;	//등록된 커맨드
+
+	float			_gravitySpeed;
+
 protected:
-	key::Enum			keyList[key::END];		//단축키 리스트
-	gameObject*			_enemy;					//상대편
+	key::Enum					keyList[key::END];		//단축키 리스트
+	gameObject*					_enemy;					//상대편
 
 public:
 	character() {}
@@ -24,6 +38,11 @@ public:
 	virtual void update();
 	virtual void render();
 
+	//커맨드 업데이트
+	void updaetCommand();
+	//중력 처리
+	void gravity();
+
 	//충돌 영역을 가져온다.
 	RECT getCollisionRect();
 
@@ -32,6 +51,8 @@ public:
 	{
 		keyList[key] = (key::Enum)setupKey;
 	}
+	//커맨드 설정
+	void addCommand(int* arrKeyCode, int arrLen, string message);
 
 	//적 셋팅
 	void setupEnemy(gameObject* enemy)

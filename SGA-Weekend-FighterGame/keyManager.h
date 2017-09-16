@@ -1,6 +1,7 @@
 #pragma once
 #include "singletonBase.h"
 #include <bitset>
+#include <deque>
 
 using namespace std;
 
@@ -21,7 +22,6 @@ public:
 	bool isOnceKeyUp(int key);
 	bool isStayKeyDown(int key);
 	bool isToggleKey(int key);
-
 
 	keyManager();
 	~keyManager();
