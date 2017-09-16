@@ -97,9 +97,12 @@
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="sceneBase.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="singletonBase.h" />
+    <ClInclude Include="skill.h" />
+    <ClInclude Include="solBadGuy.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="statePattern.h" />
     <ClInclude Include="stdafx.h" />
@@ -146,6 +149,8 @@
     <ClCompile Include="setupYongjae.cpp" />
     <ClCompile Include="setupYoonsam.cpp" />
     <ClCompile Include="setupYuhoon.cpp" />
+    <ClCompile Include="skill.cpp" />
+    <ClCompile Include="solBadGuy.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="statePattern.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -162,6 +167,9 @@
     <ClCompile Include="vector2D.cpp" />
     <ClCompile Include="winMain.cpp" />
     <ClCompile Include="world.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="20170703_0.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

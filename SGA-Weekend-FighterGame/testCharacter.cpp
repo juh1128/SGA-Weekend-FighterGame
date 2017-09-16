@@ -9,7 +9,7 @@ HRESULT testCharacter::init(vector2D pos)
 	character::init("테스트 캐릭터", pos, "테스트_공격_오른쪽");
 	this->changeState(testCharacterState::RIGHT_ATTACK);
 
-	//this->setScale(3.0f, 3.0f);
+	this->setScale(3.0f, 3.0f);
 
 	//콜백 함수 등록
 	this->addCallback("changeState", [this](tagMessage msg)

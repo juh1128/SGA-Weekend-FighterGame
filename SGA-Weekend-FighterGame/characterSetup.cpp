@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "playScene.h"
 #include "testCharacter.h"
+//#include "solBadGuy"
 
 
 void playScene::characterSetup()
@@ -8,6 +9,7 @@ void playScene::characterSetup()
 	//캐릭터 생성
 	_player[0] = new testCharacter;
 	_player[1] = new testCharacter;
+
 	//적 셋팅
 	_player[0]->setupEnemy(_player[1]);
 	_player[1]->setupEnemy(_player[0]);

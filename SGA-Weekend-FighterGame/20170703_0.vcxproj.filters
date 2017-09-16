@@ -139,6 +139,12 @@
     <Filter Include="playGround\publicFolder">
       <UniqueIdentifier>{55b8134f-8c26-49b6-bd70-0883a69c6b8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\memberFolder\taesung\skill">
+      <UniqueIdentifier>{17a20a75-aa00-401c-bdf7-bf0b3ea7cfc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\memberFolder\taesung\badSolguy">
+      <UniqueIdentifier>{13d88b4e-d5ae-42ef-a13e-a37aa769202e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -248,6 +254,15 @@
     </ClInclude>
     <ClInclude Include="attackHitbox.h">
       <Filter>2DGameFramework\trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="skill.h">
+      <Filter>playGround\memberFolder\taesung\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="solBadGuy.h">
+      <Filter>playGround\memberFolder\taesung\badSolguy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -383,5 +398,16 @@
     <ClCompile Include="attackHitbox.cpp">
       <Filter>2DGameFramework\trigger</Filter>
     </ClCompile>
+    <ClCompile Include="skill.cpp">
+      <Filter>playGround\memberFolder\taesung\skill</Filter>
+    </ClCompile>
+    <ClCompile Include="solBadGuy.cpp">
+      <Filter>playGround\memberFolder\taesung\badSolguy</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="20170703_0.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
