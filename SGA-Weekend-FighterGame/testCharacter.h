@@ -31,4 +31,9 @@ public:
 
 	void stateUpdate(testCharacterState::Enum state);
 	void changeState(testCharacterState::Enum state);
+
+
+	void skill1();
+	void skill2();
+	void skill3();
 };

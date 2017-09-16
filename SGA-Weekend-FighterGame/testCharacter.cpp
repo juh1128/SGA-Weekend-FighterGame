@@ -9,12 +9,35 @@ HRESULT testCharacter::init(vector2D pos)
 	character::init("테스트 캐릭터", pos, "테스트_공격_오른쪽");
 	this->changeState(testCharacterState::RIGHT_ATTACK);
 
-	this->setScale(3.0f, 3.0f);
+	this->setScale(4.0f, 4.0f);
 
 	//콜백 함수 등록
 	this->addCallback("changeState", [this](tagMessage msg)
 	{
 		this->changeState((testCharacterState::Enum)msg.data);
+	});
+
+
+	//커맨드 등록
+	int command[4] = { key::LEFT, key::JUMP, key::RIGHT, key::ATTACK };
+	this->addCommand(command, 4, "skill1");
+	int command2[3] = { key::RIGHT, key::RIGHT, key::ATTACK };
+	this->addCommand(command2, 3, "skill2");
+	int command3[4] = { key::LEFT, key::DOWN, key::RIGHT, key::ATTACK };
+	this->addCommand(command3, 4, "skill3");
+
+	//커맨드 메시지에 따른 콜백함수 등록
+	this->addCallback("skill1", [this](tagMessage msg)
+	{
+		this->skill1();
+	});
+	this->addCallback("skill2", [this](tagMessage msg)
+	{
+		this->skill2();
+	});
+	this->addCallback("skill3", [this](tagMessage msg)
+	{
+		this->skill3();
 	});
 
 
@@ -51,14 +74,20 @@ void testCharacter::changeState(testCharacterState::Enum state)
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, testCharacterState::RIGHT_MOVE));
 
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x + 50, _pos.y+30), vector2D(30, 30), _enemy, 0.5f);
+			hitbox->init(30, vector2D(_pos.x + 70, _pos.y), vector2D(100, 220), _enemy, 0.5f);
 			WORLD->addObject(hitbox);
 		}
 		break;
 
 		case testCharacterState::LEFT_ATTACK:
+		{
 			this->setAnimation("테스트_공격_왼쪽");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, testCharacterState::LEFT_MOVE));
+
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x - 70, _pos.y), vector2D(100, 220), _enemy, 0.5f);
+			WORLD->addObject(hitbox);
+		}
 		break;
 
 		case testCharacterState::RIGHT_JUMP:
@@ -126,7 +155,7 @@ void testCharacter::stateUpdate(testCharacterState::Enum state)
 		{
 			if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
 			{
-				_pos.x += 5;
+				_pos.x += 10;
 			}
 			if (KEYMANAGER->isStayKeyDown(keyList[key::ATTACK]))
 			{
@@ -143,7 +172,7 @@ void testCharacter::stateUpdate(testCharacterState::Enum state)
 		{
 			if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
 			{
-				_pos.x -= 5;
+				_pos.x -= 10;
 			}
 			if (KEYMANAGER->isStayKeyDown(keyList[key::ATTACK]))
 			{
@@ -180,4 +209,18 @@ void testCharacter::stateUpdate(testCharacterState::Enum state)
 		}
 		break;
 	}
+}
+
+
+void testCharacter::skill1()
+{
+	cout << "스킬1 발동!" << endl;
+}
+void testCharacter::skill2()
+{
+	cout << "스킬2 발동!" << endl;
+}
+void testCharacter::skill3()
+{
+	cout << "스킬3 발동!" << endl;
 }

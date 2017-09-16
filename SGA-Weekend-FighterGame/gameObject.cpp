@@ -60,7 +60,6 @@ RECT gameObject::getRect()
 
 		case Pivot::CENTER:
 		{
-			cout << scaledX << ", " << scaledY << endl;
 			rc = RectMakeCenter(_pos.x, _pos.y, scaledX, scaledY);
 		}
 		break;
