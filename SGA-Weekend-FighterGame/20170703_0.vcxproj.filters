@@ -270,6 +270,9 @@
     <ClInclude Include="solBadGuy.h">
       <Filter>playGround\memberFolder\taesung</Filter>
     </ClInclude>
+    <ClInclude Include="terry.h">
+      <Filter>playGround\memberFolder\guenhwa</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -424,6 +427,9 @@
     </ClCompile>
     <ClCompile Include="solBadGuy.cpp">
       <Filter>playGround\memberFolder\taesung</Filter>
+    </ClCompile>
+    <ClCompile Include="terry.cpp">
+      <Filter>playGround\memberFolder\guenhwa</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

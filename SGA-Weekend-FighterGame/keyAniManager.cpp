@@ -229,6 +229,11 @@ animation* keyAniManager::findAnimation(string animationKeyName)
 		return iter->second;
 	}
 
+
+	char buf[200];
+	wsprintf(buf, "[ 에러 ] %s 애니메이션을 찾지 못했습니다.", animationKeyName.c_str());
+	MessageBox(_hWnd, buf, TEXT("오류"), MB_OK);
+
 	return NULL;
 }
 

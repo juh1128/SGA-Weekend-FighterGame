@@ -36,7 +36,11 @@ image* imageManager::addImage(string strKey, int width, int height)
 	if (FAILED(img->init(width, height)))
 	{
 		SAFE_DELETE(img);
-		cout << "[ 에러 ] " << strKey << " 이미지 로드 실패." << endl;
+
+		char buf[200];
+		wsprintf(buf, "[ 에러 ] %s 이미지 로드 실패.", strKey.c_str());
+		MessageBox(_hWnd, buf, TEXT("오류"), MB_OK);
+
 		return NULL;
 	}
 
@@ -58,7 +62,11 @@ image* imageManager::addImage(string strKey, const char* fileName, int width, in
 	if (FAILED(img->init(fileName, width, height, trans, transColor)))
 	{
 		SAFE_DELETE(img);
-		cout << "[ 에러 ] " << strKey << " 이미지 로드 실패." << endl;
+
+		char buf[200] = {};
+		wsprintf(buf, "[ 에러 ] %s 이미지 로드 실패.", strKey.c_str());
+		MessageBox(_hWnd, buf, TEXT("오류"), MB_OK);
+
 		return NULL;
 	}
 
@@ -79,7 +87,11 @@ image* imageManager::addImage(string strKey, const char* fileName, float x, floa
 	if (FAILED(img->init(fileName, x, y, width, height, trans, transColor)))
 	{
 		SAFE_DELETE(img);
-		cout << "[ 에러 ] " << strKey << " 이미지 로드 실패." << endl;
+
+		char buf[200] = {};
+		wsprintf(buf, "[ 에러 ] %s 이미지 로드 실패.", strKey.c_str());
+		MessageBox(_hWnd, buf, TEXT("오류"), MB_OK);
+
 		return NULL;
 	}
 
@@ -101,7 +113,11 @@ image* imageManager::addFrameImage(string strKey, const char* fileName, float x,
 	if (FAILED(img->init(fileName, x, y, width, height, frameX, frameY, trans, transColor)))
 	{
 		SAFE_DELETE(img);
-		cout << "[ 에러 ] " << strKey << " 이미지 로드 실패." << endl;
+
+		char buf[200] = {};
+		wsprintf(buf, "[ 에러 ] %s 이미지 로드 실패.", strKey.c_str());
+		MessageBox(_hWnd, buf, TEXT("오류"), MB_OK);
+
 		return NULL;
 	}
 
@@ -122,7 +138,11 @@ image* imageManager::addFrameImage(string strKey, const char* fileName, int widt
 	if (FAILED(img->init(fileName, width, height, frameX, frameY, trans, transColor)))
 	{
 		SAFE_DELETE(img);
-		cout << "[ 에러 ] " << strKey << " 이미지 로드 실패." << endl;
+
+		char buf[200] = {};
+		wsprintf(buf, "[ 에러 ] %s 이미지 로드 실패.", strKey.c_str());
+		MessageBox(_hWnd, buf, TEXT("오류"), MB_OK);
+
 		return NULL;
 	}
 
@@ -141,7 +161,6 @@ image* imageManager::findImage(string strKey)
 	{
 		return key->second;
 	}
-
 	return NULL;
 }
 
