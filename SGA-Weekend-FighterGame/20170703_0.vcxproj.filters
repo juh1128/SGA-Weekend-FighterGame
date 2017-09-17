@@ -255,6 +255,9 @@
     <ClInclude Include="Nanaya.h">
       <Filter>playGround\memberFolder\youngjae</Filter>
     </ClInclude>
+    <ClInclude Include="ioriYagami.h">
+      <Filter>playGround\memberFolder\dongjin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -394,6 +397,9 @@
     </ClCompile>
     <ClCompile Include="Nanaya.cpp">
       <Filter>playGround\memberFolder\youngjae</Filter>
+    </ClCompile>
+    <ClCompile Include="ioriYagami.cpp">
+      <Filter>playGround\memberFolder\dongjin</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
