@@ -124,9 +124,6 @@
     <Filter Include="playGround\memberFolder\soonyu">
       <UniqueIdentifier>{3f2f92d5-45b7-4bdc-ab6a-7a28d5843323}</UniqueIdentifier>
     </Filter>
-    <Filter Include="playGround\memberFolder\sunghoon">
-      <UniqueIdentifier>{c246b5bb-ebef-4a94-a8fb-ca5d6f4b6321}</UniqueIdentifier>
-    </Filter>
     <Filter Include="playGround\memberFolder\taesung">
       <UniqueIdentifier>{547dd817-0fbc-4be4-ab6c-8c962bac9ec1}</UniqueIdentifier>
     </Filter>
@@ -141,6 +138,9 @@
     </Filter>
     <Filter Include="playGround\memberFolder\youngjae">
       <UniqueIdentifier>{aa3b9caf-6540-42da-9169-fe6da9d90bba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\memberFolder\sunghoon">
+      <UniqueIdentifier>{c246b5bb-ebef-4a94-a8fb-ca5d6f4b6321}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
