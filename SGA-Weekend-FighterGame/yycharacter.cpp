@@ -12,4 +12,8 @@ public:
 	{
 
 	}
+	void attack()
+	{
+
+	}
 };
