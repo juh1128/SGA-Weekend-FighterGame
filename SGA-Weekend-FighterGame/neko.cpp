@@ -2,7 +2,7 @@
 #include "neko.h"
 
 
-
+//s
 HRESULT neko::init(vector2D pos)
 {
 	character::init("³×ÄÚ", pos, "nekoRightStop");
