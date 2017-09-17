@@ -26,7 +26,7 @@ HRESULT	playScene::init()
 	_cameraTarget = new gameObject;
 	_cameraTarget->init("카메라 타겟");
 	_cameraTarget->_pos = vector2D(WINSIZEX / 2, WINSIZEY / 2);
-	CAMERAMANAGER->setMapSize(_background->getFrameWidth(), _background->getFrameHeight());
+	CAMERAMANAGER->setMapSize(1800, 768);
 	CAMERAMANAGER->connectTarget(_cameraTarget);
 
 	//플레이어 0, 플레이어 1 셋팅
@@ -66,7 +66,7 @@ void playScene::update()
 }
 void playScene::render()		
 {
-	_background->aniRender(getMemDC(), 0, 0, _backgroundAnimation);
+	_background->scaleAniRender(getMemDC(), 0, 0, _backgroundAnimation, 1800, 768);
 
 	sceneBase::render();
 }

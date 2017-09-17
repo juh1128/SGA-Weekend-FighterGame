@@ -1,8 +1,6 @@
 #pragma once
 #include "sceneBase.h"
 
-class gameObject;
-class animation;
 class callbackTest;
 
 class character;

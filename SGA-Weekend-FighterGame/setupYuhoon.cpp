@@ -4,7 +4,7 @@
 void playGround::setupYuhoon()
 {
 	//이미지 리소스 로드
-	IMAGEMANAGER->addFrameImage("맵", "resource/background2.bmp", 1828, 6144, 1, 8, true);
+	IMAGEMANAGER->addFrameImage("맵", "resource/yuhoon/background2.bmp", 914, 3072, 1, 8, true);
 	IMAGEMANAGER->addFrameImage("테스트_이동", "resource/yuhoon/testCharacter/move.bmp", 625, 168,
 		10, 2, true);
 	IMAGEMANAGER->addFrameImage("테스트_달리기", "resource/yuhoon/testCharacter/run.bmp", 624, 126,

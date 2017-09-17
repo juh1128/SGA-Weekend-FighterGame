@@ -11,6 +11,7 @@ HRESULT character::init(string characterName, vector2D pos, string animationKeyN
 	_commandResetTimer = COMMAND_RESET_TIME;
 	_historyCheck = true;
 
+	_isGravity = true;
 	_gravitySpeed = 0;
 
 	return S_OK;
@@ -26,7 +27,8 @@ void character::update()
 	//커맨드 업데이트
 	updaetCommand();
 	//중력 처리
-	gravity();
+	if (_isGravity)
+		gravity();
 
 	this->_animation->frameUpdate();
 }
@@ -192,8 +194,8 @@ void character::updaetCommand()
 
 void character::gravity()
 {
-	_gravitySpeed += 0.25f;
-	if (_gravitySpeed >= 9.8f) 9.8f;
+	_gravitySpeed += 1.5f;
+	if (_gravitySpeed >= 19.8f) 19.8f;
 
 	RECT rc = this->getCollisionRect();
 
@@ -203,6 +205,7 @@ void character::gravity()
 	}
 	else
 	{
+		_pos.y = GROUND_LINE - (rc.bottom - _pos.y);
 		_gravitySpeed = 0;
 	}
 	

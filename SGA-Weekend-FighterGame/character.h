@@ -23,11 +23,17 @@ private:
 	deque<int>							_commandHistory;
 	vector<pair<vector<int>, string>>	_commandList;	//등록된 커맨드
 
+	bool			_isGravity;
 	float			_gravitySpeed;
 
 protected:
 	key::Enum					keyList[key::END];		//단축키 리스트
 	gameObject*					_enemy;					//상대편
+
+	//스탯
+	int			_nowHp;
+	int			_maxHp;
+	int			_damage;
 
 public:
 	character() {}
@@ -60,4 +66,21 @@ public:
 		_enemy = enemy;
 	}
 	
+	//중력 적용여부 설정
+	void setGravity(bool set) { _isGravity = set; _gravitySpeed = 0; }
+	//점프하기 (중력이 적용되고 있어야 점프를 할 수 있다.)
+	void jump(float jumpPower)
+	{
+		_gravitySpeed = -jumpPower;
+		_pos.y -= 1;
+	}
+
+	//캐릭터 스탯 설정
+	void setStatus(int maxHp, int damage)
+	{
+		_nowHp = maxHp;
+		_maxHp = maxHp;
+		_damage = damage;
+	}
+
 };

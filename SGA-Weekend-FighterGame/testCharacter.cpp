@@ -9,7 +9,8 @@ HRESULT testCharacter::init(vector2D pos)
 	character::init("테스트 캐릭터", pos, "테스트_공격_오른쪽");
 	this->changeState(testCharacterState::RIGHT_ATTACK);
 
-	this->setScale(4.0f, 4.0f);
+	//this->setScale(4.0f, 4.0f);
+	//this->setSize(150, 300);
 
 	//콜백 함수 등록
 	this->addCallback("changeState", [this](tagMessage msg)
@@ -39,6 +40,9 @@ HRESULT testCharacter::init(vector2D pos)
 	{
 		this->skill3();
 	});
+
+	//캐릭터 초기 능력치 설정
+	this->setStatus(100, 10);
 
 
 	return S_OK;
@@ -165,6 +169,11 @@ void testCharacter::stateUpdate(testCharacterState::Enum state)
 			{
 				changeState(testCharacterState::LEFT_MOVE);
 			}
+
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+			{
+				jump(25);
+			}
 		}
 		break;
 
@@ -219,6 +228,7 @@ void testCharacter::skill1()
 void testCharacter::skill2()
 {
 	cout << "스킬2 발동!" << endl;
+	jump(20);
 }
 void testCharacter::skill3()
 {

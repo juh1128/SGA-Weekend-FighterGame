@@ -14,7 +14,7 @@ public:
 	vector2D() :x(0), y(0) {}
 	vector2D(float _x, float _y) : x(_x), y(_y) {}
 	vector2D(POINT pt) : x(pt.x), y(pt.y) {}
-	vector2D(float angle)
+	vector2D(float angle)  //디그리 각도 (라디안 ㄴㄴ)
 	{
 		x = 0;
 		y = 0;
