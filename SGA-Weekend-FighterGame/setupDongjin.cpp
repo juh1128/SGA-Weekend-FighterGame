@@ -21,6 +21,7 @@ void playGround::setupDongjin()
 	IMAGEMANAGER->addFrameImage("ioriYagamiJumpAttackC", "resource/Dongjin/왼쪽점프강손.bmp", 0, 0, 1378, 400, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSkill", "resource/Dongjin/오른쪽스킬1.bmp", 0, 0, 4872, 400, 18, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSkillEffect", "resource/Dongjin/오른쪽스킬1임팩트.bmp", 0, 0, 12589, 1280, 18, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSkill2Effect", "resource/Dongjin/오른쪽스킬2임팩트.bmp", 0, 0, 1283, 206, 6, 1, true, RGB(255, 0, 255));
 
 	//예시
 	//KEYANIMANAGER->addCoordinateFrameAnimation("테스트_이동_오른쪽", "테스트_이동", 0, 9, 15, false, true);
