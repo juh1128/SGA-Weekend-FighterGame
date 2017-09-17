@@ -258,6 +258,9 @@
     <ClInclude Include="ioriYagami.h">
       <Filter>playGround\memberFolder\dongjin</Filter>
     </ClInclude>
+    <ClInclude Include="neko.h">
+      <Filter>playGround\memberFolder\soonyu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -400,6 +403,9 @@
     </ClCompile>
     <ClCompile Include="ioriYagami.cpp">
       <Filter>playGround\memberFolder\dongjin</Filter>
+    </ClCompile>
+    <ClCompile Include="neko.cpp">
+      <Filter>playGround\memberFolder\soonyu</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

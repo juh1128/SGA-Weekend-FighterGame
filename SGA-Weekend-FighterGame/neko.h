@@ -5,7 +5,7 @@
 #define NEKOSITSPEED	2.0		//앉아서 이동속도 
 #define NEKOJUMPPOWER	25		//점프빠워
 #define NEKOGRAVITY		0.8		//그라비티
-
+//s
 namespace tagNekoState
 {
 	enum ENUM
