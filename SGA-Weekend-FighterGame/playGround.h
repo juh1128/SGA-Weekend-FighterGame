@@ -23,6 +23,7 @@ public:
 	void setupYongjae();
 	void setupYoonsam();
 	void setupHalim();
+	void setupYoungjae();
 
 	playGround();
 	~playGround();
