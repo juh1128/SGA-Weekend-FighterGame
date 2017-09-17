@@ -11,19 +11,19 @@ public:
 	virtual void update(void);
 	virtual void render(void);
 
-	void setupGuenhwa();
-	void setupDongjin();
-	void setupHyunjin();
-	void setupSiyeong();
-	void setupSoonyu();
+	//void setupGuenhwa();
+	//void setupDongjin();
+	//void setupHyunjin();
+	//void setupSiyeong();
+	//void setupSoonyu();
 	void setupYuhoon();
-	void setupHyeongjoon();
-	void setupSunghoon();
-	void setupTaesung();
-	void setupYongjae();
-	void setupYoonsam();
-	void setupHalim();
-	void setupYoungjae();
+	//void setupHyeongjoon();
+	//void setupSunghoon();
+	//void setupTaesung();
+	//void setupYongjae();
+	//void setupYoonsam();
+	//void setupHalim();
+	//void setupYoungjae();
 
 	playGround();
 	~playGround();
