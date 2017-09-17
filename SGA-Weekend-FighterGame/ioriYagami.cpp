@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #include "ioriYagami.h"
 #include "attackHitbox.h"
-
+#include "playGround.h"
 
 HRESULT ioriYagami::init(vector2D pos)
 {
+
+	_playGround->setupDongjin();
+
 	character::init("이오리", pos, "이오리_오른쪽_멈춤");
 	this->changeState(tagIoriState::RIGHT_STOP);
 

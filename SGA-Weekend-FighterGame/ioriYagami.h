@@ -18,6 +18,8 @@ namespace tagIoriState
 }
 
 
+class playGround;
+
 
 class ioriYagami : public character
 {
@@ -31,7 +33,7 @@ private:
 	float _startX;
 	float _startY;
 
-
+	playGround* _playGround;
 
 	bool _isJumping;
 
