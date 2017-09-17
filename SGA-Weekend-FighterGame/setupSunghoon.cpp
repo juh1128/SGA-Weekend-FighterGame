@@ -26,9 +26,9 @@ void playGround::setupSunghoon()
 
 	//Left -> 왼쪽을보는 Right -> 오른쪽을 보는
 	//정지상태
-	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftIdle", "maiIdle", 0,11, 6, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftIdle", "maiIdle", 12,23, 6, false, true);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightIdle", "maiIdle", 12, 23, 6, false,true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightIdle", "maiIdle", 0, 11, 6, false,true);
 
 	//뒤로가기
 	int arrLeftBackMove[] = { 0,1,2,3,4,5 };
