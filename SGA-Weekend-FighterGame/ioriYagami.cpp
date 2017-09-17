@@ -18,7 +18,8 @@ HRESULT ioriYagami::init(vector2D pos)
 	//this->setGravity(true);
 	
 
-
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉은_약손", "ioriYagamiSitAttackA", 4, 0, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_약손", RectMakeCenter(150, 200, 200, 400));
 
 	return S_OK;
 }
@@ -55,6 +56,7 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
 		{
 			changeState(tagIoriState::RIGHT_SIT);
+			
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
 		{
@@ -76,6 +78,7 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
 		{
 			changeState(tagIoriState::RIGHT_JUMP);
+			
 		}
 
 		break;
@@ -130,6 +133,10 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		if (!KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
 		{
 			changeState(tagIoriState::RIGHT_STOP);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
+		{
+			changeState(tagIoriState::SIT_ATTAK);
 		}
 		break;
 	case tagIoriState::LEFT_SIT:
@@ -212,6 +219,24 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 		this->setAnimation("이오리_오른쪽_강발");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
 		break;
+	case tagIoriState::SIT_ATTAK:
+		this->setAnimation("이오리_오른쪽_앉은_약손");
+		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_SIT));
+		}
+		if (!KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		}
+		break;
+	case tagIoriState::SIT_KICK:
+		break;
+	case tagIoriState::SIT_STRONG_ATTAK:
+		break;
+	case tagIoriState::SIT_STRONG_KIKC:
+		break;
+
 	}
 	_state = state;
 }
