@@ -171,7 +171,12 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		break;
 	case tagIoriState::STRONG_KICK:
 		break;
-
+	case tagIoriState::SKILL1:
+		break;
+	case tagIoriState::SKILL2:
+		break;
+	case tagIoriState::SKILL3:
+		break;
 	}
 
 }
@@ -275,7 +280,15 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
 		}
 		break;
-
+	case tagIoriState::SKILL1:
+		this->setAnimation("이오리_오른쪽_스킬");
+		break;
+	case tagIoriState::SKILL2:
+		this->setAnimation("이오리_오른쪽_스킬");
+		break;
+	case tagIoriState::SKILL3:
+		this->setAnimation("이오리_오른쪽_스킬");
+		break;
 	}
 	_state = state;
 }
