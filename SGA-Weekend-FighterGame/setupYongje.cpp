@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "playGround.h"
 
-void playGround::setupYongjae()
+void playGround::setupYongje()
 {
 	int a, b;
 	a = 1;

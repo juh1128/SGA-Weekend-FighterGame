@@ -25,7 +25,7 @@ HRESULT playGround::init(void)
 	//setupHyeongjoon();
 	//setupSunghoon();
 	//setupTaesung();
-	//setupYongjae();
+	//setupYongje();
 	//setupYoonsam();
 	//setupHalim();
 	//setupYoungjae();
