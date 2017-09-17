@@ -18,6 +18,11 @@ void playGround::setupYuhoon()
 	IMAGEMANAGER->addFrameImage("테스트_공격", "resource/yuhoon/testCharacter/attack.bmp", 399, 178,
 		5, 2, true);
 
+	//인터페이스
+	IMAGEMANAGER->addImage("HP바_백", "resource/yuhoon/ui/hpBarBack.bmp", 53, 5, true);
+	IMAGEMANAGER->addImage("HP바_프론트", "resource/yuhoon/ui/hpBarFront.bmp", 53, 5, true);
+
+
 	//애니메이션 로드
 	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_이동_오른쪽", "테스트_이동", 0, 9, 15, false, true);
 	KEYANIMANAGER->setCollisionRect("테스트_이동_오른쪽", RectMake(19,9,30,65));

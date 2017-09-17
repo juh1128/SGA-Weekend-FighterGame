@@ -1,9 +1,6 @@
 #include "stdafx.h"
 #include "playScene.h"
-#include "gameObject.h"
-#include "animation.h"
-
-#include "callbackTest.h"
+#include "progressBar.h"
 
 HRESULT	playScene::init()
 {
@@ -18,16 +15,19 @@ HRESULT	playScene::init()
 	_backgroundAnimation->setFPS(25);
 	_backgroundAnimation->start();
 
-	_cbTest = new callbackTest;
-	_cbTest->init();
-	WORLD->addObject(_cbTest);
-
 	//카메라 설정
 	_cameraTarget = new gameObject;
 	_cameraTarget->init("카메라 타겟");
 	_cameraTarget->_pos = vector2D(WINSIZEX / 2, WINSIZEY / 2);
 	CAMERAMANAGER->setMapSize(1800, 768);
 	CAMERAMANAGER->connectTarget(_cameraTarget);
+
+	//UI
+	//for (int i = 0; i < 2; ++i)
+	//{
+	//	_progressBar[i] = new progressBar();
+	//	_progressBar[i]->init(
+	//}
 
 	//플레이어 0, 플레이어 1 셋팅
 	characterSetup();
@@ -54,11 +54,6 @@ void playScene::update()
 {
 	sceneBase::update();
 
-
-	if (KEYMANAGER->isOnceKeyDown('T'))
-	{
-		_cbTest->sendMessage("addHp", 0.0f, -45);
-	}
 
 	//배경 프레임
 	_backgroundAnimation->frameUpdate();
