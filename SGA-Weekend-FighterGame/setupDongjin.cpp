@@ -4,18 +4,18 @@
 
 void playGround::setupDongjin()
 {
-	IMAGEMANAGER->addFrameImage("맵", "resource/background2.bmp", 1828, 6144, 1, 8, true);
-	IMAGEMANAGER->addFrameImage("ioriYagami", "resource/이오리/모션합체.bmp", 0, 0, 3600, 4000, 10, 10, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagami2", "resource/이오리/모션합체2.bmp", 0, 0, 3330, 1600, 10, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiStop", "resource/이오리/오른쪽멈춤.bmp", 0, 0, 2770, 400, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiStop2", "resource/이오리/왼쪽멈춤.bmp", 0, 0, 2770, 400, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiBackMove", "resource/이오리/오른쪽뒷이동.bmp", 0, 0, 2124, 400, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiJump", "resource/이오리/오른쪽점프.bmp", 0, 0, 2310, 400, 7, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiSit", "resource/이오리/오른쪽앉기.bmp", 0, 0, 1876, 400, 7, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiAttackA", "resource/이오리/오른쪽약손.bmp", 0, 0, 1175, 400, 3, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiAttackB", "resource/이오리/오른쪽약발.bmp", 0, 0, 2478, 400, 7, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiAttackC", "resource/이오리/오른쪽강손.bmp", 0, 0, 3568, 400, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiAttackD", "resource/이오리/오른쪽강발.bmp", 0, 0, 3634, 400, 9, 1, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("ioriYagami", "resource/Dongjin/모션합체.bmp", 0, 0, 3600, 4000, 10, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagami2", "resource/Dongjin/모션합체2.bmp", 0, 0, 3330, 1600, 10, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiStop", "resource/Dongjin/오른쪽멈춤.bmp", 0, 0, 2770, 400, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiStop2", "resource/Dongjin/왼쪽멈춤.bmp", 0, 0, 2770, 400, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiBackMove", "resource/Dongjin/오른쪽뒷이동.bmp", 0, 0, 2124, 400, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiJump", "resource/Dongjin/오른쪽점프.bmp", 0, 0, 2310, 400, 7, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSit", "resource/Dongjin/오른쪽앉기.bmp", 0, 0, 1876, 400, 7, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiAttackA", "resource/Dongjin/오른쪽약손.bmp", 0, 0, 1175, 400, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiAttackB", "resource/Dongjin/오른쪽약발.bmp", 0, 0, 2478, 400, 7, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiAttackC", "resource/Dongjin/오른쪽강손.bmp", 0, 0, 3568, 400, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiAttackD", "resource/Dongjin/오른쪽강발.bmp", 0, 0, 3634, 400, 9, 1, true, RGB(255, 0, 255));
 
 	//예시
 	//KEYANIMANAGER->addCoordinateFrameAnimation("테스트_이동_오른쪽", "테스트_이동", 0, 9, 15, false, true);
