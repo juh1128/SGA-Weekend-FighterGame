@@ -6,7 +6,7 @@ using namespace NanayaState;
 
 HRESULT Nanaya::init(vector2D pos)
 {
-	character::init("Nanaya", pos, "Nanaya_Right_Stand");
+	character::init("Nanaya", pos, "Nanaya_Stand");
 	this->changeState(NanayaState::RIGHT_STAND);
 
 	this->addCallback("changeState", [this](tagMessage msg)
@@ -40,7 +40,7 @@ void Nanaya::stateUpdate(NanayaState::Enum state)
 	{
 		case RIGHT_STAND:
 		{
-			this->setAnimation("Nanaya_Right_Stand");
+			this->setAnimation("Nanaya_Stand");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, NanayaState::RIGHT_STAND));
 		}
 		break;
