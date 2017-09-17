@@ -25,6 +25,8 @@ HRESULT neko::init(vector2D pos)
 		this->changeState((tagNekoState::ENUM)msg.data);
 	});
 
+	this->setScale(3.0, 3.0);
+
 	return S_OK;
 }
 
