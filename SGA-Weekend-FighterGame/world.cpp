@@ -37,6 +37,7 @@ void world::render()
 {
 	//화면 안에 있는 오브젝트만 렌더링 함.
 	RECT renderRect = CAMERAMANAGER->getRenderRect();
+	RECT temp;
 
 	for (int i = 0; i < MAX_LAYER; ++i)
 	{
@@ -46,8 +47,10 @@ void world::render()
 			gameObject* object = _objectList[i][j];
 			if (object->isActiveObject())
 			{
-				if (PtInRect(&renderRect, object->_pos.toPoint()))
+				if (IntersectRect(&temp, &object->getCollisionRect(), &renderRect))
+				{
 					object->render();
+				}
 			}
 		}
 	}
