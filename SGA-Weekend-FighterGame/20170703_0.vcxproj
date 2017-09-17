@@ -92,6 +92,7 @@
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="gameObject.h" />
+    <ClInclude Include="Nanaya.h" />
     <ClInclude Include="playGround.h" />
     <ClInclude Include="playScene.h" />
     <ClInclude Include="progressBar.h" />
@@ -129,6 +130,7 @@
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="gameObject.cpp" />
+    <ClCompile Include="Nanaya.cpp" />
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="playScene.cpp" />
     <ClCompile Include="progressBar.cpp" />
@@ -145,6 +147,7 @@
     <ClCompile Include="setupTaesung.cpp" />
     <ClCompile Include="setupYongjae.cpp" />
     <ClCompile Include="setupYoonsam.cpp" />
+    <ClCompile Include="setupYoungjae.cpp" />
     <ClCompile Include="setupYuhoon.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="statePattern.cpp" />

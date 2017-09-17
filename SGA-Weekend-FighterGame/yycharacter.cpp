@@ -12,4 +12,12 @@ public:
 	{
 
 	}
+	void attack()
+	{
+
+	}
+	void jump()
+	{
+		 //  점프가 된다아 
+	}
 };

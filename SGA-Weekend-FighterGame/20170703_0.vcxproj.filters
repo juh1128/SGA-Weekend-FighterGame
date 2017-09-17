@@ -139,6 +139,9 @@
     <Filter Include="playGround\publicFolder">
       <UniqueIdentifier>{55b8134f-8c26-49b6-bd70-0883a69c6b8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\memberFolder\youngjae">
+      <UniqueIdentifier>{aa3b9caf-6540-42da-9169-fe6da9d90bba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -248,6 +251,9 @@
     </ClInclude>
     <ClInclude Include="attackHitbox.h">
       <Filter>2DGameFramework\trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="Nanaya.h">
+      <Filter>playGround\memberFolder\youngjae</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -382,6 +388,12 @@
     </ClCompile>
     <ClCompile Include="attackHitbox.cpp">
       <Filter>2DGameFramework\trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="setupYoungjae.cpp">
+      <Filter>playGround\memberFolder\youngjae</Filter>
+    </ClCompile>
+    <ClCompile Include="Nanaya.cpp">
+      <Filter>playGround\memberFolder\youngjae</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
