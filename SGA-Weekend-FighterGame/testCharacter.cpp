@@ -5,9 +5,11 @@
 
 HRESULT testCharacter::init(vector2D pos)
 {
+	setupResource();
+
 	//테스트 애니메이션은 setupYuhoon에서 만든다. (게임 시작 시 최초 1번만 만들어놓고 씀)
-	character::init("테스트 캐릭터", pos, "테스트_공격_오른쪽");
-	this->changeState(testCharacterState::RIGHT_ATTACK);
+	character::init("테스트 캐릭터", pos, "테스트_이동_오른쪽");
+	this->changeState(testCharacterState::RIGHT_MOVE);
 
 	//this->setScale(4.0f, 4.0f);
 	//this->setSize(150, 300);
@@ -233,4 +235,56 @@ void testCharacter::skill2()
 void testCharacter::skill3()
 {
 	cout << "스킬3 발동!" << endl;
+}
+
+
+
+
+
+void testCharacter::setupResource()
+{
+	//리소스 로드
+	IMAGEMANAGER->addFrameImage("테스트_이동", "resource/yuhoon/testCharacter/move.bmp", 625, 168,
+		10, 2, true);
+	IMAGEMANAGER->addFrameImage("테스트_달리기", "resource/yuhoon/testCharacter/run.bmp", 624, 126,
+		8, 2, true);
+	IMAGEMANAGER->addFrameImage("테스트_발차기", "resource/yuhoon/testCharacter/kick.bmp", 377, 164,
+		5, 2, true);
+	IMAGEMANAGER->addFrameImage("테스트_점프", "resource/yuhoon/testCharacter/jump.bmp", 207, 83,
+		3, 2, true);
+	IMAGEMANAGER->addFrameImage("테스트_점프공격", "resource/yuhoon/testCharacter/jump_attack.bmp", 406, 162,
+		5, 2, true);
+	IMAGEMANAGER->addFrameImage("테스트_공격", "resource/yuhoon/testCharacter/attack.bmp", 399, 178,
+		5, 2, true);
+
+	//애니메이션 로드
+	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_이동_오른쪽", "테스트_이동", 0, 9, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("테스트_이동_오른쪽", RectMake(19, 9, 30, 65));
+	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_이동_왼쪽", "테스트_이동", 10, 19, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("테스트_이동_왼쪽", RectMake(19, 9, 30, 65));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_달리기_오른쪽", "테스트_달리기", 0, 7, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("테스트_달리기_오른쪽", RectMake(19, 9, 30, 65));
+	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_달리기_왼쪽", "테스트_달리기", 8, 15, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("테스트_달리기_왼쪽", RectMake(19, 9, 30, 65));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_발차기_오른쪽", "테스트_발차기", 0, 4, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("테스트_발차기_오른쪽", RectMake(19, 9, 30, 65));
+	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_발차기_왼쪽", "테스트_발차기", 5, 9, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("테스트_발차기_왼쪽", RectMake(19, 9, 30, 65));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_점프_오른쪽", "테스트_점프", 3, 5, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("테스트_점프_오른쪽", RectMake(19, 9, 30, 65));
+	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_점프_왼쪽", "테스트_점프", 0, 2, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("테스트_점프_왼쪽", RectMake(19, 9, 30, 65));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_점프공격_오른쪽", "테스트_점프공격", 0, 4, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("테스트_점프공격_오른쪽", RectMake(19, 9, 30, 65));
+	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_점프공격_왼쪽", "테스트_점프공격", 5, 9, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("테스트_점프공격_왼쪽", RectMake(19, 9, 30, 65));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_공격_오른쪽", "테스트_공격", 0, 4, 12, false, false);
+	KEYANIMANAGER->setCollisionRect("테스트_공격_오른쪽", RectMake(19, 9, 30, 65));
+	KEYANIMANAGER->addCoordinateFrameAnimation("테스트_공격_왼쪽", "테스트_공격", 5, 9, 12, false, false);
+	KEYANIMANAGER->setCollisionRect("테스트_공격_왼쪽", RectMake(19, 9, 30, 65));
 }

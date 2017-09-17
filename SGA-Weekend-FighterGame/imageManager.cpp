@@ -36,7 +36,7 @@ image* imageManager::addImage(string strKey, int width, int height)
 	if (FAILED(img->init(width, height)))
 	{
 		SAFE_DELETE(img);
-
+		cout << "[ 에러 ] " << strKey << " 이미지 로드 실패." << endl;
 		return NULL;
 	}
 
@@ -58,7 +58,7 @@ image* imageManager::addImage(string strKey, const char* fileName, int width, in
 	if (FAILED(img->init(fileName, width, height, trans, transColor)))
 	{
 		SAFE_DELETE(img);
-
+		cout << "[ 에러 ] " << strKey << " 이미지 로드 실패." << endl;
 		return NULL;
 	}
 
@@ -79,7 +79,7 @@ image* imageManager::addImage(string strKey, const char* fileName, float x, floa
 	if (FAILED(img->init(fileName, x, y, width, height, trans, transColor)))
 	{
 		SAFE_DELETE(img);
-
+		cout << "[ 에러 ] " << strKey << " 이미지 로드 실패." << endl;
 		return NULL;
 	}
 
@@ -101,7 +101,7 @@ image* imageManager::addFrameImage(string strKey, const char* fileName, float x,
 	if (FAILED(img->init(fileName, x, y, width, height, frameX, frameY, trans, transColor)))
 	{
 		SAFE_DELETE(img);
-
+		cout << "[ 에러 ] " << strKey << " 이미지 로드 실패." << endl;
 		return NULL;
 	}
 
@@ -122,7 +122,7 @@ image* imageManager::addFrameImage(string strKey, const char* fileName, int widt
 	if (FAILED(img->init(fileName, width, height, frameX, frameY, trans, transColor)))
 	{
 		SAFE_DELETE(img);
-
+		cout << "[ 에러 ] " << strKey << " 이미지 로드 실패." << endl;
 		return NULL;
 	}
 
@@ -180,6 +180,27 @@ BOOL imageManager::deleteAll(void)
 	_mImageList.clear();
 
 	return TRUE;
+}
+
+void imageManager::resetImage()
+{
+	mapImageIter iter = _mImageList.begin();
+
+	for (; iter != _mImageList.end();)
+	{
+		if (iter->second != NULL)
+		{
+			if (iter->first != "backBuffer")
+			{
+				SAFE_DELETE(iter->second);
+				iter = _mImageList.erase(iter);
+			}
+			else ++iter;
+		}
+		else ++iter;
+	}
+
+	_mImageList.clear();
 }
 
 void imageManager::render(string strKey, HDC hdc)

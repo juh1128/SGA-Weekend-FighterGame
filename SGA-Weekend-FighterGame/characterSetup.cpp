@@ -1,23 +1,64 @@
 #include "stdafx.h"
 #include "playScene.h"
+#include "selectScene.h"
+
 #include "testCharacter.h"
+#include "ioriYagami.h"
+#include "mai.h"
+#include "Nanaya.h"
+#include "neko.h"
+#include "solBadGuy.h"
 
-
+character* getCharacter(int id, vector2D pos)
+{
+	character* newCharacter;
+	switch (id)
+	{
+		case characterName::iori:
+			newCharacter = new ioriYagami;
+			((ioriYagami*)newCharacter)->init(pos);
+		break;
+		case characterName::mai:
+			newCharacter = new mai;
+			((mai*)newCharacter)->init(pos);
+		break;
+		case characterName::nanaya:
+			newCharacter = new Nanaya;
+			((Nanaya*)newCharacter)->init(pos);
+		break;
+		case characterName::terry:
+			newCharacter = new testCharacter;
+			((testCharacter*)newCharacter)->init(pos);
+		break;
+		case characterName::neco:
+			newCharacter = new neko;
+			((neko*)newCharacter)->init(pos);
+		break;
+		case characterName::sol:
+			newCharacter = new solBadGuy;
+			((solBadGuy*)newCharacter)->init(pos);
+		break;
+		default:
+			newCharacter = new testCharacter;
+			((testCharacter*)newCharacter)->init(pos);
+		break;
+	}
+	return newCharacter;
+}
 
 void playScene::characterSetup()
 {
 	//캐릭터 생성
-	_player[0] = new testCharacter;
-	_player[1] = new testCharacter;
-	//적 셋팅
-	_player[0]->setupEnemy(_player[1]);
-	_player[1]->setupEnemy(_player[0]);
+	_player[0] = getCharacter(_selectedCharacter[0], vector2D(200, 200));
+	WORLD->addObject(_player[0], 1);
+	_player[1] = getCharacter(_selectedCharacter[1], vector2D(WINSIZEX - 200, 200));
+	WORLD->addObject(_player[1], 1);
 
 	//========================================================================//
 
-	//1p 캐릭터 초기화
-	((testCharacter*)_player[0])->init(vector2D(200, 200));
-	WORLD->addObject(_player[0], 1);
+	//적 셋팅
+	_player[0]->setupEnemy(_player[1]);
+	_player[1]->setupEnemy(_player[0]);
 
 	//1p 단축키 설정
 	_player[0]->setupKey(key::LEFT, VK_LEFT);
@@ -28,12 +69,6 @@ void playScene::characterSetup()
 	_player[0]->setupKey(key::KICK, 'S');
 	_player[0]->setupKey(key::STRONG_ATTACK, 'Q');
 	_player[0]->setupKey(key::STRONG_KICK, 'W');
-
-	//========================================================================//
-
-	//2p 캐릭터 초기화
-	((testCharacter*)_player[1])->init(vector2D(WINSIZEX-200, 200));
-	WORLD->addObject(_player[1], 1);
 
 	//2p 단축키 설정
 	_player[1]->setupKey(key::LEFT, VK_NUMPAD4);
