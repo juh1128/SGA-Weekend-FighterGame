@@ -116,9 +116,10 @@ void character::render()
 RECT character::getCollisionRect()
 {
 	//LEFT_TOP 좌표를 구한다.
+	vector2D size = this->getSize();
 	vector2D leftTop;
-	leftTop.x = _pos.x - this->getSize().x * 0.5f;
-	leftTop.y = _pos.y - this->getSize().y * 0.5f;
+	leftTop.x = _pos.x - size.x * 0.5f;
+	leftTop.y = _pos.y - size.y * 0.5f;
 
 	RECT collisionRC = _animation->getCollisionRect();
 	collisionRC.left *= this->getScale().x;
