@@ -35,6 +35,8 @@ private:
 	float _savePosY;					//좌표 저장 변수
 	bool  _isJump;						//점프 상태인지 제어 변수
 
+	float _bottom;						//발 좌표
+
 	key::Enum   _saveLastKey;			//마지막에 누른 stayKeyDown 키 저장 변수 
 
 

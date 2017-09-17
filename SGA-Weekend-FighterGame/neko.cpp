@@ -9,6 +9,8 @@ HRESULT neko::init(vector2D pos)
 
 	_state = RIGHT_STOP;
 	_isEnemyRight = true;
+	
+	//_pivot = Pivot::BOTTOM;
 
 	//점프 관련 변수들
 	_jumpPower = 0;
@@ -26,6 +28,9 @@ HRESULT neko::init(vector2D pos)
 	});
 
 	this->setScale(3.0, 3.0);
+
+	this->setGravity(0);
+	//116 ,179 , 144,225
 
 	return S_OK;
 }
