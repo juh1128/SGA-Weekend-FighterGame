@@ -30,7 +30,7 @@ void playGround::setupDongjin()
 	//앉기공격 모션
 	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackA", "resource/Dongjin/오른쪽앉은약손.bmp", 0, 0, 2021, 254, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackB", "resource/Dongjin/오른쪽앉은약발.bmp", 0, 0, 2598, 254, 6, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackC", "resource/Dongjin/오른쪽앉기강손.bmp", 0, 0, 3069, 400, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackC", "resource/Dongjin/오른쪽앉기강손.bmp", 0, 0, 3675, 479, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackD", "resource/Dongjin/오른쪽앉기강발.bmp", 0, 0, 2771, 316, 6, 1, true, RGB(255, 0, 255));
 
 	//스킬 스킬임팩트
@@ -87,7 +87,7 @@ void playGround::setupDongjin()
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_강발", "ioriYagamiAttackD", 8, 0, 15, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_강발", RectMakeCenter(150, 200, 200, 400));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉은_약손", "ioriYagamiSitAttackA", 5, 0, 15, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉은_약손", "ioriYagamiSitAttackA", 4, 0, 15, false, true);
 	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_약손", RectMakeCenter(150, 200, 200, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉은_약발", "ioriYagamiSitAttackB", 0, 5, 15, false, true);

@@ -32,7 +32,7 @@ HRESULT	selectScene::init()
 	//초기 애니메이션 설정
 	_selectedAnimation[characterName::iori] = new animation();
 	_selectedAnimation[characterName::iori]->init(3568, 400, 3568 / 9, 400);
-	_selectedAnimation[characterName::iori]->setPlayFrame(0, 8, false, false);
+	_selectedAnimation[characterName::iori]->setPlayFrame(8, 0, false, false);
 
 	_selectedAnimation[characterName::terry] = new animation();
 	_selectedAnimation[characterName::terry]->init(2288, 800, 2288 / 8, 800/2);
