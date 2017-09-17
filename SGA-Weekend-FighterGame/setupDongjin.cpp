@@ -5,7 +5,7 @@
 void playGround::setupDongjin()
 {
 
-	IMAGEMANAGER->addFrameImage("ioriYagami", "resource/Dongjin/모션합체.bmp", 0, 0, 3600, 4000, 10, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagami", "resource/Dongjin/모션합체.bmp", 0, 0, 3600, 800, 10, 10, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagami2", "resource/Dongjin/모션합체2.bmp", 0, 0, 3330, 1600, 10, 4, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiStop", "resource/Dongjin/오른쪽멈춤.bmp", 0, 0, 2770, 400, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiStop2", "resource/Dongjin/왼쪽멈춤.bmp", 0, 0, 2770, 400, 9, 1, true, RGB(255, 0, 255));
