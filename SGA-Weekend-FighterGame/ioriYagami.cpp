@@ -12,9 +12,8 @@ HRESULT ioriYagami::init(vector2D pos)
 	{
 		this->changeState((tagIoriState::Enum)msg.data);
 	});
-
-
-
+	//this->setGravity(true);
+	
 
 
 
@@ -70,7 +69,11 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		{
 			changeState(tagIoriState::STRONG_KICK);
 		}
-
+	
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+		{
+			changeState(tagIoriState::RIGHT_JUMP);
+		}
 
 		break;
 		//case tagIoriState::LEFT_STOP:
@@ -129,7 +132,10 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 	case tagIoriState::LEFT_SIT:
 		break;
 	case tagIoriState::RIGHT_JUMP:
-
+		if (KEYMANAGER->isStayKeyDown(keyList[key::JUMP]))
+		{
+			jump(25);
+		}
 		break;
 	case tagIoriState::LEFT_JUMP:
 		break;
@@ -182,6 +188,7 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 		break;
 	case tagIoriState::RIGHT_JUMP:
 		this->setAnimation("이오리_오른쪽_점프");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.1f, tagIoriState::RIGHT_STOP));
 		break;
 	case tagIoriState::LEFT_JUMP:
 		break;
