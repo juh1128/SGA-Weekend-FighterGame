@@ -52,12 +52,12 @@ public:
 	mai() {}
 	virtual ~mai() {}
 
-	virtual HRESULT init(vector2D pos);
-	virtual void release();
-	virtual void update();
-	virtual void render();
+	HRESULT init(vector2D pos);
+	void release();
+	void update();
+	void render();
 
-	virtual void stateUpdate();
-	virtual void changeState();
+	void stateUpdate(state);
+	void changeState(state);
 };
 
