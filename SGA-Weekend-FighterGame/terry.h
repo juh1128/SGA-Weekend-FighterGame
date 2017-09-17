@@ -7,6 +7,7 @@
 #define NEKOJUMPPOWER	25		//점프빠워
 #define NEKOGRAVITY		0.8		//그라비티
 
+
 namespace tagTerryState
 {
 	enum Enum
@@ -57,6 +58,8 @@ public:
 	void release();
 	void update();
 	void render();
+
+	void enemyPos();
 
 	void stateUpdate(tagTerryState::Enum state);
 	void changeState(tagTerryState::Enum state);
