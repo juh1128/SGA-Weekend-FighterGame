@@ -8,6 +8,7 @@
 #include "Nanaya.h"
 #include "neko.h"
 #include "solBadGuy.h"
+#include "terry.h"
 
 character* getCharacter(int id, vector2D pos)
 {
@@ -27,8 +28,8 @@ character* getCharacter(int id, vector2D pos)
 			((Nanaya*)newCharacter)->init(pos);
 		break;
 		case characterName::terry:
-			newCharacter = new testCharacter;
-			((testCharacter*)newCharacter)->init(pos);
+			newCharacter = new terry;
+			((terry*)newCharacter)->init(pos);
 		break;
 		case characterName::neco:
 			newCharacter = new neko;
