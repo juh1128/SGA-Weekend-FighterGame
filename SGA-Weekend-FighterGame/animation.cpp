@@ -18,6 +18,9 @@ animation::animation()
 	_collisionRect = { 0,0,0,0 };
 	_endMessage.text = "NULL";
 	_messageTarget = NULL;
+
+	_maxFrameX = 0;
+	_maxFrameY = 0;
 }
 
 
@@ -30,9 +33,11 @@ HRESULT animation::init(int totalW, int totalH, int frameW, int frameH)
 {
 	_frameWidth = frameW;
 	int _frameNumWidth = totalW / _frameWidth;
+	_maxFrameX = _frameNumWidth;
 
 	_frameHeight = frameH;
 	int _frameNumHeight = totalH / _frameHeight;
+	_maxFrameY = _frameNumHeight;
 
 	_frameNum = _frameNumWidth * _frameNumHeight;
 
