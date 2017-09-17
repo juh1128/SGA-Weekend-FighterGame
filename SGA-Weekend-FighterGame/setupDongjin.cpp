@@ -20,8 +20,17 @@ void playGround::setupDongjin()
 	IMAGEMANAGER->addFrameImage("ioriYagamiBackJump2", "resource/Dongjin/왼쪽백점프.bmp", 0, 0, 1130, 400, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiJumpAttackC", "resource/Dongjin/왼쪽점프강손.bmp", 0, 0, 1378, 400, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSkill", "resource/Dongjin/오른쪽스킬1.bmp", 0, 0, 4872, 400, 18, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSkill2", "resource/Dongjin/왼쪽스킬1.bmp", 0, 0, 4872, 400, 18, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSkillEffect", "resource/Dongjin/오른쪽스킬1임팩트.bmp", 0, 0, 12589, 1280, 18, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiSkill2Effect", "resource/Dongjin/오른쪽스킬2임팩트.bmp", 0, 0, 1283, 206, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSkillEffect2", "resource/Dongjin/왼쪽스킬1임팩트.bmp", 0, 0, 12589, 1280, 18, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSkill3", "resource/Dongjin/오른쪽스킬2.bmp", 0, 0, 2153, 400, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSkill4", "resource/Dongjin/왼쪽스킬2.bmp", 0, 0, 2153, 400, 8, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSkillEffect3", "resource/Dongjin/왼쪽스킬2임팩트.bmp", 0, 0, 1283, 206, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSkillEffect4", "resource/Dongjin/오른쪽스킬2임팩트.bmp", 0, 0, 1283, 206, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSkill5", "resource/Dongjin/오른쪽스킬3.bmp", 0, 0, 6400, 400, 17, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSkill6", "resource/Dongjin/왼쪽스킬3.bmp", 0, 0, 6400, 400, 17, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSkillEffect5", "resource/Dongjin/오른쪽스킬3임팩트.bmp", 0, 0, 1283, 206, 6, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSkillEffect6", "resource/Dongjin/왼쪽스킬3임팩트.bmp", 0, 0, 1283, 206, 6, 1, true, RGB(255, 0, 255));
 
 	//예시
 	//KEYANIMANAGER->addCoordinateFrameAnimation("테스트_이동_오른쪽", "테스트_이동", 0, 9, 15, false, true);
@@ -33,7 +42,7 @@ void playGround::setupDongjin()
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_멈춤", "ioriYagamiStop2", 0, 8, 15, false, true);
 	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_멈춤", RectMakeCenter(150, 200, 200, 400));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_이동", "ioriYagamiMove", 0, 8, 15, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_이동", "ioriYagamiSkill", 18, 0, 15, false, true);
 	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_이동", RectMakeCenter(150, 200, 200, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_이동", "ioriYagamiMove2", 0, 8, 15, false, true);
