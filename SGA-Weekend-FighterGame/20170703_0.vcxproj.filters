@@ -273,6 +273,9 @@
     <ClInclude Include="terry.h">
       <Filter>playGround\memberFolder\guenhwa</Filter>
     </ClInclude>
+    <ClInclude Include="athena.h">
+      <Filter>playGround\memberFolder\siyeong</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -430,6 +433,9 @@
     </ClCompile>
     <ClCompile Include="terry.cpp">
       <Filter>playGround\memberFolder\guenhwa</Filter>
+    </ClCompile>
+    <ClCompile Include="athena.cpp">
+      <Filter>playGround\memberFolder\siyeong</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
