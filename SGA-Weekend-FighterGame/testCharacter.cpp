@@ -11,8 +11,7 @@ HRESULT testCharacter::init(vector2D pos)
 	character::init("테스트 캐릭터", pos, "테스트_이동_오른쪽");
 	this->changeState(testCharacterState::RIGHT_MOVE);
 
-	//this->setScale(4.0f, 4.0f);
-	//this->setSize(150, 300);
+	this->setScale(4.0f, 4.0f);
 
 	//콜백 함수 등록
 	this->addCallback("changeState", [this](tagMessage msg)
