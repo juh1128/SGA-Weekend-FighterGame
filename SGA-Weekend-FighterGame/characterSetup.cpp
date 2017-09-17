@@ -3,6 +3,7 @@
 #include "testCharacter.h"
 
 
+
 void playScene::characterSetup()
 {
 	//캐릭터 생성

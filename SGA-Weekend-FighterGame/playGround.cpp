@@ -20,7 +20,7 @@ HRESULT playGround::init(void)
 	setupDongjin();
 	setupHyunjin();
 	setupSiyeong();
-	setupSoonyu();
+//	setupSoonyu();
 	setupYuhoon();
 	setupHyeongjoon();
 	setupSunghoon();
@@ -28,6 +28,7 @@ HRESULT playGround::init(void)
 	setupYongjae();
 	setupYoonsam();
 	setupHalim();
+	setupYoungjae();
 
 	//초기 시작 씬 생성
 	SCENEMANAGER->pushScene(new playScene);
