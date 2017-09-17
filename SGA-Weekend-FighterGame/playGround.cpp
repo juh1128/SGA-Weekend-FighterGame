@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "playGround.h"
-#include "playScene.h"
+#include "selectScene.h"
 
 playGround::playGround()
 {
@@ -21,7 +21,7 @@ HRESULT playGround::init(void)
 	//setupHyunjin();
 	//setupSiyeong();
 	//setupSoonyu();
-	setupYuhoon();
+	//setupYuhoon();
 	//setupHyeongjoon();
 	//setupSunghoon();
 	//setupTaesung();
@@ -31,7 +31,7 @@ HRESULT playGround::init(void)
 	//setupYoungjae();
 
 	//초기 시작 씬 생성
-	SCENEMANAGER->pushScene(new playScene);
+	SCENEMANAGER->pushScene(new selectScene);
 
 	return S_OK;
 }

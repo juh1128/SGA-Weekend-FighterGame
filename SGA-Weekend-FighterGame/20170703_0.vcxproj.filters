@@ -127,9 +127,6 @@
     <Filter Include="playGround\memberFolder\taesung">
       <UniqueIdentifier>{547dd817-0fbc-4be4-ab6c-8c962bac9ec1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="playGround\memberFolder\yongjae">
-      <UniqueIdentifier>{08e45a8a-dc5c-4021-bb35-b45a7dc1fa93}</UniqueIdentifier>
-    </Filter>
     <Filter Include="playGround\memberFolder\yoonsam">
       <UniqueIdentifier>{5da3a185-7a8c-4653-8a7e-ac028c0c9d72}</UniqueIdentifier>
     </Filter>
@@ -141,6 +138,9 @@
     </Filter>
     <Filter Include="playGround\memberFolder\sunghoon">
       <UniqueIdentifier>{c246b5bb-ebef-4a94-a8fb-ca5d6f4b6321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\memberFolder\yongje">
+      <UniqueIdentifier>{08e45a8a-dc5c-4021-bb35-b45a7dc1fa93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -261,8 +261,14 @@
     <ClInclude Include="neko.h">
       <Filter>playGround\memberFolder\soonyu</Filter>
     </ClInclude>
-    <ClInclude Include="athena.h">
-      <Filter>playGround\memberFolder\siyeong</Filter>
+    <ClInclude Include="selectScene.h">
+      <Filter>playGround\gameBase\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="mai.h">
+      <Filter>playGround\memberFolder\sunghoon</Filter>
+    </ClInclude>
+    <ClInclude Include="solBadGuy.h">
+      <Filter>playGround\memberFolder\taesung</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -353,6 +359,9 @@
     <ClCompile Include="setupDongjin.cpp">
       <Filter>playGround\memberFolder\dongjin</Filter>
     </ClCompile>
+    <ClCompile Include="setupSiyeong.cpp">
+      <Filter>playGround\memberFolder\siyeong</Filter>
+    </ClCompile>
     <ClCompile Include="setupSoonyu.cpp">
       <Filter>playGround\memberFolder\soonyu</Filter>
     </ClCompile>
@@ -404,14 +413,17 @@
     <ClCompile Include="neko.cpp">
       <Filter>playGround\memberFolder\soonyu</Filter>
     </ClCompile>
-    <ClCompile Include="setupSiyeong.cpp">
-      <Filter>playGround\memberFolder\siyeong</Filter>
-    </ClCompile>
     <ClCompile Include="setupYongje.cpp">
-      <Filter>playGround\memberFolder\yongjae</Filter>
+      <Filter>playGround\memberFolder\yongje</Filter>
     </ClCompile>
-    <ClCompile Include="athena.cpp">
-      <Filter>playGround\memberFolder\siyeong</Filter>
+    <ClCompile Include="selectScene.cpp">
+      <Filter>playGround\gameBase\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="mai.cpp">
+      <Filter>playGround\memberFolder\sunghoon</Filter>
+    </ClCompile>
+    <ClCompile Include="solBadGuy.cpp">
+      <Filter>playGround\memberFolder\taesung</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
