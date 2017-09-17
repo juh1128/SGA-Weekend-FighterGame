@@ -15,13 +15,18 @@ private:
 	progressBar*		_progressBar[2];
 
 	//플레이어
+	int					_selectedCharacter[2];
 	character*			_player[2];
 
 	//카메라
 	gameObject*			_cameraTarget;
 
 public:
-	playScene() {}
+	playScene(int player1, int player2) 
+	{ 
+		_selectedCharacter[0] = player1; 
+		_selectedCharacter[1] = player2;
+	}
 	virtual ~playScene() {}
 
 	virtual HRESULT	init();

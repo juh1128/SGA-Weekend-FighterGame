@@ -6,9 +6,13 @@ HRESULT	playScene::init()
 {
 	sceneBase::init();
 
+	//리소스 로드
+	// - 인터페이스
+	IMAGEMANAGER->addImage("HP바_백", "resource/yuhoon/ui/hpBarBack.bmp", 53, 5, true);
+	IMAGEMANAGER->addImage("HP바_프론트", "resource/yuhoon/ui/hpBarFront.bmp", 53, 5, true);
+
 	//초기 오브젝트 생성
-	_background = new image;
-	_background = IMAGEMANAGER->findImage("맵");
+	_background = IMAGEMANAGER->addFrameImage("맵", "resource/yuhoon/background2.bmp", 914, 3072, 1, 8, true);
 	_backgroundAnimation = new animation;
 	_backgroundAnimation->init(_background->getWidth(), _background->getHeight(), _background->getFrameWidth(), _background->getFrameHeight());
 	_backgroundAnimation->setDefPlayFrame(false, true);
@@ -40,6 +44,8 @@ void playScene::release()
 {
 	SAFE_DELETE(_cameraTarget);
 	sceneBase::release();
+
+	IMAGEMANAGER->resetImage();
 }
 
 //씬 재시작 시 설정해야되는 것이 있다면 여기에 쓴다.

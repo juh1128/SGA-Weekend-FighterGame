@@ -261,6 +261,15 @@
     <ClInclude Include="neko.h">
       <Filter>playGround\memberFolder\soonyu</Filter>
     </ClInclude>
+    <ClInclude Include="selectScene.h">
+      <Filter>playGround\gameBase\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="mai.h">
+      <Filter>playGround\memberFolder\sunghoon</Filter>
+    </ClInclude>
+    <ClInclude Include="solBadGuy.h">
+      <Filter>playGround\memberFolder\taesung</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -406,6 +415,15 @@
     </ClCompile>
     <ClCompile Include="setupYongje.cpp">
       <Filter>playGround\memberFolder\yongje</Filter>
+    </ClCompile>
+    <ClCompile Include="selectScene.cpp">
+      <Filter>playGround\gameBase\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="mai.cpp">
+      <Filter>playGround\memberFolder\sunghoon</Filter>
+    </ClCompile>
+    <ClCompile Include="solBadGuy.cpp">
+      <Filter>playGround\memberFolder\taesung</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
