@@ -20,7 +20,7 @@ HRESULT playGround::init(void)
 	setupDongjin();
 	setupHyunjin();
 	setupSiyeong();
-	setupSoonyu();
+//	setupSoonyu();
 	setupYuhoon();
 	setupHyeongjoon();
 	setupSunghoon();
