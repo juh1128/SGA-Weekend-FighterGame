@@ -8,8 +8,8 @@ HRESULT testCharacter::init(vector2D pos)
 	setupResource();
 
 	//테스트 애니메이션은 setupYuhoon에서 만든다. (게임 시작 시 최초 1번만 만들어놓고 씀)
-	character::init("테스트 캐릭터", pos, "테스트_공격_오른쪽");
-	this->changeState(testCharacterState::RIGHT_ATTACK);
+	character::init("테스트 캐릭터", pos, "테스트_이동_오른쪽");
+	this->changeState(testCharacterState::RIGHT_MOVE);
 
 	//this->setScale(4.0f, 4.0f);
 	//this->setSize(150, 300);
