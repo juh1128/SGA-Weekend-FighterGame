@@ -13,7 +13,7 @@ HRESULT gameObject::init(string objectName, string imageKey, vector2D pos, Pivot
 		_image = IMAGEMANAGER->findImage(imageKey);
 		_size.x = _image->getFrameWidth();
 		_size.y = _image->getFrameHeight();
-
+	
 		_animation->init(_image->getWidth(), _image->getHeight(), _image->getFrameWidth(), _image->getFrameHeight());
 	}
 	//이미지가 없을 경우
@@ -223,4 +223,7 @@ void gameObject::setAnimation(string animationKeyName)
 	auto anim = KEYANIMANAGER->findAnimation(animationKeyName);
 	*_animation = *anim;
 	_animation->start();
+
+	_size.x = _animation->getFrameWidth();
+	_size.y = _animation->getFrameHeight();
 }

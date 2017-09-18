@@ -5,7 +5,7 @@ namespace characterName
 {
 	enum Enum
 	{
-		iori, terry, neco, mai, sol, nanaya, END
+		 iori, terry, neco, mai, athena, sol, nanaya, mauru, kim, END
 	};
 }
 
