@@ -191,12 +191,13 @@ HRESULT neko::init(vector2D pos)
 	_state = RIGHT_STOP;		//오른쪽 정지상태로 초기화 
 	_isEnemyRight = true;		//상대오른쪽에 있는거 트루로 초기화
 
-								//점프 관련 변수들
+	//점프 관련 변수들
 	_jumpPower = 0;
 	_gravity = 0;
 	_savePosY = this->_pos.y;
 	_isJump = false;
 
+	//능력치 초기화 (체력 , 공격력)
 	this->setStatus(1000, 10);
 
 	//키 저장 변수
@@ -224,7 +225,7 @@ HRESULT neko::init(vector2D pos)
 
 	this->setScale(3.0, 3.0);
 
-	this->setGravity(0);
+	this->setGravity(0);		//유훈이형 중력 안씀
 
 	_centerPos = _pos;
 	_centerPos.y = _pos.y + 50;
