@@ -273,8 +273,8 @@
     <ClInclude Include="terry.h">
       <Filter>playGround\memberFolder\guenhwa</Filter>
     </ClInclude>
-    <ClInclude Include="athena.h">
-      <Filter>playGround\memberFolder\siyeong</Filter>
+    <ClInclude Include="effectFire.h">
+      <Filter>playGround\memberFolder\soonyu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -434,8 +434,8 @@
     <ClCompile Include="terry.cpp">
       <Filter>playGround\memberFolder\guenhwa</Filter>
     </ClCompile>
-    <ClCompile Include="athena.cpp">
-      <Filter>playGround\memberFolder\siyeong</Filter>
+    <ClCompile Include="effectFire.cpp">
+      <Filter>playGround\memberFolder\soonyu</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
