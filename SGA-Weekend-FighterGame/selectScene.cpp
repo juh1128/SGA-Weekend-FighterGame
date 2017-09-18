@@ -23,6 +23,8 @@ HRESULT	selectScene::init()
 	IMAGEMANAGER->addFrameImage("네코", "resource/soonwoo/neko/neko1_right.bmp", 4352, 1790, 17, 7, true);
 	// - 마우루 오른쪽 0~4
 	IMAGEMANAGER->addFrameImage("마우루", "resource/yoonsam/Mauru/Mauru_sit_.bmp", 550, 580, 5, 4, true);
+	// - 윕 오른쪽  1~8
+	IMAGEMANAGER->addFrameImage("윕", "resource/hyeongjoon/whip/whip_attack/whip_stongFoot.bmp", 1237, 228, 11, 2, true);
 
 	//왼쪽 보는 애니메이션
 	// - 마이 0->7 (1010, 437, 1207, 687)
@@ -38,6 +40,10 @@ HRESULT	selectScene::init()
 
 
 	//초기 애니메이션 설정
+	_selectedAnimation[characterName::whip] = new animation();
+	_selectedAnimation[characterName::whip]->init(1237, 228, 1237 / 11, 228 / 2);
+	_selectedAnimation[characterName::whip]->setPlayFrame(1, 8, false, false);
+
 	_selectedAnimation[characterName::kim] = new animation();
 	_selectedAnimation[characterName::kim]->init(683, 796, 683 / 3, 796 / 2);
 	_selectedAnimation[characterName::kim]->setPlayFrame(0, 3, false, false);
@@ -84,6 +90,7 @@ HRESULT	selectScene::init()
 
 
 	//충돌 렉트 설정
+	_characterRC[characterName::whip] = { 42, 261, 200, 483 };
 	_characterRC[characterName::kim] = { 667, 323, 830, 568 };
 	_characterRC[characterName::mauru] = { 210, 314, 380, 500 };
 	_characterRC[characterName::iori] = { 358, 288, 493, 526 };
@@ -211,6 +218,7 @@ void selectScene::render()
 	_title->render(getMemDC(), 200, 84);
 
 	//캐릭터 렌더링
+	IMAGEMANAGER->findImage("윕")->scaleAniRender(getMemDC(), 42, 261, _selectedAnimation[characterName::whip], 200-42+20, 483-261);
 	IMAGEMANAGER->findImage("마우루")->scaleAniRender(getMemDC(), 210, 274, _selectedAnimation[characterName::mauru], 180, 250);
 	IMAGEMANAGER->findImage("이오리")->scaleAniRender(getMemDC(), 357, 267, _selectedAnimation[characterName::iori], 230, 259);
 	IMAGEMANAGER->findImage("테리")->scaleAniRender(getMemDC(), 74, 360, _selectedAnimation[characterName::terry], 270 - 74, 651 - 360);

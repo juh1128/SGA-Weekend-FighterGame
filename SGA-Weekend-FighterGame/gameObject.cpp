@@ -121,7 +121,7 @@ void gameObject::update(void)
 		{
 			iter->second(_messageList[i]);
 		}
-		_messageList.pop_back();
+		_messageList.erase(_messageList.begin()+i);
 	}
 }
 
@@ -195,17 +195,17 @@ void gameObject::setDestroy(float delayTime)
 }
 
 //메시지 처리 관련
-void gameObject::sendMessage(string text, float delayTime, int data, float data2, vector<gameObject*> targetList)
+void gameObject::sendMessage(string text, float delayTime, int data, float data2, POINT ptData, vector<gameObject*> targetList)
 {
 	//딜레이타임이 없으면 바로 메시지 벡터에 넣는다.
 	if (delayTime == 0.0f)
 	{
-		_messageList.emplace_back(text, 0.0f, data, data2, targetList);
+		_messageList.emplace_back(text, 0.0f, data, data2, ptData, targetList);
 	}
 	//딜레이타임이 있으면 메시지 예약 리스트에 넣는다.
 	else
 	{
-		_reservedMessage.emplace_back(text, delayTime, data, data2, targetList);
+		_reservedMessage.emplace_back(text, delayTime, data, data2, ptData, targetList);
 	}
 }
 

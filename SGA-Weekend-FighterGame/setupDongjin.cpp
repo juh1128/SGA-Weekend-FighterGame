@@ -10,10 +10,12 @@ void playGround::setupDongjin()
 	IMAGEMANAGER->addFrameImage("ioriYagamiMove2", "resource/Dongjin/왼쪽이동.bmp", 0, 0, 2578, 400, 10, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiBackMove", "resource/Dongjin/오른쪽뒷이동.bmp", 0, 0, 2124, 400, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiBackMove2", "resource/Dongjin/왼쪽뒷이동.bmp", 0, 0, 2124, 400, 9, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiJump", "resource/Dongjin/오른쪽점프.bmp", 0, 0, 2310, 400, 7, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiJump", "resource/Dongjin/오른쪽점프.bmp", 0, 0, 1960, 350, 7, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSit", "resource/Dongjin/오른쪽앉기.bmp", 0, 0, 1876, 400, 7, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiBackJump", "resource/Dongjin/오른쪽백점프.bmp", 0, 0, 1130, 400, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiBackJump2", "resource/Dongjin/왼쪽백점프.bmp", 0, 0, 1130, 400, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiDash", "resource/Dongjin/오른쪽대쉬.bmp", 0, 0, 4235, 331, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiDash2", "resource/Dongjin/왼쪽대쉬.bmp", 0, 0, 4235, 331, 9, 1, true, RGB(255, 0, 255));
 
 	//일반공격모션 강손 강발 약손 약발
 	IMAGEMANAGER->addFrameImage("ioriYagamiAttackA", "resource/Dongjin/오른쪽약손.bmp", 0, 0, 1175, 400, 3, 1, true, RGB(255, 0, 255));
@@ -22,10 +24,10 @@ void playGround::setupDongjin()
 	IMAGEMANAGER->addFrameImage("ioriYagamiAttackD", "resource/Dongjin/오른쪽강발.bmp", 0, 0, 3634, 400, 9, 1, true, RGB(255, 0, 255));
 
 	//점프공격 모션
-	IMAGEMANAGER->addFrameImage("ioriYagamiJumpAttackC", "resource/Dongjin/왼쪽점프강손.bmp", 0, 0, 1378, 400, 4, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiJumpAttackA", "resource/Dongjin/왼쪽점프약손.bmp", 0, 0, 960, 400, 2, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiJumpAttackD", "resource/Dongjin/왼쪽점프강발.bmp", 0, 0, 2147, 400, 5, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiJumpAttackB", "resource/Dongjin/왼쪽점프약발.bmp", 0, 0, 1204, 400, 2, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiJumpAttackC", "resource/Dongjin/오른쪽점프강손.bmp", 0, 0, 1378, 400, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiJumpAttackA", "resource/Dongjin/오른쪽점프약손.bmp", 0, 0, 773, 322, 2, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiJumpAttackD", "resource/Dongjin/오른쪽점프강발.bmp", 0, 0, 2147, 400, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiJumpAttackB", "resource/Dongjin/오른쪽점프약발.bmp", 0, 0, 1000, 332, 2, 1, true, RGB(255, 0, 255));
 
 	//앉기공격 모션
 	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackA", "resource/Dongjin/오른쪽앉은약손.bmp", 0, 0, 2021, 254, 5, 1, true, RGB(255, 0, 255));
@@ -59,7 +61,7 @@ void playGround::setupDongjin()
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_멈춤", "ioriYagamiStop2", 0, 8, 15, false, true);
 	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_멈춤", RectMakeCenter(150, 200, 200, 400));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_이동", "ioriYagamiMove", 0, 9, 15, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_이동", "ioriYagamiDash", 0, 9, 15, false, true);
 	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_이동", RectMakeCenter(150, 200, 200, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_이동", "ioriYagamiMove2", 0, 9, 15, false, true);
@@ -109,4 +111,22 @@ void playGround::setupDongjin()
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_스킬3", "ioriYagamiSkill5", 16, 0, 15, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_스킬3", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_대쉬", "ioriYagamiDash", 0, 9, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_대쉬", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_대쉬", "ioriYagamiDash2", 0, 9, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_대쉬", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_점프_약손", "ioriYagamiJumpAttackA", 0, 1, 5, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_이동", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_점프_약발", "ioriYagamiJumpAttackB", 1, 0, 5, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_이동", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_점프_강손", "ioriYagamiJumpAttackC", 3, 0, 10, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_이동", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_점프_강발", "ioriYagamiJumpAttackD", 4, 0, 10, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_이동", RectMakeCenter(150, 200, 200, 400));
 }
