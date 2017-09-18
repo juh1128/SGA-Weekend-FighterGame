@@ -18,82 +18,95 @@ HRESULT athena::init(vector2D pos)
 	
 	int rightStop[] = { 0,1,2,3,4,5,6,7 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightStop", "athena", rightStop, 8, 10, true);
-	KEYANIMANAGER->setCollisionRect("athenaRightStop", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaRightStop", RectMake(30, 40, 100, 150));
 
 	int leftStop[] = { 0,1,2,3,4,5,6,7 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftStop", "athena2", leftStop, 8, 10, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftStop", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaLeftStop", RectMake(30, 40, 100, 150));
 
 	int rightMove[] = { 8,9,10,11,12,13,14,15,16,17,18,19 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightMove", "athena", rightMove, 12, 15, true);
-	KEYANIMANAGER->setCollisionRect("athenaRightMove", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaRightMove", RectMake(30, 40, 100, 150));
 
 
 	int leftMove[] = { 8,9,10,11,12,13,14,15,16,17,18,19 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftMove", "athena2", leftMove, 12, 15, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftMove", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaLeftMove", RectMake(30, 40, 100, 150));
 
 	int rightBackStep[] = { 24,25,26,27,28,29,30,31 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightBackStep", "athena", rightBackStep, 8, 10, true);
-	KEYANIMANAGER->setCollisionRect("athenaRightBackStep", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaRightBackStep", RectMake(30, 40, 100, 150));
 
 	int leftBackStep[] = { 24,25,26,27,28,29,30,31 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftBackStep", "athena2", leftBackStep, 8, 10, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftBackStep", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaLeftBackStep", RectMake(30, 40, 100, 150));
 
 	int rightJump[] = { 32,33,34,35,36,37,38,39,40 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightJump", "athena", rightJump, 9, 13, false);
-	KEYANIMANAGER->setCollisionRect("athenaRightJump", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaRightJump", RectMake(30, 40, 100, 150));
 
 	int leftJump[] = { 32,33,34,35,36,37,38,39,40 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftJump", "athena", leftJump, 9, 13, false);
-	KEYANIMANAGER->setCollisionRect("athenaLeftJump", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaLeftJump", RectMake(30, 40, 100, 150));
 
 	int rightSit[] = { 42,43,44,45 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightSit", "athena", rightSit, 4, 8, true);
-	KEYANIMANAGER->setCollisionRect("athenaRightSit", RectMake(90, 130, 130, 260));
+	KEYANIMANAGER->setCollisionRect("athenaRightSit", RectMake(30, 40, 100, 150));
 
 	int leftSit[] = { 42,43,44,45 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftSit", "athena2", leftSit, 4, 8, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftSit", RectMake(90, 130, 130, 260));
+	KEYANIMANAGER->setCollisionRect("athenaLeftSit", RectMake(30, 40, 100, 150));
 
-	//int rightDash[] = { 47,48,49,50,51 };
-	//KEYANIMANAGER->addArrayFrameAnimation("athenaLeftDash", "athena", rightDash, 7, 15, true);
-	//
-	//int rightBackDash[] = { 52,53 };
-	//KEYANIMANAGER->addArrayFrameAnimation("athenaLeftBackDash", "athena", rightBackDash, 2, 10, true);
-	//
+	int rightDash[] = { 0,1,2,3,4 };
+	KEYANIMANAGER->addArrayFrameAnimation("athenaRightDash", "athenaAction", rightDash, 5, 15, true);
+	KEYANIMANAGER->setCollisionRect("athenaRightDash", RectMake(30, 40, 100, 150));
+
+	int leftDash[] = { 0,1,2,3,4 };
+	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftDash", "athenaAction2", leftDash, 5, 15, true);
+	KEYANIMANAGER->setCollisionRect("athenaLeftDash", RectMake(30, 40, 100, 150));
+
+	int rightBackDash[] = { 5,6 };
+	KEYANIMANAGER->addArrayFrameAnimation("athenaRightBackDash", "athenaAction", rightBackDash, 2, 10, false);
+	KEYANIMANAGER->setCollisionRect("athenaRightBackDash", RectMake(30, 40, 100, 150));
+
+	int leftBackDash[] = { 5,6 };
+	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftBackDash", "athenaAction2", rightBackDash, 2, 10, false);
+	KEYANIMANAGER->setCollisionRect("athenaLeftBackDash", RectMake(30, 40, 100, 150));
+
+	
 	int rightHandAttack[] = { 8,9,10,11,12 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightHandAttack", "athenaAction", rightHandAttack, 5, 10, true);
-	KEYANIMANAGER->setCollisionRect("athenaRightHandAttack", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaRightHandAttack", RectMake(30, 40, 100, 150));
 
 	int rightFootAttack[] = { 13,14 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightFootAttack", "athenaAction", rightFootAttack, 2, 5, true);
-	KEYANIMANAGER->setCollisionRect("athenaRightFootAttack", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaRightFootAttack", RectMake(30, 40, 100, 150));
 
 	int rightHandCount[] = { 16,17,18,19,20 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightHandCount", "athenaAction", rightHandCount, 5, 10, true);
-	KEYANIMANAGER->setCollisionRect("athenaRightHandCount", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaRightHandCount", RectMake(30, 40, 100, 150));
 
 	int rightFootCount[] = { 24,25,26,27,28,29,30 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightFootCount", "athenaAction", rightFootCount, 7, 15, true);
-	KEYANIMANAGER->setCollisionRect("athenaRightFootCount", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaRightFootCount", RectMake(30, 40, 100, 150));
 
 	int leftHandAttack[] = { 8,9,10,11,12 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftHandAttack", "athenaAction2", rightHandAttack, 5, 10, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftHandAttack", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaLeftHandAttack", RectMake(30, 40, 100, 150));
 
 	int leftFootAttack[] = { 13,14 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftFootAttack", "athenaAction2", rightFootAttack, 2, 5, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftFootAttack", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaLeftFootAttack", RectMake(30, 40, 100, 150));
 
 	int leftHandCount[] = { 16,17,18,19,20 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftHandCount", "athenaAction2", rightHandCount, 5, 10, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftHandCount", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaLeftHandCount", RectMake(30, 40, 100, 150));
 
 	int leftFootCount[] = { 24,25,26,27,28,29,30 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftFootCount", "athenaAction2", rightFootCount, 7, 15, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftFootCount", RectMake(90, 40, 130, 350));
+	KEYANIMANAGER->setCollisionRect("athenaLeftFootCount", RectMake(30, 40, 100, 150));
+
+	//int 
 
 //================================================================================================
 	
@@ -102,6 +115,7 @@ HRESULT athena::init(vector2D pos)
 	
 	_state = athenaState::LEFT_STOP;
 	
+	this->setScale(2.0f, 2.0f);
 	
 	this->addCallback("changeState", [this](tagMessage msg)
 	{
@@ -109,6 +123,24 @@ HRESULT athena::init(vector2D pos)
 	});
 
 	_isEnemyDirection = true;		//»ó´ë¹æÀÌ ¿À¸¥ÂÊ¿¡ ÀÖÀ»‹š
+
+	//Ä¿¸àµå
+	int command[2] = { key::RIGHT,key::RIGHT };
+	this->addCommand(command, 2, "dashRight");
+
+	int command2[2] = { key::LEFT,key::LEFT };
+	this->addCommand(command2, 2, "backDashRight");
+
+	//Ä¿¸àµå ÄÝ¹é
+	this->addCallback("dashRight", [this](tagMessage msg)
+	{
+		this->dash();
+	});
+	this->addCallback("backDashRight", [this](tagMessage msg)
+	{
+		this->dash();
+	});
+
 
 	return S_OK;
 }
@@ -160,22 +192,34 @@ void athena::changeState(athenaState::Enum state)					//»óÅÂ°¡ º¯ÇÏ´Â ¼ø°£ ÇÑ¹ø¸
 
 	case athenaState::RIGHT_JUMP:	case athenaState::RIGHT_MOVE_JUMP:			//¿À¸¥ÂÊ Á¡ÇÁ
 		this->setAnimation("athenaRightJump");
-		jump(35);
+		jump(30);
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::RIGHT_STOP));
 		break;
 
 	case athenaState::LEFT_JUMP: case athenaState::LEFT_MOVE_JUMP:				//¿ÞÂÊ Á¡ÇÁ
 		this->setAnimation("athenaLeftJump");
-		jump(35);
+		jump(30);
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::LEFT_STOP));
 		break;
 
 	case athenaState::RIGHT_DASH:				//¿À¸¥ÂÊ ´ë½¬
-		this->setAnimation("athenRightDash");
+		this->setAnimation("athenaRightDash");
+		break;
+
+	case athenaState::RIGHT_BACK_DASH:
+		this->setAnimation("athenaRightBackDash");
+		jump(12);
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::RIGHT_STOP));
 		break;
 
 	case athenaState::LEFT_DASH:				//¿ÞÂÊ ´ë½¬
 		this->setAnimation("athenaLeftDash");
+		break;
+
+	case athenaState::LEFT_BACK_DASH:
+		this->setAnimation("athenaLeftBackDash");
+		jump(12);
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::LEFT_STOP));
 		break;
 
 	case athenaState::RIGHT_SIT:				//¿À¸¥ÂÊ ¾É±â
@@ -367,7 +411,7 @@ void athena::stateUpdate(athenaState::Enum state)						//¾÷µ¥ÀÌÆ®¿¡¼­ °è¼Ó µ¹¾Æ°
 		
 	break;
 	
-	case athenaState::RIGHT_MOVE:
+	case athenaState::RIGHT_MOVE: case athenaState::RIGHT_DASH:
 		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))				//¿À¸¥ÂÊÀ» º¸°í ¿À¸¥ÂÊÅ°¸¦ ²Ú´­·¶À»¶§ (¿À¸¥ÂÊ ÀÌµ¿)
 		{
 			_pos.x += 10;
@@ -441,7 +485,7 @@ void athena::stateUpdate(athenaState::Enum state)						//¾÷µ¥ÀÌÆ®¿¡¼­ °è¼Ó µ¹¾Æ°
 		}
 		break;
 	
-	case athenaState::LEFT_MOVE:
+	case athenaState::LEFT_MOVE: case athenaState::LEFT_DASH:
 		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))				//¿ÞÂÊÅ°¸¦ ²Ú ´©¸£°í ÀÖÀ»¶§ (¿ÞÂÊÀ¸·Î ÀÌµ¿)
 		{
 			_pos.x -= 10;
@@ -482,6 +526,7 @@ void athena::stateUpdate(athenaState::Enum state)						//¾÷µ¥ÀÌÆ®¿¡¼­ °è¼Ó µ¹¾Æ°
 	case athenaState::RIGHT_MOVE_JUMP:
 		_pos.x += 10;
 	break;
+	
 
 	case athenaState::LEFT_JUMP:
 	break;
@@ -502,9 +547,15 @@ void athena::stateUpdate(athenaState::Enum state)						//¾÷µ¥ÀÌÆ®¿¡¼­ °è¼Ó µ¹¾Æ°
 		{
 			changeState(athenaState::LEFT_STOP);
 		}
-	
-	case athenaState::RIGHT_DASH:
 	break;
+	
+	case athenaState::RIGHT_BACK_DASH:
+		_pos.x -= 20;
+	break;
+
+	case athenaState::LEFT_BACK_DASH:
+		_pos.x += 20;
+		break;
 	
 	case athenaState::RIGHT_FOOT_ATTACK:
 	break;
@@ -518,8 +569,8 @@ void athena::stateUpdate(athenaState::Enum state)						//¾÷µ¥ÀÌÆ®¿¡¼­ °è¼Ó µ¹¾Æ°
 	case athenaState::RIGHT_HAND_COUNT:
 	break;
 
-	case athenaState::LEFT_DASH:
-		break;		 
+	//case athenaState::LEFT_DASH:
+	//	break;		 
 
 	case athenaState::LEFT_FOOT_ATTACK:
 		break;		
@@ -546,4 +597,27 @@ void athena::enemyDirectiion()
 	{
 		_isEnemyDirection = false;
 	}
+}
+
+void athena::dash()
+{
+	if (_state == athenaState::RIGHT_STOP||_state == athenaState::RIGHT_MOVE)
+	{
+		changeState(athenaState::RIGHT_DASH);
+
+	}
+	if (_state == athenaState::RIGHT_BACK_STEP)
+	{
+		changeState(athenaState::RIGHT_BACK_DASH);
+	}
+	if (_state == athenaState::LEFT_STOP || _state == athenaState::LEFT_MOVE)
+	{
+		changeState(athenaState::LEFT_DASH);
+
+	}
+	if (_state == athenaState::LEFT_BACK_STEP)
+	{
+		changeState(athenaState::LEFT_BACK_DASH);
+	}
+
 }

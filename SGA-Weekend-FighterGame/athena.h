@@ -15,6 +15,7 @@ namespace athenaState
 		RIGHT_JUMP,
 		RIGHT_MOVE_JUMP,
 		RIGHT_DASH,
+		RIGHT_BACK_DASH,
 		RIGHT_BACK_STEP,
 		LEFT_STOP,
 		LEFT_MOVE,
@@ -26,7 +27,8 @@ namespace athenaState
 		LEFT_JUMP,
 		LEFT_MOVE_JUMP,
 		LEFT_BACK_STEP,
-		LEFT_DASH
+		LEFT_DASH,
+		LEFT_BACK_DASH
 
 	};
 }
@@ -51,5 +53,6 @@ public:
 	void changeState(athenaState::Enum state);
 
 	void enemyDirectiion();
+	void dash();
 };
 
