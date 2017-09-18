@@ -86,6 +86,7 @@
     <ClInclude Include="character.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="effect.h" />
+    <ClInclude Include="effectFire.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="image.h" />
@@ -94,6 +95,7 @@
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="gameObject.h" />
+    <ClInclude Include="kim.h" />
     <ClInclude Include="mai.h" />
     <ClInclude Include="Mauru.h" />
     <ClInclude Include="Nanaya.h" />
@@ -121,6 +123,7 @@
     <ClInclude Include="txtData.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="vector2D.h" />
+    <ClInclude Include="whip.h" />
     <ClInclude Include="world.h" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +135,7 @@
     <ClCompile Include="character.cpp" />
     <ClCompile Include="characterSetup.cpp" />
     <ClCompile Include="effect.cpp" />
+    <ClCompile Include="effectFire.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="image.cpp" />
@@ -140,6 +144,7 @@
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="gameObject.cpp" />
+    <ClCompile Include="kim.cpp" />
     <ClCompile Include="mai.cpp" />
     <ClCompile Include="Mauru.cpp" />
     <ClCompile Include="Nanaya.cpp" />
@@ -179,6 +184,7 @@
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="vector2D.cpp" />
+    <ClCompile Include="whip.cpp" />
     <ClCompile Include="winMain.cpp" />
     <ClCompile Include="world.cpp" />
   </ItemGroup>

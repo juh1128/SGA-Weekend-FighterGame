@@ -273,11 +273,20 @@
     <ClInclude Include="terry.h">
       <Filter>playGround\memberFolder\guenhwa</Filter>
     </ClInclude>
-    <ClInclude Include="athena.h">
-      <Filter>playGround\memberFolder\siyeong</Filter>
-    </ClInclude>
     <ClInclude Include="Mauru.h">
       <Filter>playGround\memberFolder\yoonsam</Filter>
+    </ClInclude>
+    <ClInclude Include="kim.h">
+      <Filter>playGround\memberFolder\yongje</Filter>
+    </ClInclude>
+    <ClInclude Include="effectFire.h">
+      <Filter>playGround\memberFolder\soonyu</Filter>
+    </ClInclude>
+    <ClInclude Include="whip.h">
+      <Filter>playGround\memberFolder\hyeongjoon</Filter>
+    </ClInclude>
+    <ClInclude Include="athena.h">
+      <Filter>playGround\memberFolder\siyeong</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -437,11 +446,20 @@
     <ClCompile Include="terry.cpp">
       <Filter>playGround\memberFolder\guenhwa</Filter>
     </ClCompile>
-    <ClCompile Include="athena.cpp">
-      <Filter>playGround\memberFolder\siyeong</Filter>
-    </ClCompile>
     <ClCompile Include="Mauru.cpp">
       <Filter>playGround\memberFolder\yoonsam</Filter>
+    </ClCompile>
+    <ClCompile Include="kim.cpp">
+      <Filter>playGround\memberFolder\yongje</Filter>
+    </ClCompile>
+    <ClCompile Include="effectFire.cpp">
+      <Filter>playGround\memberFolder\soonyu</Filter>
+    </ClCompile>
+    <ClCompile Include="whip.cpp">
+      <Filter>playGround\memberFolder\hyeongjoon</Filter>
+    </ClCompile>
+    <ClCompile Include="athena.cpp">
+      <Filter>playGround\memberFolder\siyeong</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

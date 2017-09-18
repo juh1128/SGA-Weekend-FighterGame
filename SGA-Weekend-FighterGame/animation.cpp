@@ -675,7 +675,7 @@ void animation::frameUpdate()
 				if (_messageTarget)
 				{
 					_messageTarget->sendMessage(_endMessage.text, _endMessage.delayTime,
-						_endMessage.data, _endMessage.data2, _endMessage.targetList);
+						_endMessage.data, _endMessage.data2, _endMessage.ptData, _endMessage.targetList);
 				}
 			}
 		}

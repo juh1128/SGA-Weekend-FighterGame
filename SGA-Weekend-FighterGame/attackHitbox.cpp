@@ -38,11 +38,12 @@ void attackHitbox::update()
 		RECT temp;
 		if (IntersectRect(&temp, &_target->getCollisionRect(), &getRect()))
 		{
-			_target->sendMessage("addHp", 0.0f, -_damage);
+			POINT hitedPos = { (temp.right + temp.left) / 2, (temp.top + temp.bottom) / 2 };
+
+			_target->sendMessage("attacked", 0.0f, _damage, 0, hitedPos);
 
 			if (_hitedEffectKey != "NONE")
-			{
-				POINT hitedPos = { (temp.right + temp.left) / 2, (temp.top + temp.bottom) / 2 };
+			{				
 				EFFECTMANAGER->play(_hitedEffectKey, hitedPos.x, hitedPos.y);
 			}
 			this->setDestroy();
