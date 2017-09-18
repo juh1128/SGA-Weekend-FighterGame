@@ -29,9 +29,23 @@ HRESULT neko::init(vector2D pos)
 	KEYANIMANAGER->addArrayFrameAnimation("nekoRightMove", "neko1_right", rightMove, 8, 7, true);
 	KEYANIMANAGER->setCollisionRect("nekoRightMove", RectMake(118, 179, 24, 42));
 	int leftMove[]{ 5,6,7,8,9,10,11,12 };
-
 	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftMove", "neko1_left", leftMove, 8, 7, true);
 	KEYANIMANAGER->setCollisionRect("nekoLeftMove", RectMake(112, 179, 24, 42));
+
+	//===================DASH=============================
+	int rightDash[]{ 40,41,42,43,44,45,46,47 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoRightDash", "neko1_right", rightDash, 7, 15, false);
+	
+	int leftDash[]{ 40,41,42,43,44,45,46,47 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftDash", "neko1_left", leftDash, 7, 15, false);
+
+	//===================BACK DASH========================
+	int rightBackDash[]{ 34,35,36,37,38,39 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoRightBackDash", "neko1_right", rightBackDash, 6, 15, false);
+	
+	int leftBackDash[]{ 34,35,36,37,38,39 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftBackDash", "neko1_left", leftBackDash, 6, 15, false);
+
 	//=====================ChangeSIT===========================
 
 	//DOWN
@@ -74,10 +88,10 @@ HRESULT neko::init(vector2D pos)
 	//neko falling
 	int rightFall[]{26};
 	KEYANIMANAGER->addArrayFrameAnimation("nekoRightFall", "neko1_right", rightFall, 1, 1, false);
-	KEYANIMANAGER->setCollisionRect("nekoRightJump", RectMake(118, 179, 24, 42));
+	KEYANIMANAGER->setCollisionRect("nekoRightFall", RectMake(118, 179, 24, 42));
 	int  leftFall[]{ 26 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftFall", "neko1_left", leftFall, 1, 1, false);
-	KEYANIMANAGER->setCollisionRect("nekoLeftJump", RectMake(112, 179, 24, 42));
+	KEYANIMANAGER->setCollisionRect("nekoLeftFall", RectMake(112, 179, 24, 42));
 
 	//back Jump
 	int  rightBackJump[]{ 51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67 };
@@ -147,10 +161,10 @@ HRESULT neko::init(vector2D pos)
 	//===================================fly===========================
 	int rightFly[]{ 103,104,105,106,107 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoRightFly", "neko1_right", rightFly, 5, 10, true);
-	KEYANIMANAGER->setCollisionRect("nekoRightFly", RectMake(122, 195, 26, 14));
+	KEYANIMANAGER->setCollisionRect("nekoRightFly", RectMake(120, 203, 56, 14));
 	int leftFly[]{ 103,104,105,106,107 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftFly", "neko1_left", leftFly, 5, 10, true);
-	KEYANIMANAGER->setCollisionRect("nekoLeftFly", RectMake(107, 195, 26, 14));
+	KEYANIMANAGER->setCollisionRect("nekoLeftFly", RectMake(85, 200, 56, 14));
 	
 	//===============================neko code 초기화=====================================================
 	character::init("네코", pos, "nekoRightStop");
@@ -203,6 +217,7 @@ HRESULT neko::init(vector2D pos)
 	{
 		this->nekoLeftFly();
 	});
+
 	
 	return S_OK;
 }
@@ -514,6 +529,35 @@ void neko::changeState(tagNekoState::ENUM state)
 		this->setAnimation("nekoLeftFall");
 	}
 	break;
+
+	case RIGHT_DASH : 
+	{
+		this->setAnimation("nekoRightDash");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_MOVE));
+	}
+	break;
+	case LEFT_DASH :
+	{
+		this->setAnimation("nekoLeftDash");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_MOVE));
+	}
+	break;
+
+	case RIGHT_BACK_DASH :
+	{
+		this->setAnimation("nekoRightBackDash");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_STOP));
+	}
+	break;
+
+	case LEFT_BACK_DASH : 
+	{
+		this->setAnimation("nekoLeftBackDash");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_STOP));
+	}
+	break;
+
+
 	//end
 	}
 	_state = state;
@@ -1130,6 +1174,29 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 		}
 	}
 	break;
+
+	case RIGHT_DASH:
+	{
+
+	}
+	break;
+	case LEFT_DASH:
+	{
+
+	}
+	break;
+
+	case RIGHT_BACK_DASH:
+	{
+
+	}
+	break;
+
+	case LEFT_BACK_DASH:
+	{
+
+	}
+	break;
 	//end
 	}
 }
@@ -1198,6 +1265,13 @@ void neko::nekoRightFly()
 		|| _state == RIGHT_BACK_JUMP || _state == LEFT_BACK_JUMP)
 	{
 		this->changeState(RIGHT_FLY);
+	}
+	if (_isEnemyRight)
+	{
+
+	}
+	else if (!_isEnemyRight)
+	{
 
 	}
 }
@@ -1208,4 +1282,22 @@ void neko::nekoLeftFly()
 	{
 		this->changeState(LEFT_FLY);
 	}
+}
+
+void neko::nekoRightDash()
+{
+
+}
+
+void neko::nekoLeftDash()
+{
+
+}
+void neko::nekoRightBackDash()
+{
+
+}
+void neko::nekoLeftBackDash()
+{
+
 }
