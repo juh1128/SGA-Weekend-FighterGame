@@ -79,10 +79,26 @@ void playScene::update()
 	else
 		_progressBar[1]->update(0, 1000);
 
+
+	//카메라 타겟 위치 셋업
+	//vector2D averagePos = (_player[0]->_pos + _player[1]->_pos) / 2;
+	//_cameraTarget->_pos = averagePos;\
+	
+	if (KEYMANAGER->isStayKeyDown('M'))
+	{
+		_cameraTarget->_pos.x += 5.0f;
+	}
+	if (KEYMANAGER->isStayKeyDown('N'))
+	{
+		_cameraTarget->_pos.x -= 5.0f;
+	}
+
+	CAMERAMANAGER->updateCamera();
 }
 void playScene::render()		
 {
-	_background->scaleAniRender(getMemDC(), 0, 0, _backgroundAnimation, 1800, 768);
+	RECT rc = CAMERAMANAGER->getRenderRect();
+	_background->scaleAniRender(getMemDC(), -rc.left, -rc.top, _backgroundAnimation, 1800, 768);
 
 	_progressBar[0]->render();
 	_progressBar[1]->render();

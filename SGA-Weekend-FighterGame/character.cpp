@@ -37,6 +37,12 @@ void character::update()
 	if (_isGravity)
 		gravity();
 
+	//캐릭터의 x좌표 보정
+	RECT cameraRC = CAMERAMANAGER->getRenderRect();
+	RECT rc = _animation->getCollisionRect();
+	int width = rc.right - rc.left;
+	_pos.fixedPosX(cameraRC.left+width, cameraRC.right-width);
+
 	this->_animation->frameUpdate();
 }
 
@@ -47,6 +53,22 @@ void character::render()
 	//디버그 모드일 경우 히트박스 렉트를 그려준다.
 	if (_isDebugMode)
 	{
+		//카메라 렌더링 영역
+		RECT cameraRC = CAMERAMANAGER->getRenderRect();
+		//상대좌표 구하기
+		POINT renderPos = { _pos.x - cameraRC.left, _pos.y - cameraRC.top };
+
+		//상대좌표를 기준으로 만든 렌더링 렉트
+		vector2D size = getSize();
+		RECT renderRC = RectMakeCenter(renderPos.x, renderPos.y, size.x, size.y);
+
+		//충돌 영역 렉트
+		RECT collisionRC = this->getCollisionRect();
+		MoveRect(&collisionRC, -cameraRC.left, -cameraRC.top);
+
+		//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
+		if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
+			return;
 
 		//히트박스 영역 표시
 		HPEN bluePen = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
@@ -57,8 +79,7 @@ void character::render()
 		oldPen = (HPEN)SelectObject(memDC, bluePen);
 		oldBrush = (HBRUSH)SelectObject(memDC, GetStockObject(NULL_BRUSH));
 
-		RECT rc = getCollisionRect();
-		Rectangle(memDC, rc.left, rc.top, rc.right, rc.bottom);
+		Rectangle(memDC, collisionRC.left, collisionRC.top, collisionRC.right, collisionRC.bottom);
 
 		SelectObject(memDC, oldBrush);
 		SelectObject(memDC, oldPen);
@@ -71,8 +92,7 @@ void character::render()
 		oldPen = (HPEN)SelectObject(memDC, yelloBrush);
 		oldBrush = (HBRUSH)SelectObject(memDC, GetStockObject(NULL_BRUSH));
 
-		RECT imageRC = getRect();
-		Rectangle(memDC, imageRC.left, imageRC.top, imageRC.right, imageRC.bottom);
+		Rectangle(memDC, renderRC.left, renderRC.top, renderRC.right, renderRC.bottom);
 
 		SelectObject(memDC, oldBrush);
 		SelectObject(memDC, oldPen);
@@ -81,16 +101,7 @@ void character::render()
 
 		//캐릭터의 중심점 그리기
 		oldBrush = (HBRUSH)SelectObject(memDC, GetStockObject(COLOR_BACKGROUND));
-		Ellipse(memDC, _pos.x - 3, _pos.y - 3, _pos.x + 3, _pos.y + 3);
-		SelectObject(memDC, oldBrush);
-
-		//LEFT_TOP 그리기
-		vector2D size = this->getSize();
-		vector2D leftTop;
-		leftTop.x = _pos.x - size.x * 0.5f;
-		leftTop.y = _pos.y - size.y * 0.5f;
-		oldBrush = (HBRUSH)SelectObject(memDC, GetStockObject(COLOR_BACKGROUND));
-		Ellipse(memDC, leftTop.x - 3, leftTop.y - 3, leftTop.x + 3, leftTop.y + 3);
+		Ellipse(memDC, renderPos.x - 3, renderPos.y - 3, renderPos.x + 3, renderPos.y + 3);
 		SelectObject(memDC, oldBrush);
 
 	}
@@ -234,5 +245,29 @@ void character::attacked(int damage, vector2D hitedPos)
 	else
 	{
 		this->sendMessage("hited", 0, direction);
+	}
+}
+
+void character::move(float moveSpeed, DIRECTION::Enum dir)
+{
+	_pos.x += moveSpeed * dir;
+
+	RECT rc = this->getCollisionRect();
+	//적과 충돌 했을 경우
+	if (_enemy)
+	{
+		if (_enemy->isActiveObject())
+		{
+			RECT temp;
+			if (IntersectRect(&temp, &rc, &_enemy->getCollisionRect()))
+			{
+				vector2D dirEenemyToMe = _pos - _enemy->_pos;
+				//적이 내 왼쪽에 있는지? 오른쪽에 있는지?
+				DIRECTION::Enum dir = (dirEenemyToMe.x > 0) ? DIRECTION::LEFT : DIRECTION::RIGHT;
+
+				//적을 밀어낸다.
+
+			}
+		}
 	}
 }

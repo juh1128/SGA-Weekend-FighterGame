@@ -13,7 +13,7 @@ namespace DIRECTION
 {
 	enum Enum
 	{
-		LEFT, RIGHT
+		LEFT = -1, RIGHT = 1
 	};
 }
 
@@ -91,13 +91,16 @@ public:
 		_damage = damage;
 	}
 
-	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?
+	//Á¡ÇÁ ÁßÀÎÁö?
 	bool isJump() { return _isJump; }
 
 
-	//ï¿½Ù¼ï¿½
+	//°Ù¼Â
 	int getNowHp() { return _nowHp; }
 	int getMaxHp() { return _maxHp; }
+
+	//ÀÌµ¿ ÇÔ¼ö
+	void move(float moveSpeed, DIRECTION::Enum dir);
 
 private:
 	void attacked(int damage, vector2D hitedPos);
