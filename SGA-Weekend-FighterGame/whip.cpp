@@ -74,40 +74,48 @@ void whip::changeState(tagWhip::Enum state)
 	
 	switch (state)
 	{
+		///기본 동작
 		case RIGHT_STOP:
-		{
-			this->setAnimation("whip_stop_right");
-		}
+		{			this->setAnimation("whip_stop_right");		}
 		break;
-		case tagWhip::LEFT_STOP:
-		{
-			this->setAnimation("whip_stop_left");
-		}
-		case tagWhip::RIGHT_MOVE:
-		{
-			this->setAnimation("whip_move_right");
-		}
+		case LEFT_STOP:
+		{			this->setAnimation("whip_stop_left");		}
 		break;
-		case tagWhip::LEFT_JUMP:
-		{
-			this->setAnimation("whip_move_left");
-		}
+		//이동
+		case RIGHT_MOVE:
+		{			this->setAnimation("whip_move_right");		}
+		break;
+		case LEFT_MOVE:
+		{			this->setAnimation("whip_move_left");		}
+		break;
+		//앉기
+		case RIGHT_SIT:
+		{			this->setAnimation("whip_sit_right");		}
+		break;
+		case LEFT_SIT:
+		{			this->setAnimation("whip_sit_left");		}
+		break;
+		//점프
+		case RIGHT_JUMP:
+		{			this->setAnimation("whip_jump_right");		}
+		break;
+		case LEFT_JUMP:
+		{			this->setAnimation("whip_jump_left");		}
+		//달리기
+		case RIGHT_RUN:
+		{			this->setAnimation("whip_run_right");		}
+		break;
+		case LEFT_RUN:
+		{			this->setAnimation("whip_run_left");		}
+		break;
+		//무브점프
+		case RIGHT_MOVEJUMP:
+		{			this->setAnimation("whip_moveJump_right");		}
+		break;
+		case LEFT_MOVEJUMP:
+		{			this->setAnimation("whip_moveJump_left");		}
+		break;
 
-		case tagWhip::RIGHT_RUN:
-		{
-			this->setAnimation("위프_달리기_오른쪽");
-		}
-		break;
-		case tagWhip::RIGHT_JUMP:
-		{
-			this->setAnimation("위프_점프_오른쪽");
-		}
-		break;
-		case tagWhip::RIGHT_MOVEJUMP:
-		{
-			this->setAnimation("위프_무브점프_오른쪽");
-		}
-		break;
 	}
 
 	_state = state;
@@ -117,19 +125,36 @@ void whip::stateUpdate(tagWhip::Enum state)
 {
 	switch (state)
 	{
-		case tagWhip::RIGHT_STOP:
+		case RIGHT_STOP:
 		{
 			if (KEYMANAGER->isOnceKeyDown(keyList[key::RIGHT]))
-			{
-				this->changeState(RIGHT_MOVE);
-			}
+			{				this->changeState(RIGHT_MOVE);			}
 			if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))
+			{				this->changeState(LEFT_MOVE);			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+			{				this->changeState(RIGHT_JUMP);			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::DOWN]))
+			{				this->changeState(RIGHT_SIT);			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
 			{
-				this->changeState(LEFT_MOVE);
+
 			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
+			{
+
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
+			{
+
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
+			{
+
+			}
+
 		}
 		break;
-		case tagWhip::RIGHT_MOVE:
+		case RIGHT_MOVE:
 		{
 			if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
 			{
@@ -139,9 +164,11 @@ void whip::stateUpdate(tagWhip::Enum state)
 			{
 				this->changeState(LEFT_MOVE);
 			}
+
+
 		}
 		break;
-		case tagWhip::LEFT_MOVE:
+		case LEFT_MOVE:
 		{
 			if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
 			{
@@ -152,17 +179,17 @@ void whip::stateUpdate(tagWhip::Enum state)
 				this->changeState(RIGHT_MOVE);
 			}
 		}
-		case tagWhip::RIGHT_RUN:
+		case RIGHT_RUN:
 		{
 			
 		}
 		break;
-		case tagWhip::RIGHT_JUMP:
+		case RIGHT_JUMP:
 		{
-			
+			jump(25);
 		}
 		break;
-		case tagWhip::RIGHT_MOVEJUMP:
+		case RIGHT_MOVEJUMP:
 		{
 			
 		}
@@ -185,14 +212,14 @@ void whip::setupResource()
 			19, 2, true);
 		IMAGEMANAGER->addFrameImage("위프_이동", "resource/hyeongjoon/whip/whip_motion/whip_move.bmp", 2753 / 4, 862 / 4,
 			8, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_달리기", "resource/hyeongjoon/whip/whip_motion/whip_run.bmp", 2989/4, 794/4,
-		//	8, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_앉기", "resource/hyeongjoon/whip/whip_motion/whip_sit.bmp", 2100/4, 600/4,
-		//	7, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_점프", "resource/hyeongjoon/whip/whip_motion/whip_jump.bmp", 2720/4, 886/4,
-		//	8, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_무브점프", "resource/hyeongjoon/whip/whip_motion/whip_moveJump.bmp", 3102/4, 1188/4,
-		//	9, 2, true);
+		IMAGEMANAGER->addFrameImage("위프_달리기", "resource/hyeongjoon/whip/whip_motion/whip_run.bmp", 2989/4, 794/4,
+			8, 2, true);
+		IMAGEMANAGER->addFrameImage("위프_앉기", "resource/hyeongjoon/whip/whip_motion/whip_sit.bmp", 2100/4, 600/4,
+			7, 2, true);
+		IMAGEMANAGER->addFrameImage("위프_점프", "resource/hyeongjoon/whip/whip_motion/whip_jump.bmp", 2720/4, 886/4,
+			8, 2, true);
+		IMAGEMANAGER->addFrameImage("위프_무브점프", "resource/hyeongjoon/whip/whip_motion/whip_moveJump.bmp", 3102/4, 1188/4,
+			9, 2, true);
 		//일반공격 
 		//IMAGEMANAGER->addFrameImage("위프_약손", "resource/hyeongjoon/whip/whip_attack/whip_weakHand.bmp", 11210/4, 1680/4,
 		//	9, 4, true);
@@ -238,25 +265,25 @@ void whip::setupResource()
 		KEYANIMANAGER->addCoordinateFrameAnimation("whip_move_left", "위프_이동", 15, 8, 5, false, true);
 		KEYANIMANAGER->setCollisionRect("whip_move_left", RectMakeCenter(150, 200, 200, 400));
 		
-		//KEYANIMANAGER->addCoordinateFrameAnimation("위프_달리기_오른쪽", "위프_달리기", 0, 7, 5, false, true);
-		//KEYANIMANAGER->setCollisionRect("위프_달리기_오른쪽	", RectMakeCenter(150, 200, 200, 400));
-		//KEYANIMANAGER->addCoordinateFrameAnimation("위프_달리기_왼쪽", "위프_달리기", 15, 8, 5, false, true);
-		//KEYANIMANAGER->setCollisionRect("위프_달리기_왼쪽", RectMakeCenter(150, 200, 200, 400));
-		//
-		//KEYANIMANAGER->addCoordinateFrameAnimation("위프_앉기_오른쪽", "위프_앉기", 0, 6, 5, true, true);
-		//KEYANIMANAGER->setCollisionRect("위프_앉기_오른쪽	", RectMakeCenter(150, 200, 200, 400));
-		//KEYANIMANAGER->addCoordinateFrameAnimation("위프_앉기_왼쪽", "위프_앉기", 13, 7, 5, true, true);
-		//KEYANIMANAGER->setCollisionRect("위프_앉기_왼쪽", RectMakeCenter(150, 200, 200, 400));
-		//
-		//KEYANIMANAGER->addCoordinateFrameAnimation("위프_점프_오른쪽", "위프_점프", 0, 7, 5, false, false);
-		//KEYANIMANAGER->setCollisionRect("위프_점프_오른쪽	", RectMakeCenter(150, 200, 200, 400));
-		//KEYANIMANAGER->addCoordinateFrameAnimation("위프_점프_왼쪽", "위프_점프", 15, 8, 5, false, false);
-		//KEYANIMANAGER->setCollisionRect("위프_점프_왼쪽", RectMakeCenter(150, 200, 200, 400));
-		//
-		//KEYANIMANAGER->addCoordinateFrameAnimation("위프_무브점프_오른쪽", "위프_무브점프", 0, 8, 5, false, false);
-		//KEYANIMANAGER->setCollisionRect("위프_무브점프_오른쪽	", RectMakeCenter(150, 200, 200, 400));
-		//KEYANIMANAGER->addCoordinateFrameAnimation("위프_무브점프_왼쪽", "위프_무브점프", 17, 9, 5, false, false);
-		//KEYANIMANAGER->setCollisionRect("위프_무브점프_왼쪽", RectMakeCenter(150, 200, 200, 400));
+		KEYANIMANAGER->addCoordinateFrameAnimation("whip_run_right", "위프_달리기", 0, 7, 5, false, true);
+		KEYANIMANAGER->setCollisionRect("whip_run_right", RectMakeCenter(150, 200, 200, 400));
+		KEYANIMANAGER->addCoordinateFrameAnimation("whip_run_left", "위프_달리기", 15, 8, 5, false, true);
+		KEYANIMANAGER->setCollisionRect("whip_run_left", RectMakeCenter(150, 200, 200, 400));
+		
+		KEYANIMANAGER->addCoordinateFrameAnimation("whip_sit_right", "위프_앉기", 0, 6, 5, true, true);
+		KEYANIMANAGER->setCollisionRect("whip_sit_right", RectMakeCenter(150, 200, 200, 400));
+		KEYANIMANAGER->addCoordinateFrameAnimation("whip_sit_left", "위프_앉기", 13, 7, 5, true, true);
+		KEYANIMANAGER->setCollisionRect("whip_sit_left", RectMakeCenter(150, 200, 200, 400));
+		
+		KEYANIMANAGER->addCoordinateFrameAnimation("whip_jump_right", "위프_점프", 0, 7, 5, false, false);
+		KEYANIMANAGER->setCollisionRect("whip_jump_right", RectMakeCenter(150, 200, 200, 400));
+		KEYANIMANAGER->addCoordinateFrameAnimation("whip_jump_left", "위프_점프", 15, 8, 5, false, false);
+		KEYANIMANAGER->setCollisionRect("whip_jump_left", RectMakeCenter(150, 200, 200, 400));
+		
+		KEYANIMANAGER->addCoordinateFrameAnimation("whip_moveJump_right", "위프_무브점프", 0, 8, 5, false, false);
+		KEYANIMANAGER->setCollisionRect("whip_moveJump_right", RectMakeCenter(150, 200, 200, 400));
+		KEYANIMANAGER->addCoordinateFrameAnimation("whip_moveJump_left", "위프_무브점프", 17, 9, 5, false, false);
+		KEYANIMANAGER->setCollisionRect("whip_moveJump_left", RectMakeCenter(150, 200, 200, 400));
 
 
 		//일반공격

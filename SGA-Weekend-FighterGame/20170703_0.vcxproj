@@ -123,6 +123,7 @@
     <ClInclude Include="txtData.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="vector2D.h" />
+    <ClInclude Include="whip.h" />
     <ClInclude Include="world.h" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +184,7 @@
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="vector2D.cpp" />
+    <ClCompile Include="whip.cpp" />
     <ClCompile Include="winMain.cpp" />
     <ClCompile Include="world.cpp" />
   </ItemGroup>

@@ -92,7 +92,7 @@ public:
 	void setActive(bool set) { _isActive = set; }
 
 	//메시지를 전달한다.
-	void sendMessage(string text, float delayTime = 0.0f, int data = 0, float data2 = 0.0f, vector<gameObject*> targetList = vector<gameObject*>());
+	void sendMessage(string text, float delayTime = 0.0f, int data = 0, float data2 = 0.0f, POINT ptData = POINT(), vector<gameObject*> targetList = vector<gameObject*>());
 	//콜백 함수 저장
 	void addCallback(string msgName, std::function<void(tagMessage)> callbackFunc)
 	{

@@ -16,6 +16,8 @@ namespace tagIoriState
 		STRONG_ATTACK, STRONG_KICK,
 		SIT_ATTAK, SIT_KICK,
 		SIT_STRONG_ATTAK, SIT_STRONG_KIKC,
+		JUMP_ATTAK, JUMP_KICK,
+		JUMP_STRONG_ATTAK, JUMP_STRONG_KICK,
 		SKILL1, SKILL2,
 		SKILL3
 	};
@@ -36,6 +38,8 @@ private:
 
 	float _startX;
 	float _startY;
+
+	bool _isEnemyRight;
 
 	playGround* _playGround;
 
