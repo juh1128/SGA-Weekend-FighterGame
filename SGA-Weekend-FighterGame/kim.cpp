@@ -19,68 +19,112 @@ HRESULT kim::init(vector2D pos)
 
 
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("kimIdleLeft", "kimIdle", 0, 10, 22, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("kimIdleLeft", "kimIdle", 0, 11, 22, false, true);
 	KEYANIMANAGER->setCollisionRect("kimIdleLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimIdle")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
 		110, 370));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimIdleRight", "kimIdle", 21, 11, 22, false, true);
 	KEYANIMANAGER->setCollisionRect("kimIdleRight", RectMakeCenter(IMAGEMANAGER->findImage("kimIdle")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
 		110, 370));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("kimWalkFrontLeft", "kimWalk", 0, 5, 12, false, true);
-	KEYANIMANAGER->addCoordinateFrameAnimation("kimWalkBackLeft", "kimWalk", 6, 11, 12, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("kimWalkFrontLeft", "kimWalk", 0, 6, 12, false, true);
+	KEYANIMANAGER->setCollisionRect("kimWalkFrontLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimWalk")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimWalk")->getFrameHeight() / 2,
+		110, 370));
+	KEYANIMANAGER->addCoordinateFrameAnimation("kimWalkBackLeft", "kimWalk", 6, 12, 12, false, true);
+	KEYANIMANAGER->setCollisionRect("kimWalkBackLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimWalk")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimWalk")->getFrameHeight() / 2,
+		110, 370));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimWalkFrontRight", "kimWalk", 17, 12, 12, false, true);
+	KEYANIMANAGER->setCollisionRect("kimWalkFrontRight", RectMakeCenter(IMAGEMANAGER->findImage("kimWalk")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimWalk")->getFrameHeight() / 2,
+		110, 370));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimWalkBackRight", "kimWalk", 23, 18, 12, false, true);
+	KEYANIMANAGER->setCollisionRect("kimWalkBackRight", RectMakeCenter(IMAGEMANAGER->findImage("kimWalk")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimWalk")->getFrameHeight() / 2,
+		110, 370));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("kimSitLeft", "kimSit", 0, 2, 60, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("kimSitLeft", "kimSit", 0, 3, 60, false, false);
+	KEYANIMANAGER->setCollisionRect("kimSitLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimSit")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimSit")->getFrameHeight() / 2 + 80,
+		110, 200));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimSitRight", "kimSit", 5, 3, 60, false, false);
+	KEYANIMANAGER->setCollisionRect("kimSitRight", RectMakeCenter(IMAGEMANAGER->findImage("kimSit")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimSit")->getFrameHeight() / 2 + 80,
+		110, 200));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimStandUpLeft", "kimSit", 1, 0, 60, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("kimStandUpRight", "kimSit", 4, 5, 60, false, false);
+	KEYANIMANAGER->setCollisionRect("kimStandUpLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimSit")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimSit")->getFrameHeight() / 2 + 80,
+		110, 200));
+	KEYANIMANAGER->addCoordinateFrameAnimation("kimStandUpRight", "kimSit", 4, 6, 60, false, false);
+	KEYANIMANAGER->setCollisionRect("kimStandUpRight", RectMakeCenter(IMAGEMANAGER->findImage("kimSit")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimSit")->getFrameHeight() / 2 + 80,
+		110, 200));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("kimJumpLeft", "kimJump", 0, 6, 10, false, false);
-	KEYANIMANAGER->setCollisionRect("kimJumpLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimJump")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
-		110, 350));
+	KEYANIMANAGER->addCoordinateFrameAnimation("kimJumpLeft", "kimJump", 0, 7, 10, false, false);
+	KEYANIMANAGER->setCollisionRect("kimJumpLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimJump")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimJump")->getFrameHeight() / 2,
+		110, 300));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimJumpRight", "kimJump", 13, 7, 10, false, false);
-	KEYANIMANAGER->setCollisionRect("kimJumpRight", RectMakeCenter(IMAGEMANAGER->findImage("kimJump")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
-		110, 350));
+	KEYANIMANAGER->setCollisionRect("kimJumpRight", RectMakeCenter(IMAGEMANAGER->findImage("kimJump")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimJump")->getFrameHeight() / 2,
+		110, 300));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimFrontJumpLeft", "kimFrontJump", 0, 9, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("kimFrontJumpLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimFrontJump")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
-		110, 350));
+	KEYANIMANAGER->setCollisionRect("kimFrontJumpLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimFrontJump")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimFrontJump")->getFrameHeight() / 2,
+		110, 250));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimFrontJumpRight", "kimFrontJump", 17, 9, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("kimFrontJumpRight", RectMakeCenter(IMAGEMANAGER->findImage("kimFrontJump")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
-		110, 350));
+	KEYANIMANAGER->setCollisionRect("kimFrontJumpRight", RectMakeCenter(IMAGEMANAGER->findImage("kimFrontJump")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimFrontJump")->getFrameHeight() / 2,
+		110, 250));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimDashStartLeft", "kimDash", 0, 1, 30, false, false);
+	KEYANIMANAGER->setCollisionRect("kimDashStartLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimDash")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimDash")->getFrameHeight() / 2 + 30,
+		110, 280));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimDashLeft", "kimDash", 1, 7, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("kimDashLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimDash")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimDash")->getFrameHeight() / 2 + 30,
+		110, 280));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimDashStopLeft", "kimDash", 7, 8, 30, false, false);
+	KEYANIMANAGER->setCollisionRect("kimDashStopLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimDash")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimDash")->getFrameHeight() / 2 + 30,
+		110, 280));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimDashStartRight", "kimDash", 15, 16, 30, false, false);
+	KEYANIMANAGER->setCollisionRect("kimDashStartRight", RectMakeCenter(IMAGEMANAGER->findImage("kimDash")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimDash")->getFrameHeight() / 2 + 30,
+		110, 280));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimDashRight", "kimDash", 14, 9, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("kimDashRight", RectMakeCenter(IMAGEMANAGER->findImage("kimDash")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimDash")->getFrameHeight() / 2 + 30,
+		110, 280));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimDashStopRight", "kimDash", 8, 9, 30, false, false);
+	KEYANIMANAGER->setCollisionRect("kimDashStopRight", RectMakeCenter(IMAGEMANAGER->findImage("kimDash")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimDash")->getFrameHeight() / 2 + 30,
+		110, 280));
 
 	int arr01[5] = { 0,1,1,1,0 };
 	KEYANIMANAGER->addArrayFrameAnimation("kimBackDashLeft", "kimBackDash", arr01, sizeof(arr01) / sizeof(arr01[0]), 15, false);
-	KEYANIMANAGER->setCollisionRect("kimBackDashLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimBackDash")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
+	KEYANIMANAGER->setCollisionRect("kimBackDashLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimBackDash")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimBackDash")->getFrameHeight() / 2,
 		110, 350));
 	int arr02[5] = { 3,2,2,2,3 };
 	KEYANIMANAGER->addArrayFrameAnimation("kimBackDashRight", "kimBackDash", arr02, sizeof(arr02) / sizeof(arr02[0]), 15, false);
-	KEYANIMANAGER->setCollisionRect("kimBackDashRight", RectMakeCenter(IMAGEMANAGER->findImage("kimBackDash")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
+	KEYANIMANAGER->setCollisionRect("kimBackDashRight", RectMakeCenter(IMAGEMANAGER->findImage("kimBackDash")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimBackDash")->getFrameHeight() / 2,
 		110, 350));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimALeft", "kimA", 0, 4, 30, false, false);
+	KEYANIMANAGER->setCollisionRect("kimALeft", RectMakeCenter(IMAGEMANAGER->findImage("kimA")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimA")->getFrameHeight() / 2,
+		110, 370));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimARight", "kimA", 7, 4, 30, false, false);
+	KEYANIMANAGER->setCollisionRect("kimARight", RectMakeCenter(IMAGEMANAGER->findImage("kimA")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimA")->getFrameHeight() / 2,
+		110, 370));
 
 	int arr03[10] = { 0,1,2,3,4,4,5,6,7,8 };
 	KEYANIMANAGER->addArrayFrameAnimation("kimBLeft", "kimB", arr03, sizeof(arr03) / sizeof(arr03[0]), 30, false);
+	KEYANIMANAGER->setCollisionRect("kimBLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimB")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimB")->getFrameHeight() / 2,
+		110, 370));
 	int arr04[10] = { 17,16,15,14,13,13,12,11,10,9 };
 	KEYANIMANAGER->addArrayFrameAnimation("kimBRight", "kimB", arr04, sizeof(arr04) / sizeof(arr04[0]), 30, false);
+	KEYANIMANAGER->setCollisionRect("kimBRight", RectMakeCenter(IMAGEMANAGER->findImage("kimB")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimB")->getFrameHeight() / 2,
+		110, 370));
 
 	int arr05[12] = { 0,1,2,3,4,5,6,6,7,8,9,10 };
 	KEYANIMANAGER->addArrayFrameAnimation("kimCLeft", "kimC", arr05, sizeof(arr05) / sizeof(arr05[0]), 30, false);
+	KEYANIMANAGER->setCollisionRect("kimCLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimC")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimC")->getFrameHeight() / 2,
+		110, 370));
 	int arr06[12] = { 21,20,19,18,17,16,15,15,14,13,12,11 };
 	KEYANIMANAGER->addArrayFrameAnimation("kimCRight", "kimC", arr06, sizeof(arr06) / sizeof(arr06[0]), 30, false);
+	KEYANIMANAGER->setCollisionRect("kimCRight", RectMakeCenter(IMAGEMANAGER->findImage("kimC")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimC")->getFrameHeight() / 2,
+		110, 370));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimDLeft", "kimD", 0, 18, 30, false, false);
+	KEYANIMANAGER->setCollisionRect("kimDLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimD")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimD")->getFrameHeight() / 2,
+		110, 370));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimDRight", "kimD", 35, 18, 30, false, false);
+	KEYANIMANAGER->setCollisionRect("kimDRight", RectMakeCenter(IMAGEMANAGER->findImage("kimD")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimD")->getFrameHeight() / 2,
+		110, 370));
 	//------------------------------------------------------
 
 	character::init("kim", pos, "kimIdleRight");
@@ -194,6 +238,10 @@ void kim::leverPositionUpdate(void)
 }
 void kim::changeState(kimState::Enum state)
 {
+	attackHitbox* hitbox;
+	int plusRight;
+	_isLeft ? plusRight = -1 : plusRight = 1;
+
 	switch (state)
 	{
 	case kimState::IDLE:
@@ -267,24 +315,48 @@ void kim::changeState(kimState::Enum state)
 		jump(15);
 		break;
 	case kimState::A:
+		_isLeft = _isEnemyLeft;
 		if (_isLeft) this->setAnimation("kimALeft");
 		else this->setAnimation("kimARight");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
+
+		_isLeft ? plusRight = -1 : plusRight = 1;
+		hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x + plusRight * 200, _pos.y - 50), vector2D(200, 50), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
 		break;
 	case kimState::B:
+		_isLeft = _isEnemyLeft;
 		if (_isLeft) this->setAnimation("kimBLeft");
 		else this->setAnimation("kimBRight");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
+
+		_isLeft ? plusRight = -1 : plusRight = 1;
+		hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x + plusRight * 150, _pos.y - 130), vector2D(200, 50), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
 		break;
 	case kimState::C:
+		_isLeft = _isEnemyLeft;
 		if (_isLeft) this->setAnimation("kimCLeft");
 		else this->setAnimation("kimCRight");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
+
+		_isLeft ? plusRight = -1 : plusRight = 1;
+		hitbox = new attackHitbox;
+		hitbox->init(70, vector2D(_pos.x + plusRight * 180, _pos.y - 110), vector2D(200, 50), _enemy, 0.3f);
+		WORLD->addObject(hitbox);
 		break;
 	case kimState::D:
+		_isLeft = _isEnemyLeft;
 		if (_isLeft) this->setAnimation("kimDLeft");
 		else this->setAnimation("kimDRight");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
+
+		_isLeft ? plusRight = -1 : plusRight = 1;
+		hitbox = new attackHitbox;
+		hitbox->init(100, vector2D(_pos.x + plusRight * 200, _pos.y - 70), vector2D(150, 300), _enemy, 0.5f);
+		WORLD->addObject(hitbox);
 		break;
 	}
 
@@ -420,10 +492,13 @@ void kim::stateUpdate(kimState::Enum state)
 		switch (_lever)
 		{
 		case LEVER::LEFTDOWN:
-			break;
 		case LEVER::DOWN:
-			break;
 		case LEVER::RIGHTDOWN:
+			if (_isEnemyLeft != _isLeft)
+			{
+				_isLeft = _isEnemyLeft;
+				changeState(kimState::SIT);
+			}
 			break;
 		case LEVER::IDLE:
 			_state = kimState::NONE;
@@ -507,6 +582,8 @@ void kim::stateUpdate(kimState::Enum state)
 	case kimState::C:
 		break;
 	case kimState::D:
+		if (_isLeft) _pos.x -= 4;
+		else _pos.x += 4;
 		break;
 	}
 
