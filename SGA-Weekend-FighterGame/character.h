@@ -94,6 +94,11 @@ public:
 	//점프 상태인지?
 	bool isJump() { return _isJump; }
 
+
+	//겟셋
+	int getNowHp() { return _nowHp; }
+	int getMaxHp() { return _maxHp; }
+
 private:
 	void attacked(int damage, vector2D hitedPos);
 
