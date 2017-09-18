@@ -56,8 +56,7 @@ HRESULT kim::init(vector2D pos)
 	});
 
 	_lever = _pastLever = LEVER::IDLE;
-	enemyPositionUpdate();
-	_isLeft = _isEnemyLeft;
+	_isLeft = _isEnemyLeft = false;
 
 	return S_OK;
 }
