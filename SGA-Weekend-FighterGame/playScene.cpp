@@ -63,7 +63,6 @@ void playScene::update()
 {
 	sceneBase::update();
 
-
 	//배경 프레임
 	_backgroundAnimation->frameUpdate();
 
@@ -81,19 +80,29 @@ void playScene::update()
 
 
 	//카메라 타겟 위치 셋업
-	//vector2D averagePos = (_player[0]->_pos + _player[1]->_pos) / 2;
-	//_cameraTarget->_pos = averagePos;\
-	
-	if (KEYMANAGER->isStayKeyDown('M'))
+	gameObject* left = _player[1];
+	gameObject* right = _player[0];
+	if (_player[0]->_pos.x <= _player[1]->_pos.x)
 	{
-		_cameraTarget->_pos.x += 5.0f;
+		left = _player[0];
+		right = _player[1];
 	}
-	if (KEYMANAGER->isStayKeyDown('N'))
+	float distance = right->getCollisionRect().right - left->getCollisionRect().left;
+	if (distance < WINSIZEX*0.95f)
 	{
-		_cameraTarget->_pos.x -= 5.0f;
+		vector2D averagePos = (_player[0]->_pos + _player[1]->_pos) / 2;
+		vector2D dir = averagePos - _cameraTarget->_pos;
+		if (dir.getLength() <= 5.0f)
+		{
+			_cameraTarget->_pos = averagePos;
+		}
+		else
+		{
+			_cameraTarget->_pos = _cameraTarget->_pos + dir.normalize()*5.0f;
+		}
 	}
-
 	CAMERAMANAGER->updateCamera();
+
 }
 void playScene::render()		
 {
