@@ -77,55 +77,33 @@ void character::render()
 		Ellipse(memDC, _pos.x - 3, _pos.y - 3, _pos.x + 3, _pos.y + 3);
 		SelectObject(memDC, oldBrush);
 
-		//입력한 커맨드 표시
-	/*	string buf;
-		for (int i = 0; i<_commandHistory.size(); ++i)
-		{
-			switch (_commandHistory[i])
-			{
-			case key::ATTACK:
-				buf.append("[ATTACK] ");
-				break;
-			case key::RIGHT:
-				buf.append("[RIGHT] ");
-				break;
-			case key::LEFT:
-				buf.append("[LEFT] ");
-				break;
-			case key::JUMP:
-				buf.append("[JUMP] ");
-				break;
-			case key::DOWN:
-				buf.append("[DOWN] ");
-				break;
-			case key::KICK:
-				buf.append("[KICK] ");
-				break;
-			case key::STRONG_ATTACK:
-				buf.append("[STRONG_ATTACK] ");
-				break;
-			case key::STRONG_KICK:
-				buf.append("[STRONG_KICK] ");
-				break;
-			}
-		}
-		TextOut(getMemDC(), _pos.x, _pos.y - 100, buf.c_str(), buf.length());*/
+		//LEFT_TOP 그리기
+		vector2D size = this->getSize();
+		vector2D leftTop;
+		leftTop.x = _pos.x - size.x * 0.5f;
+		leftTop.y = _pos.y - size.y * 0.5f;
+		oldBrush = (HBRUSH)SelectObject(memDC, GetStockObject(COLOR_BACKGROUND));
+		Ellipse(memDC, leftTop.x - 3, leftTop.y - 3, leftTop.x + 3, leftTop.y + 3);
+		SelectObject(memDC, oldBrush);
+
 	}
 }
 
 RECT character::getCollisionRect()
 {
 	//LEFT_TOP 좌표를 구한다.
+	vector2D oldSize = this->getOriginSize();
 	vector2D size = this->getSize();
+
 	vector2D leftTop;
-	leftTop.x = _pos.x - size.x * 0.5f;
-	leftTop.y = _pos.y - size.y * 0.5f;
+	leftTop.x = _pos.x - (size.x * 0.5f);
+	leftTop.y = _pos.y - (size.y * 0.5f);
 
 	RECT collisionRC = _animation->getCollisionRect();
-	collisionRC.left *= this->getScale().x;
-	collisionRC.top *= this->getScale().y;
-	collisionRC.right *= this->getScale().x;
-	collisionRC.bottom *= this->getScale().y;
+	collisionRC.left *= size.x / oldSize.x;
+	collisionRC.top *= size.y / oldSize.y;
+	collisionRC.right *= size.x / oldSize.x;
+	collisionRC.bottom *= size.y / oldSize.y;
 
 	MoveRect(&collisionRC, leftTop.x, leftTop.y);
 	return collisionRC;
