@@ -609,10 +609,10 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 		this->setAnimation("이오리_오른쪽_스킬");
 		break;
 	case tagIoriState::SKILL2:
-		this->setAnimation("이오리_오른쪽_스킬");
+		this->setAnimation("이오리_오른쪽_스킬2");
 		break;
 	case tagIoriState::SKILL3:
-		this->setAnimation("이오리_오른쪽_스킬");
+		this->setAnimation("이오리_오른쪽_스킬3");
 		break;
 	}
 	_state = state;
