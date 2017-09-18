@@ -55,29 +55,6 @@ void playScene::release()
 void playScene::resume()		
 {
 
-
-	//UI
-	if(_player[0]->isLive())
-		_progressBar[0]->update(_player[0]->getNowHp(), _player[0]->getMaxHp());
-	else
-		_progressBar[0]->update(0, 1000);
-
-	if (_player[1]->isLive())
-		_progressBar[1]->update(_player[1]->getNowHp(), _player[1]->getMaxHp());
-	else
-		_progressBar[1]->update(0, 1000);
-
-
-	//UI
-	if(_player[0]->isLive())
-		_progressBar[0]->update(_player[0]->getNowHp(), _player[0]->getMaxHp());
-	else
-		_progressBar[0]->update(0, 1000);
-
-	if (_player[1]->isLive())
-		_progressBar[1]->update(_player[1]->getNowHp(), _player[1]->getMaxHp());
-	else
-		_progressBar[1]->update(0, 1000);
 }
 
 
