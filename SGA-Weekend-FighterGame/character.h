@@ -91,7 +91,7 @@ public:
 		_damage = damage;
 	}
 
-	//점프 중인지?
+	//점프 상태인지?
 	bool isJump() { return _isJump; }
 
 

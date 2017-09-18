@@ -102,5 +102,6 @@ void playScene::render()
 
 	_progressBar[0]->render();
 	_progressBar[1]->render();
+
 	sceneBase::render();
 }

@@ -11,9 +11,9 @@ HRESULT neko::init(vector2D pos)
 	IMAGEMANAGER->addFrameImage("neko1_left", "resource/soonwoo/neko/neko1_left.bmp", 4352, 1795, 17, 7, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("neko1_right", "resource/soonwoo/neko/neko1_right.bmp", 4352, 1790, 17, 7, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("nekoRightFireEffect", "resource/soonwoo/neko/nekoFire.bmp", 7424, 256, 29, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("nekoLeftFireEffect", "resource/soonwoo/neko/nekoFireLeft.bmp", 7424, 256, 29, 1, true,RGB(255,0,255));
+	IMAGEMANAGER->addFrameImage("nekoLeftFireEffect", "resource/soonwoo/neko/nekoFireLeft.bmp", 7424, 256, 29, 1, true, RGB(255, 0, 255));
 	//이펙트 로드
-	
+
 	//키애니메니져 설정
 
 	//======================STOP======================
@@ -86,7 +86,7 @@ HRESULT neko::init(vector2D pos)
 	KEYANIMANAGER->setCollisionRect("nekoLeftJump", RectMake(112, 179, 24, 42));
 
 	//neko falling
-	int rightFall[]{26};
+	int rightFall[]{ 26 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoRightFall", "neko1_right", rightFall, 1, 1, false);
 	KEYANIMANAGER->setCollisionRect("nekoRightFall", RectMake(118, 179, 24, 42));
 	int  leftFall[]{ 26 };
@@ -190,24 +190,25 @@ HRESULT neko::init(vector2D pos)
 
 	_state = RIGHT_STOP;		//오른쪽 정지상태로 초기화 
 	_isEnemyRight = true;		//상대오른쪽에 있는거 트루로 초기화
-	
+
 	//점프 관련 변수들
 	_jumpPower = 0;
 	_gravity = 0;
 	_savePosY = this->_pos.y;
 	_isJump = false;
 
+	//능력치 초기화 (체력 , 공격력)
 	this->setStatus(1000, 10);
 
 	//키 저장 변수
 	_saveLastKey = key::END;	//아무키도 안누른 END로 초기화  해준다.
 
-	//=====================콜백 함수 등록=========================
+								//=====================콜백 함수 등록=========================
 	this->addCallback("changeState", [this](tagMessage msg)
 	{
 		this->changeState((tagNekoState::ENUM)msg.data);
 	});
-	
+
 	this->addCallback("hited", [this](tagMessage msg)
 	{
 		this->hit(msg);
@@ -224,7 +225,7 @@ HRESULT neko::init(vector2D pos)
 
 	this->setScale(3.0, 3.0);
 
-	this->setGravity(0);
+	this->setGravity(0);		//유훈이형 중력 안씀
 
 	_centerPos = _pos;
 	_centerPos.y = _pos.y + 50;
@@ -251,7 +252,7 @@ HRESULT neko::init(vector2D pos)
 		this->nekoLeftFly();
 	});
 
-	
+
 	return S_OK;
 }
 
@@ -293,54 +294,54 @@ void neko::changeState(tagNekoState::ENUM state)
 	{
 		this->setAnimation("nekoRightStop");	//오른쪽 정지로 프레임 변경
 	}
-		break;
+	break;
 	case LEFT_STOP:		//왼쪽 정지상태
 	{
 		this->setAnimation("nekoLeftStop");		//왼쪽 정지로 프레임 변경
 	}
-		break;
+	break;
 	case RIGHT_MOVE:	//오른쪽 이동 상태 
 	{
 		this->setAnimation("nekoRightMove");	//오른쪽 이동으로 프레임 변경
 	}
-		break;
+	break;
 	case LEFT_MOVE:		//왼쪽 이동 상태
 	{
 		this->setAnimation("nekoLeftMove");		//왼쪽 이동으로 프레임 변경 
 	}
-		break;
+	break;
 	case RIGHT_SIT:		//오른쪽 앉기 상태
 	{
 		this->setAnimation("nekoRightSit");		//오른쪽 앉기로 프레임 변경
 	}
-		break;
+	break;
 	case LEFT_SIT:	//왼쪽 앉기 상태
 	{
 		this->setAnimation("nekoLeftSit");
 	}
-		break;
-	case RIGHT_CHANGE_SIT :	//오른쪽 앉을려는 상태
+	break;
+	case RIGHT_CHANGE_SIT:	//오른쪽 앉을려는 상태
 	{
 		this->setAnimation("nekoRightChangeSit");		//오른쪽 앉기 모션으로 프레임변경
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_SIT));	//앉기 모션 프레임끝나면 앉기로 상태변경
 	}
 	break;
 
-	case LEFT_CHANGE_SIT :	//왼쪽 앉을려는 상태 
+	case LEFT_CHANGE_SIT:	//왼쪽 앉을려는 상태 
 	{
 		this->setAnimation("nekoLeftChangeSit");				//왼쪽 앉는 프레임 재생
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SIT));	//프레임 끝나면 왼쪽 앉기상태로 변환
 	}
-		break;
+	break;
 
-	case RIGHT_CHANGE_UP :	//오른쪽 일어서는 상태
+	case RIGHT_CHANGE_UP:	//오른쪽 일어서는 상태
 	{
 		this->setAnimation("nekoRightChangeSitUp");		//오른쪽 일어서는 프레임 재생
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));	//프레임 끝나면 오른쪽 정지상태
 	}
 	break;
 
-	case LEFT_CHAGNE_UP :	//왼쪽 일어서는 상태
+	case LEFT_CHAGNE_UP:	//왼쪽 일어서는 상태
 	{
 		this->setAnimation("nekoLeftChangeSitUp");		//왼쪽 일어서는 프레임 재생 
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));	//프레임 끝나면 왼쪽 정지 상태
@@ -358,28 +359,28 @@ void neko::changeState(tagNekoState::ENUM state)
 		this->setAnimation("nekoLeftSitMove");		//왼쪽 앉기 이동으로 프레임 변환 
 	}
 	break;
-	
+
 	case RIGHT_JUMP:							//오른쪽 정프 상태 
 	{
 		this->setJump();						//점프!
 		this->setAnimation("nekoRightJump");	//오른쪽 점프 프레임으로 변환 
 	}
-		break;
+	break;
 	case LEFT_JUMP:								//왼쪽 점프 상태
 	{
 		this->setJump();						//점프!
 		this->setAnimation("nekoLeftJump");		//왼쪽 점프 프레임으로 변환 
 	}
-		break;
+	break;
 
-	case RIGHT_BACK_JUMP :						//오른쪽 백 점프 
+	case RIGHT_BACK_JUMP:						//오른쪽 백 점프 
 	{
 		this->setJump();						//점프!
 		this->setAnimation("nekoRightBackJump");//오른쪽 백 점프 프레임으로 변환  
 	}
 	break;
-			
-	case LEFT_BACK_JUMP :						//왼쪽 백 점프
+
+	case LEFT_BACK_JUMP:						//왼쪽 백 점프
 	{
 		this->setJump();						//점프!
 		this->setAnimation("nekoLeftBackJump");	//왼쪽 백 점프 프레임으로 변환
@@ -390,9 +391,9 @@ void neko::changeState(tagNekoState::ENUM state)
 	{
 		this->setAnimation("nekoRightAttack");	//오른쪽 약공 프레임으로 변환 
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));	//프레임 끝나면 오른쪽 정지로 변환 
-		//공격렉트 생성
+																							//공격렉트 생성
 		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_centerPos.x + 70,_centerPos.y -5), vector2D(50, 75), _enemy, 0.1f);
+		hitbox->init(30, vector2D(_centerPos.x + 70, _centerPos.y - 5), vector2D(50, 75), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
 	}
 	break;
@@ -401,35 +402,35 @@ void neko::changeState(tagNekoState::ENUM state)
 	{
 		this->setAnimation("nekoLeftAttack");	//왼쪽 약공프레임으로 변환
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));	//프레임 끝나면 왼쪽 정지상태로 변환
-		//공격렉트 생성
+																							//공격렉트 생성
 		attackHitbox* hitbox = new attackHitbox;
 		hitbox->init(30, vector2D(_centerPos.x - 70, _centerPos.y - 5), vector2D(50, 75), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
 	}
 	break;
-	
+
 	case RIGHT_SIT_ATTACK:						//오른쪽 앉아 약공
 	{
 		this->setAnimation("nekoRightSitAttack");	//오른쪽 앉아 약공으로 프레임 변환
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_SIT));	//프레임 끝나면  오른쪽 앉아 상태로변환
-		//공격랙트 생성
+																							//공격랙트 생성
 		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_centerPos.x + 80, _centerPos.y +50), vector2D(50, 60), _enemy, 0.1f);
+		hitbox->init(30, vector2D(_centerPos.x + 80, _centerPos.y + 50), vector2D(50, 60), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
 	}
 	break;
-	case LEFT_SIT_ATTACK :						//왼쪽 앉아 약공
+	case LEFT_SIT_ATTACK:						//왼쪽 앉아 약공
 	{
 		this->setAnimation("nekoLeftSitAttack");	//왼쪽 앉아약공으로 프레임 변환  
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SIT));	//프레임 끝나면 왼쪽 앉아 상태로 변환
-		//공격랙트 생성
+																							//공격랙트 생성
 		attackHitbox* hitbox = new attackHitbox;
 		hitbox->init(30, vector2D(_centerPos.x - 80, _centerPos.y + 50), vector2D(50, 60), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
 	}
 	break;
 
-	case RIGHT_KICK :					//오른쪽 킥
+	case RIGHT_KICK:					//오른쪽 킥
 	{
 		this->setAnimation("nekoRightKick");				//오른쪽 킥 프레임으로 변환 
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
@@ -440,7 +441,7 @@ void neko::changeState(tagNekoState::ENUM state)
 	}
 	break;
 
-	case LEFT_KICK :				//왼쪽 킥
+	case LEFT_KICK:				//왼쪽 킥
 	{
 		this->setAnimation("nekoLeftKick");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
@@ -451,7 +452,7 @@ void neko::changeState(tagNekoState::ENUM state)
 	}
 	break;
 
-	case RIGHT_SIT_KICK :			//오른쪽 앉아 발  
+	case RIGHT_SIT_KICK:			//오른쪽 앉아 발  
 	{
 		this->setAnimation("nekoRightSitKick");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_SIT));
@@ -462,7 +463,7 @@ void neko::changeState(tagNekoState::ENUM state)
 	}
 	break;
 
-	case LEFT_SIT_KICK :			//왼쪽 앉아 발 
+	case LEFT_SIT_KICK:			//왼쪽 앉아 발 
 	{
 		this->setAnimation("nekoLeftSitKick");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SIT));
@@ -472,24 +473,24 @@ void neko::changeState(tagNekoState::ENUM state)
 		WORLD->addObject(hitbox);
 	}
 	break;
-	
-	case RIGHT_DEFENSE :						//오른쪽 막기 
+
+	case RIGHT_DEFENSE:						//오른쪽 막기 
 	{
 		this->setAnimation("nekoRightDefense");	//오른쪽 막기 프레임으로 변환 
 	}
 	break;
-	case LEFT_DEFENSE :							//왼쪽 막기
+	case LEFT_DEFENSE:							//왼쪽 막기
 	{
 		this->setAnimation("nekoLeftDefense");	//왼쪽 막기 프레임으로 변환 
 	}
 	break;
 
-	case RIGHT_SIT_DEFENSE :					//오른쪽 앉아 막기
+	case RIGHT_SIT_DEFENSE:					//오른쪽 앉아 막기
 	{
 		this->setAnimation("nekoRightSitDefense");	//오른쪽 앉아 막기 프레임으로 변환 
 	}
 	break;
-	case LEFT_SIT_DEFENSE :						//왼쪽 앉아 막기
+	case LEFT_SIT_DEFENSE:						//왼쪽 앉아 막기
 	{
 		this->setAnimation("nekoLeftSitDefense");	//왼쪽 앉아 막기 프레임으로 변환 
 	}
@@ -511,7 +512,7 @@ void neko::changeState(tagNekoState::ENUM state)
 	case RIGHT_STAY_FIRE:						//오른쪽 불지속뿜기
 	{
 		effectFire* effect = new effectFire;
-		effect->init("nekoRightFireEffect" ,vector2D(_pos.x + 10, _centerPos.y - 190));
+		effect->init("nekoRightFireEffect", vector2D(_pos.x + 10, _centerPos.y - 190));
 		WORLD->addObject(effect);
 		_effect = effect;
 	}
@@ -528,14 +529,14 @@ void neko::changeState(tagNekoState::ENUM state)
 	}
 	break;
 
-	case RIGHT_FLY :
+	case RIGHT_FLY:
 	{
 		this->setAnimation("nekoRightFly");
 		_isJump = false;
 		_jumpPower = 0;
 	}
 	break;
-	case LEFT_FLY :
+	case LEFT_FLY:
 	{
 		this->setAnimation("nekoLeftFly");
 		_isJump = false;
@@ -555,34 +556,34 @@ void neko::changeState(tagNekoState::ENUM state)
 	}
 	break;
 
-	case RIGHT_DASH : 
+	case RIGHT_DASH:
 	{
 		this->setAnimation("nekoRightDash");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_MOVE));
 	}
 	break;
-	case LEFT_DASH :
+	case LEFT_DASH:
 	{
 		this->setAnimation("nekoLeftDash");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_MOVE));
 	}
 	break;
 
-	case RIGHT_BACK_DASH :
+	case RIGHT_BACK_DASH:
 	{
 		this->setAnimation("nekoRightBackDash");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_STOP));
 	}
 	break;
 
-	case LEFT_BACK_DASH : 
+	case LEFT_BACK_DASH:
 	{
 		this->setAnimation("nekoLeftBackDash");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_STOP));
 	}
 	break;
 
-	case RIGHT_HIT : 
+	case RIGHT_HIT:
 	{
 		this->setAnimation("nekoRightHit");
 		if (_isEnemyRight)
@@ -624,12 +625,12 @@ void neko::changeState(tagNekoState::ENUM state)
 	}
 	break;
 
-	case RIGHT_DIE : 
+	case RIGHT_DIE:
 	{
 
 	}
 	break;
-	case LEFT_DIE : 
+	case LEFT_DIE:
 	{
 
 	}
@@ -678,7 +679,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 		{
 			this->changeState(RIGHT_KICK);							//오른쪽 킥 상태로 변환 
 		}
-		
+
 
 		if (!_isEnemyRight)this->changeState(LEFT_STOP);		//적이 왼쪽에 있다면 상태 왼쪽 정지상태로 변환
 	}
@@ -728,7 +729,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 		{
 			this->changeState(RIGHT_SIT_MOVE);					//오른쪽 앉기 이동 상태
 		}
-		
+
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))		//왼쪽 키를 눌렀다면
 		{
 			this->changeState(LEFT_MOVE);						//왼쪽 움직임 상태로 변환 
@@ -765,7 +766,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 			{
 				this->changeState(LEFT_ATTACK);			//오른공격 상태로 변환
 			}
-			
+
 		}
 	}
 	break;
@@ -788,7 +789,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 		//================적이 오른쪽에 있다면=======================
 		if (_isEnemyRight)
 		{
-			if(KEYMANAGER->isOnceKeyUp(keyList[key::LEFT])) //왼쪽이동 키에서 손때면 
+			if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT])) //왼쪽이동 키에서 손때면 
 			{
 				this->changeState(RIGHT_STOP);				//오른쪽 정지상태로 변환
 			}
@@ -841,7 +842,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 		{
 			this->changeState(RIGHT_SIT_KICK);				//오른쪽 앉아 발 상태로 변환 
 		}
-		
+
 		if (!_isEnemyRight)this->changeState(LEFT_SIT);		//적이 왼쪽에 있다면 왼쪽 앉기 상태로 변환 
 	}
 	break;
@@ -871,7 +872,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 		if (_isEnemyRight)this->changeState(RIGHT_SIT);		//적이 오른쪽에 있다면 오른쪽 앉기 상태로 변환
 	}
 	break;
-	
+
 	case RIGHT_CHANGE_SIT:
 	{
 
@@ -896,7 +897,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 	}
 	break;
 
-	case RIGHT_SIT_MOVE :	//오른쪽 앉기 이동상태
+	case RIGHT_SIT_MOVE:	//오른쪽 앉기 이동상태
 	{
 		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))	//오른쪽 키길게 누르면 
 		{
@@ -943,8 +944,8 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 		}
 	}
 	break;
-	
-	case LEFT_SIT_MOVE :	//왼쪽 앉기 이동
+
+	case LEFT_SIT_MOVE:	//왼쪽 앉기 이동
 	{
 		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))	//왼쪽 키 길게 누르고 있으면
 		{
@@ -966,7 +967,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 		{
 			this->changeState(LEFT_MOVE);		//왼쪽 이동상태로  변환
 		}
-	
+
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::RIGHT]))	//오른쪽 키를  누른다면
 		{
 			this->changeState(RIGHT_MOVE);		//오른쪽 이동상태로 변환  
@@ -989,7 +990,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 				this->changeState(LEFT_SIT_KICK);				//왼쪽 앉아 킥상태로 변환해라 
 			}
 		}
-	
+
 	}
 	break;
 
@@ -1038,7 +1039,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 			_saveLastKey = END;								//왼쪽 키 저장 해제  
 		}
 	}
-	break; 
+	break;
 
 	case RIGHT_BACK_JUMP:		//오른쪽 백 점프 상태
 	{
@@ -1087,14 +1088,14 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 		}
 	}
 	break;
-	
-	case RIGHT_ATTACK :
+
+	case RIGHT_ATTACK:
 	{
 
 	}
 	break;
 
-	case LEFT_ATTACK :
+	case LEFT_ATTACK:
 	{
 
 	}
@@ -1156,18 +1157,18 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 	}
 	break;
 
-	case RIGHT_FIRE :
+	case RIGHT_FIRE:
 	{
 
 	}
 	break;
-	case LEFT_FIRE :
+	case LEFT_FIRE:
 	{
 
 	}
 	break;
 
-	case RIGHT_STAY_FIRE :
+	case RIGHT_STAY_FIRE:
 	{
 		//공격랙트 생성 
 		attackHitbox* hitbox = new attackHitbox;
@@ -1187,7 +1188,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 	}
 	break;
 
-	case LEFT_STAY_FIRE :
+	case LEFT_STAY_FIRE:
 	{
 		//공격랙트 생성 
 		attackHitbox* hitbox = new attackHitbox;
@@ -1236,7 +1237,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 	}
 	break;
 
-	case RIGHT_FALL : 
+	case RIGHT_FALL:
 	{
 		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
 		{
@@ -1249,7 +1250,7 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 	}
 	break;
 
-	case LEFT_FALL : 
+	case LEFT_FALL:
 	{
 		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
 		{
@@ -1349,22 +1350,22 @@ void neko::jumping()
 
 		if (_state == RIGHT_JUMP || _state == LEFT_JUMP ||
 			_state == RIGHT_BACK_JUMP || _state == LEFT_BACK_JUMP
-			||_state == RIGHT_FALL || _state == LEFT_FALL)	//점프 상태였다면
+			|| _state == RIGHT_FALL || _state == LEFT_FALL)	//점프 상태였다면
 		{
 			if (_isEnemyRight)							//만약 상대가 오른쪽에 있다면 
 			{
-				if(_saveLastKey == END)this->changeState(RIGHT_STOP);			//마지막에 누른키가 없으면 오른쪽 정지상태로 변환
+				if (_saveLastKey == END)this->changeState(RIGHT_STOP);			//마지막에 누른키가 없으면 오른쪽 정지상태로 변환
 				else if (_saveLastKey == RIGHT)this->changeState(RIGHT_MOVE);	//마지막에 누른키가 오른쪽이라면 오른쪽이동상태로변환
 				else if (_saveLastKey == LEFT)this->changeState(LEFT_MOVE);		//마지막에 누른키가 왼쪽이라면 왼쪽 이동상태로 변환
-			}	
+			}
 			else										//만약 상대가 왼쪽에  있다면 
 			{
 				if (_saveLastKey == END)this->changeState(LEFT_STOP);			//마지막에 누른키가 없으면 오른쪽 정지상태로 변환
 				else if (_saveLastKey == RIGHT)this->changeState(RIGHT_MOVE);	//마지막에 누른키가 오른쪽이라면 오른쪽이동상태로변환
 				else if (_saveLastKey == LEFT)this->changeState(LEFT_MOVE);		//마지막에 누른키가 왼쪽이라면 왼쪽 이동상태로 변환
-			}				
+			}
 		}
-		else if (_state == RIGHT_DING )
+		else if (_state == RIGHT_DING)
 		{
 			this->changeState(RIGHT_DIE);
 		}
@@ -1461,7 +1462,7 @@ void neko::die(tagMessage msg)
 
 void neko::block()
 {
-	if (_state == LEFT_MOVE )
+	if (_state == LEFT_MOVE)
 	{
 		this->changeState(RIGHT_DEFENSE);
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_MOVE));

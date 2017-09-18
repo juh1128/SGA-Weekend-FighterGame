@@ -30,12 +30,12 @@ namespace tagNekoState
 		RIGHT_FIRE, LEFT_FIRE,					//불뿜기
 		RIGHT_STAY_FIRE, LEFT_STAY_FIRE,		//불뿜고 있기
 		RIGHT_FLY, LEFT_FLY,					//날기
-		RIGHT_FALL,LEFT_FALL,					//떨어지는 상태
-		RIGHT_DASH,LEFT_DASH,					//대쉬 상태
-		RIGHT_BACK_DASH , LEFT_BACK_DASH,		//백대쉬 상태
-		RIGHT_HIT , LEFT_HIT,					//쳐맞는 상태 
+		RIGHT_FALL, LEFT_FALL,					//떨어지는 상태
+		RIGHT_DASH, LEFT_DASH,					//대쉬 상태
+		RIGHT_BACK_DASH, LEFT_BACK_DASH,		//백대쉬 상태
+		RIGHT_HIT, LEFT_HIT,					//쳐맞는 상태 
 		RIGHT_DING, LEFT_DING,					//뒤져가는 상태					
-		RIGHT_DIE ,LEFT_DIE						//뒤지는 상태
+		RIGHT_DIE, LEFT_DIE						//뒤지는 상태
 	};
 }
 
@@ -64,7 +64,7 @@ private:
 
 
 public:
-	neko()  {}
+	neko() {}
 	virtual ~neko() {}
 
 	HRESULT init(vector2D pos);
@@ -92,7 +92,7 @@ public:
 	void nekoFire();
 	void nekoRightFly();
 	void nekoLeftFly();
-	
+
 	void hit(tagMessage msg);
 	void die(tagMessage msg);
 	void block();
