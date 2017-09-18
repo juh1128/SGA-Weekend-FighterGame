@@ -26,21 +26,15 @@ HRESULT terry::init(vector2D pos)
 
 	//서있는상태 (Idle)
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightIdle", "terryIdle", 0, 7, 8, false, true);
-	KEYANIMANAGER->setCollisionRect("terryRightIdle", RectMake(100, 30, 220-100, 340-30));
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftIdle", "terryIdle", 8, 15, 8, false, true);
-	KEYANIMANAGER->setCollisionRect("terryLeftIdle", RectMake(100, 30, 220 - 100, 340 - 30));
 
 	//무빙
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightMove", "terryMove", 0, 5, 6, false, false);
-	KEYANIMANAGER->setCollisionRect("terryRightMove", RectMake(100, 90, 220 - 100, 400 - 90));
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftMove", "terryMove", 6, 11, 6, false, false);
-	KEYANIMANAGER->setCollisionRect("terryLeftMove", RectMake(60, 90, 180 - 60, 400 - 90));
 
 	//뒷무빙
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightBackMove", "terryBackMove", 0, 5, 6, false, false);
-	KEYANIMANAGER->setCollisionRect("terryRightBackMove", RectMake(100, 90, 250 - 100, 400 - 90));
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftBackMove", "terryBackMove", 6, 11, 6, false, false);
-	KEYANIMANAGER->setCollisionRect("terryLeftBackMove", RectMake(20, 90, 180 - 20, 400 - 90));
 
 	//대쉬무빙
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightDashMove", "terryDashMove", 0, 9, 8, false, false);
@@ -56,22 +50,15 @@ HRESULT terry::init(vector2D pos)
 
 	//제자리 점프
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightJump", "terryJump", 0, 5, 8, false, false);
-	KEYANIMANAGER->setCollisionRect("terryRightJump", RectMake(80, 42, 238 - 80, 500 - 42));
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftJump", "terryJump", 6, 11, 8, false, false);
-	KEYANIMANAGER->setCollisionRect("terryLeftJump", RectMake(80, 42, 238 - 80, 500 - 42));
 
 	//무브 점프
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightMoveJump", "terryMoveJump", 0, 4, 8, false, false);
-	KEYANIMANAGER->setCollisionRect("terryRightMoveJump", RectMake(80, 210, 230 - 80, 400 - 210));
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftMoveJump", "terryMoveJump", 5, 9, 8, false, false);
-	KEYANIMANAGER->setCollisionRect("terryLeftMoveJump", RectMake(80, 210, 230 - 80, 400 - 210));
 
 	//백 무브 점프
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightBackMoveJump", "terryBackMoveJump", 0, 4, 8, false, false);
-	KEYANIMANAGER->setCollisionRect("terryRightBackMoveJump", RectMake(80, 210, 230 - 80, 400 - 210));
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftBackMoveJump", "terryBackMoveJump", 5, 9, 8, false, false);
-	KEYANIMANAGER->setCollisionRect("terryLeftBackMoveJump", RectMake(80, 210, 230 - 80, 400 - 210));
-	
 
 	//스탠딩 막기
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightDefence", "terryDefence", 0, 2, 8, false, false);
@@ -104,8 +91,6 @@ HRESULT terry::init(vector2D pos)
 	});
 	_isEnemyRight = true;
 
-	
-
 
 	return S_OK;
 }
@@ -122,7 +107,7 @@ void terry::update()
 	stateUpdate(_state);
 	enemyPos();
 	
-	
+
 }
 void terry::render()
 {
@@ -174,35 +159,36 @@ void terry::changeState(tagTerryState::Enum state)
 		break;		
 	case tagTerryState::RIGHT_JUMP: 
 		this->setAnimation("terryRightJump");
-		jump(30);
+		jump(55);
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
 		break;
 	case tagTerryState::LEFT_JUMP:
 		this->setAnimation("terryLeftJump");
-		jump(30);
+		jump(55);
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
 		break;
 	case tagTerryState::RIGHT_MOVE_JUMP: 
 		this->setAnimation("terryRightMoveJump");
-		jump(30);
+		jump(55);
+		_pos.x -= 30;
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
 		break;
 	case tagTerryState::LEFT_MOVE_JUMP:
 		this->setAnimation("terryLeftMoveJump");
-		jump(30);
-		
+		jump(55);
+		_pos.x += 30;
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
 		break;
 	case tagTerryState::RIGHT_BACK_MOVE_JUMP:
 		this->setAnimation("terryRightBackMoveJump");
-		jump(30);
-		
+		jump(55);
+		_pos.x += 30;
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
 		break;
 	case tagTerryState::LEFT_BACK_MOVE_JUMP:
 		this->setAnimation("terryLeftBackMoveJump");
-		jump(30);
-		
+		jump(55);
+		_pos.x -= 30;
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
 		break;		
 	case tagTerryState::RIGHT_DEFENCE: 
@@ -218,85 +204,36 @@ void terry::changeState(tagTerryState::Enum state)
 		this->setAnimation("terryLeftSitDefence");
 		break;		
 	case tagTerryState::RIGHT_ATTACK: 
-	{
 		this->setAnimation("terryRightAttack");
-
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
-
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x - 170, _pos.y - 120), vector2D(50, 50), _enemy, 0.1f);
-		WORLD->addObject(hitbox);
-	}
 		break;
 	case tagTerryState::LEFT_ATTACK:
-	{
 		this->setAnimation("terryLeftAttack");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
-
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x + 170, _pos.y - 120), vector2D(50, 50), _enemy, 0.1f);
-		WORLD->addObject(hitbox);
-	}
-	break;
-	case tagTerryState::RIGHT_KICK:
-	{
+		break;
+	case tagTerryState::RIGHT_KICK: 
 		this->setAnimation("terryRightKick");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
-
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x - 220, _pos.y - 50), vector2D(50, 80), _enemy, 0.1f);
-		WORLD->addObject(hitbox);
-	}
 		break;
 	case tagTerryState::LEFT_KICK:
-	{
 		this->setAnimation("terryLeftKick");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
-
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x + 220, _pos.y - 50), vector2D(50, 80), _enemy, 0.1f);
-		WORLD->addObject(hitbox);
-	}
 		break;
 	case tagTerryState::RIGHT_POWER_ATTACK: 
-	{
 		this->setAnimation("terryRightPowerAttack");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
-
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x - 200, _pos.y - 80), vector2D(50, 60), _enemy, 0.1f);
-		WORLD->addObject(hitbox);
-	}
 		break;
 	case tagTerryState::LEFT_POWER_ATTACK:
-	{
 		this->setAnimation("terryLeftPowerAttack");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
-
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x + 200, _pos.y - 80), vector2D(50, 60), _enemy, 0.1f);
-		WORLD->addObject(hitbox);
-	}
 		break;
 	case tagTerryState::RIGHT_POWER_KICK: 
-	{
 		this->setAnimation("terryRightPowerKick");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
-
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x - 200, _pos.y - 120), vector2D(50, 120), _enemy, 0.1f);
-		WORLD->addObject(hitbox);
-	}
 		break;
 	case tagTerryState::LEFT_POWER_KICK:
-	{
 		this->setAnimation("terryLeftPowerKick");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
-
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x + 200, _pos.y - 120), vector2D(50, 120), _enemy, 0.1f);
-		WORLD->addObject(hitbox);
-	}
 		break;
 	}
 	_state = state;
@@ -569,16 +506,12 @@ void terry::stateUpdate(tagTerryState::Enum state)
 	case tagTerryState::LEFT_JUMP:
 		break;
 	case tagTerryState::RIGHT_MOVE_JUMP:
-		_pos.x -= 10;
 		break;
 	case tagTerryState::LEFT_MOVE_JUMP:
-		_pos.x += 10;
 		break;
 	case tagTerryState::RIGHT_BACK_MOVE_JUMP:
-		_pos.x += 10;
 		break;
 	case tagTerryState::LEFT_BACK_MOVE_JUMP:
-		_pos.x -= 10;
 		break;
 	case tagTerryState::RIGHT_DEFENCE:
 		break;
