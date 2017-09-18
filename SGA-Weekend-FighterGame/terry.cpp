@@ -91,6 +91,8 @@ HRESULT terry::init(vector2D pos)
 	});
 	_isEnemyRight = true;
 
+	
+
 
 	return S_OK;
 }
@@ -107,7 +109,7 @@ void terry::update()
 	stateUpdate(_state);
 	enemyPos();
 	
-
+	
 }
 void terry::render()
 {
@@ -170,25 +172,24 @@ void terry::changeState(tagTerryState::Enum state)
 	case tagTerryState::RIGHT_MOVE_JUMP: 
 		this->setAnimation("terryRightMoveJump");
 		jump(55);
-		_pos.x -= 30;
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
 		break;
 	case tagTerryState::LEFT_MOVE_JUMP:
 		this->setAnimation("terryLeftMoveJump");
 		jump(55);
-		_pos.x += 30;
+		
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
 		break;
 	case tagTerryState::RIGHT_BACK_MOVE_JUMP:
 		this->setAnimation("terryRightBackMoveJump");
 		jump(55);
-		_pos.x += 30;
+		
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
 		break;
 	case tagTerryState::LEFT_BACK_MOVE_JUMP:
 		this->setAnimation("terryLeftBackMoveJump");
 		jump(55);
-		_pos.x -= 30;
+		
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
 		break;		
 	case tagTerryState::RIGHT_DEFENCE: 
@@ -204,36 +205,85 @@ void terry::changeState(tagTerryState::Enum state)
 		this->setAnimation("terryLeftSitDefence");
 		break;		
 	case tagTerryState::RIGHT_ATTACK: 
+	{
 		this->setAnimation("terryRightAttack");
+
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x - 170, _pos.y - 120), vector2D(50, 50), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	case tagTerryState::LEFT_ATTACK:
+	{
 		this->setAnimation("terryLeftAttack");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
-		break;
-	case tagTerryState::RIGHT_KICK: 
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x + 170, _pos.y - 120), vector2D(50, 50), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
+	break;
+	case tagTerryState::RIGHT_KICK:
+	{
 		this->setAnimation("terryRightKick");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x - 220, _pos.y - 50), vector2D(50, 80), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	case tagTerryState::LEFT_KICK:
+	{
 		this->setAnimation("terryLeftKick");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x + 220, _pos.y - 50), vector2D(50, 80), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	case tagTerryState::RIGHT_POWER_ATTACK: 
+	{
 		this->setAnimation("terryRightPowerAttack");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x - 200, _pos.y - 80), vector2D(50, 60), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	case tagTerryState::LEFT_POWER_ATTACK:
+	{
 		this->setAnimation("terryLeftPowerAttack");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x + 200, _pos.y - 80), vector2D(50, 60), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	case tagTerryState::RIGHT_POWER_KICK: 
+	{
 		this->setAnimation("terryRightPowerKick");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x - 200, _pos.y - 120), vector2D(50, 120), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	case tagTerryState::LEFT_POWER_KICK:
+	{
 		this->setAnimation("terryLeftPowerKick");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x + 200, _pos.y - 120), vector2D(50, 120), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	}
 	_state = state;
@@ -506,12 +556,16 @@ void terry::stateUpdate(tagTerryState::Enum state)
 	case tagTerryState::LEFT_JUMP:
 		break;
 	case tagTerryState::RIGHT_MOVE_JUMP:
+		_pos.x -= 10;
 		break;
 	case tagTerryState::LEFT_MOVE_JUMP:
+		_pos.x += 10;
 		break;
 	case tagTerryState::RIGHT_BACK_MOVE_JUMP:
+		_pos.x += 10;
 		break;
 	case tagTerryState::LEFT_BACK_MOVE_JUMP:
+		_pos.x -= 10;
 		break;
 	case tagTerryState::RIGHT_DEFENCE:
 		break;
