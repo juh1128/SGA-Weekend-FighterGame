@@ -8,21 +8,18 @@ HRESULT athena::init(vector2D pos)
 //===============================================================================================
 	
 	//ÃÊ±âÈ­
-	IMAGEMANAGER->addFrameImage("athena", "resource/siyeong/´ë±â,¾É±â.bmp", 100, WINSIZEY / 2 - 50, 1440, 1260, 8, 6, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("athena2", "resource/siyeong/¿ÞÂÊ°È±â,¾É±â.bmp", 100, WINSIZEY / 2 - 50, 1440, 1260, 8, 6, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("athenaAction", "resource/siyeong/°­¾à¼Õ¹ß.bmp", 100, WINSIZEY / 2 - 50, 1440, 840, 8, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("athenaAction2", "resource/siyeong/¿ÞÂÊ°­¾à¼Õ¹ß.bmp", 100, WINSIZEY / 2 - 50, 1440, 840, 8, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("athena", "resource/siyeong/´ë±â,¾É±â.bmp", 100, WINSIZEY / 2 - 50, 2880, 2520, 8, 6, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("athena2", "resource/siyeong/¿ÞÂÊ°È±â,¾É±â.bmp", 100, WINSIZEY / 2 - 50, 2880, 2520, 8, 6, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("athenaAction", "resource/siyeong/°­¾à¼Õ¹ß.bmp", 100, WINSIZEY / 2 - 50, 2880, 1680, 8, 4, true, RGB(255, 0, 255));
 
-
-	//¾Ö´Ï¸ÞÀÌ¼Ç
-	
-	int rightStop[] = { 0,1,2,3,4,5,6,7 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaRightStop", "athena", rightStop, 8, 10, true);
-	KEYANIMANAGER->setCollisionRect("athenaRightStop", RectMake(90, 40, 130, 350));
-
+	////¾Ö´Ï¸ÞÀÌ¼Ç
 	int leftStop[] = { 0,1,2,3,4,5,6,7 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftStop", "athena2", leftStop, 8, 10, true);
 	KEYANIMANAGER->setCollisionRect("athenaLeftStop", RectMake(90, 40, 130, 350));
+
+	int rightStop[] = { 0,1,2,3,4,5,6,7 };
+	KEYANIMANAGER->addArrayFrameAnimation("athenaRightStop", "athena", rightStop, 8, 10, true);
+	KEYANIMANAGER->setCollisionRect("athenaRightStop", RectMake(90, 40, 130, 350));
 
 	int rightMove[] = { 8,9,10,11,12,13,14,15,16,17,18,19 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightMove", "athena", rightMove, 12, 15, true);
@@ -37,25 +34,14 @@ HRESULT athena::init(vector2D pos)
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightBackStep", "athena", rightBackStep, 8, 10, true);
 	KEYANIMANAGER->setCollisionRect("athenaRightBackStep", RectMake(90, 40, 130, 350));
 
-	int leftBackStep[] = { 24,25,26,27,28,29,30,31 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftBackStep", "athena2", leftBackStep, 8, 10, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftBackStep", RectMake(90, 40, 130, 350));
-
 	int rightJump[] = { 32,33,34,35,36,37,38,39,40 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightJump", "athena", rightJump, 9, 13, false);
 	KEYANIMANAGER->setCollisionRect("athenaRightJump", RectMake(90, 40, 130, 350));
-
-	int leftJump[] = { 32,33,34,35,36,37,38,39,40 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftJump", "athena", leftJump, 9, 13, false);
-	KEYANIMANAGER->setCollisionRect("athenaLeftJump", RectMake(90, 40, 130, 350));
 
 	int rightSit[] = { 42,43,44,45 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightSit", "athena", rightSit, 4, 8, true);
 	KEYANIMANAGER->setCollisionRect("athenaRightSit", RectMake(90, 130, 130, 260));
 
-	int leftSit[] = { 42,43,44,45 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftSit", "athena2", leftSit, 4, 8, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftSit", RectMake(90, 130, 130, 260));
 
 	//int rightDash[] = { 47,48,49,50,51 };
 	//KEYANIMANAGER->addArrayFrameAnimation("athenaLeftDash", "athena", rightDash, 7, 15, true);
@@ -79,36 +65,17 @@ HRESULT athena::init(vector2D pos)
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightFootCount", "athenaAction", rightFootCount, 7, 15, true);
 	KEYANIMANAGER->setCollisionRect("athenaRightFootCount", RectMake(90, 40, 130, 350));
 
-	int leftHandAttack[] = { 8,9,10,11,12 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftHandAttack", "athenaAction2", rightHandAttack, 5, 10, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftHandAttack", RectMake(90, 40, 130, 350));
-
-	int leftFootAttack[] = { 13,14 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftFootAttack", "athenaAction2", rightFootAttack, 2, 5, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftFootAttack", RectMake(90, 40, 130, 350));
-
-	int leftHandCount[] = { 16,17,18,19,20 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftHandCount", "athenaAction2", rightHandCount, 5, 10, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftHandCount", RectMake(90, 40, 130, 350));
-
-	int leftFootCount[] = { 24,25,26,27,28,29,30 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftFootCount", "athenaAction2", rightFootCount, 7, 15, true);
-	KEYANIMANAGER->setCollisionRect("athenaLeftFootCount", RectMake(90, 40, 130, 350));
-
 //================================================================================================
 	
 	
 	character::init("athena", pos, "athenaRightStop");
 	
-	_state = athenaState::LEFT_STOP;
-	
+	_state = athenaState::RIGHT_STOP;
 	
 	this->addCallback("changeState", [this](tagMessage msg)
 	{
 		this->changeState((athenaState::Enum)msg.data);
 	});
-
-	_isEnemyDirection = true;		//»ó´ë¹æÀÌ ¿À¸¥ÂÊ¿¡ ÀÖÀ»‹š
 
 	return S_OK;
 }
@@ -122,7 +89,7 @@ void athena::update()
 {
 	character::update();
 	stateUpdate(_state);
-	this->enemyDirectiion();
+
 }
 
 void athena::render()
@@ -137,54 +104,46 @@ void athena::changeState(athenaState::Enum state)					//»óÅÂ°¡ º¯ÇÏ´Â ¼ø°£ ÇÑ¹ø¸
 	case athenaState::RIGHT_STOP:				//¿À¸¥ÂÊ ´ë±â
 		this->setAnimation("athenaRightStop");
 		break;
-
+	
 	case athenaState::LEFT_STOP:				//¿ÞÂÊ ´ë±â
 		this->setAnimation("athenaLeftStop");
-		break;
+	
 	case athenaState::RIGHT_MOVE:				//¿À¸¥ÂÊ ÀÌµ¿
 		this->setAnimation("athenaRightMove");
 		break;
 
 	case athenaState::RIGHT_BACK_STEP:			//¿À¸¥ÂÊ¹æÇâÀ¸·Î µÚ·Î ÀÌµ¿
 		this->setAnimation("athenaRightBackStep");
-		break;
-
-	case athenaState::LEFT_BACK_STEP:			//¿ÞÂÊ¹æÇâ µÚ·Î ÀÌµ¿
-		this->setAnimation("athenaLeftBackStep");
-		break;
-
+	break;
+	
 	case athenaState::LEFT_MOVE:				//¿ÞÂÊ ÀÌµ¿
-
 		this->setAnimation("athenaLeftMove");
-		break;
-
-	case athenaState::RIGHT_JUMP:	case athenaState::RIGHT_MOVE_JUMP:			//¿À¸¥ÂÊ Á¡ÇÁ
+	break;
+	
+	case athenaState::RIGHT_JUMP:				//¿À¸¥ÂÊ Á¡ÇÁ
 		this->setAnimation("athenaRightJump");
 		jump(35);
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::RIGHT_STOP));
-		break;
-
-	case athenaState::LEFT_JUMP: case athenaState::LEFT_MOVE_JUMP:				//¿ÞÂÊ Á¡ÇÁ
+	break;
+	
+	case athenaState::LEFT_JUMP:				//¿ÞÂÊ Á¡ÇÁ
 		this->setAnimation("athenaLeftJump");
-		jump(35);
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::LEFT_STOP));
 		break;
-
+	
 	case athenaState::RIGHT_DASH:				//¿À¸¥ÂÊ ´ë½¬
 		this->setAnimation("athenRightDash");
 		break;
-
+	
 	case athenaState::LEFT_DASH:				//¿ÞÂÊ ´ë½¬
 		this->setAnimation("athenaLeftDash");
 		break;
 
 	case athenaState::RIGHT_SIT:				//¿À¸¥ÂÊ ¾É±â
 		this->setAnimation("athenaRightSit");
-		break;
+	break;
 
 	case athenaState::LEFT_SIT:
-		this->setAnimation("athenaLeftSit");	//¿ÞÂÊ ¾É±â
-		break;
+	break;
 
 	case athenaState::RIGHT_FOOT_ATTACK:
 	{
@@ -196,31 +155,13 @@ void athena::changeState(athenaState::Enum state)					//»óÅÂ°¡ º¯ÇÏ´Â ¼ø°£ ÇÑ¹ø¸
 		WORLD->addObject(hitbox);
 	}
 	break;
-
+	
 	case athenaState::LEFT_FOOT_ATTACK:
-	{
-		this->setAnimation("athenaLeftFootAttack");	//¾à¹ß °ø°Ý
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::LEFT_STOP));
-
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x + 120, _pos.y - 70), vector2D(180, 120), _enemy, 0.5f);
-		WORLD->addObject(hitbox);
-	}
-	break;
-
-	case athenaState::LEFT_HAND_ATTACK:
-	{
-		this->setAnimation("athenaLeftHandAttack");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::LEFT_STOP));
-
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x + 120, _pos.y - 70), vector2D(180, 100), _enemy, 0.5f);
-		WORLD->addObject(hitbox);
-	}
-	break;
-
+		break;
+	
 	case athenaState::RIGHT_HAND_ATTACK:	//¾à¼Õ °ø°Ý
 	{
+
 		this->setAnimation("athenaRightHandAttack");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::RIGHT_STOP));
 
@@ -229,7 +170,7 @@ void athena::changeState(athenaState::Enum state)					//»óÅÂ°¡ º¯ÇÏ´Â ¼ø°£ ÇÑ¹ø¸
 		WORLD->addObject(hitbox);
 	}
 	break;
-
+	
 	case athenaState::RIGHT_FOOT_COUNT:
 	{
 		this->setAnimation("athenaRightFootCount");
@@ -240,20 +181,8 @@ void athena::changeState(athenaState::Enum state)					//»óÅÂ°¡ º¯ÇÏ´Â ¼ø°£ ÇÑ¹ø¸
 		hitbox->init(30, vector2D(_pos.x + 120, _pos.y - 70), vector2D(180, 120), _enemy, 0.5f);
 		WORLD->addObject(hitbox);
 	}
-	break;
-
-	case athenaState::LEFT_FOOT_COUNT:
-	{
-		this->setAnimation("athenaLeftFootCount");
-
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::LEFT_STOP));
-
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x + 120, _pos.y - 70), vector2D(180, 120), _enemy, 0.5f);
-		WORLD->addObject(hitbox);
-	}
-	break;
-
+		break;
+	
 	case athenaState::RIGHT_HAND_COUNT:
 	{
 		this->setAnimation("athenaRightHandCount");
@@ -263,19 +192,9 @@ void athena::changeState(athenaState::Enum state)					//»óÅÂ°¡ º¯ÇÏ´Â ¼ø°£ ÇÑ¹ø¸
 		hitbox->init(30, vector2D(_pos.x + 120, _pos.y - 70), vector2D(180, 100), _enemy, 0.5f);
 		WORLD->addObject(hitbox);
 	}
-	break;
-
-
-	case athenaState::LEFT_HAND_COUNT:
-		{
-			this->setAnimation("athenaLeftHandCount");
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::LEFT_STOP));
-			
-			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x + 120, _pos.y - 70), vector2D(180, 100), _enemy, 0.5f);
-			WORLD->addObject(hitbox);
-		}
+		break;
 	}
+	
 	_state = state;
 }
 
@@ -318,54 +237,7 @@ void athena::stateUpdate(athenaState::Enum state)						//¾÷µ¥ÀÌÆ®¿¡¼­ °è¼Ó µ¹¾Æ°
 		{
 			changeState(athenaState::RIGHT_HAND_COUNT);
 		}
-		
-		if (!_isEnemyDirection)
-		{
-			this->changeState(athenaState::LEFT_STOP);
-		}
 		break;
-
-	case athenaState::LEFT_STOP:
-		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
-		{
-			changeState(athenaState::LEFT_MOVE);
-		}
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::RIGHT]))
-		{
-			changeState(athenaState::LEFT_BACK_STEP);
-		}
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
-		{
-			changeState(athenaState::LEFT_JUMP);
-		}
-		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
-		{
-			changeState(athenaState::LEFT_SIT);
-		}
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
-		{
-			changeState(athenaState::LEFT_HAND_ATTACK);
-		}
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
-		{
-			changeState(athenaState::LEFT_FOOT_ATTACK);
-		}
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
-		{
-			changeState(athenaState::LEFT_HAND_COUNT);
-		}
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
-		{
-			changeState(athenaState::LEFT_FOOT_COUNT);
-		}
-	
-		if (_isEnemyDirection)
-		{
-			this->changeState(athenaState::RIGHT_STOP);
-		}
-		
-		
-	break;
 	
 	case athenaState::RIGHT_MOVE:
 		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))				//¿À¸¥ÂÊÀ» º¸°í ¿À¸¥ÂÊÅ°¸¦ ²Ú´­·¶À»¶§ (¿À¸¥ÂÊ ÀÌµ¿)
@@ -378,116 +250,26 @@ void athena::stateUpdate(athenaState::Enum state)						//¾÷µ¥ÀÌÆ®¿¡¼­ °è¼Ó µ¹¾Æ°
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))				//¿À¸¥ÂÊ ÀÌµ¿½Ã¿¡ ¿ÞÂÊÅ°¸¦ ÇÑ¹ø¸¸ ´­·¶À»¶§ (¿ÞÂÊÀÌµ¿ »óÅÂº¯°æ)
 		{
-			changeState(athenaState::RIGHT_BACK_STEP);
-		}
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
-		{
-			changeState(athenaState::RIGHT_MOVE_JUMP);
-		}
-
-		if (_isEnemyDirection)											//»ó´ë¹æÀÌ ¿À¸¥ÂÊ¿¡ ÀÖ´Ù¸é
-		{
-			if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))			//Å°¿¡¼­ ¼Õ¶§¸é
-			{
-				this->changeState(athenaState::RIGHT_STOP);				//¿À¸¥ÂÊ Á¤Áö»óÅÂ
-			}
-		}
-
-		else if (!_isEnemyDirection)								//»ó´ë¹æÀÌ ¿ÞÂÊ¿¡ ÀÖ´Ù¸é
-		{
-			if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))		//Å°¿¡¼­ ¼Õ¶§¸é
-			{
-				this->changeState(athenaState::LEFT_STOP);			//¿ÞÂÊ Á¤Áö»óÅÂ·Î º¯È¯ 
-			}
-
-		}
-		break;
-
-	case athenaState::RIGHT_BACK_STEP:
-		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))				//¿ÞÂÊÅ°¸¦ ²Ú ´©¸£°í ÀÖÀ»¶§ (¿ÞÂÊÀ¸·Î ÀÌµ¿)
-		{
-			_pos.x -= 10;
-		}
-		else if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))			//¿À¸¥ÂÊÀ¸·Î ¿òÁ÷ÀÏ¶§¿¡ µÞ°ÉÀ½Áú ¹é½ºÅÜ
-		{
-			changeState(athenaState::RIGHT_STOP);
-		}
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::RIGHT]))
-		{
-			changeState(athenaState::RIGHT_MOVE);
-		}
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
-		{
-			changeState(athenaState::LEFT_MOVE_JUMP);
-		}
-		break;
-
-	case athenaState::LEFT_BACK_STEP:
-		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
-		{
-			_pos.x += 10;
-		}
-		else if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
-		{
-			changeState(athenaState::LEFT_STOP);
-		}
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))
-		{
 			changeState(athenaState::LEFT_MOVE);
-		}
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
-		{
-			changeState(athenaState::RIGHT_MOVE_JUMP);
 		}
 		break;
 	
-	case athenaState::LEFT_MOVE:
+	case athenaState::LEFT_MOVE: case athenaState::RIGHT_BACK_STEP:
 		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))				//¿ÞÂÊÅ°¸¦ ²Ú ´©¸£°í ÀÖÀ»¶§ (¿ÞÂÊÀ¸·Î ÀÌµ¿)
 		{
 			_pos.x -= 10;
 		}
-		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))				//¿ÞÂÊÅ°¸¦ ¶ÂÀ»¶§ »óÅÂ (¿À¸¥ÂÊ ´ë±â »óÅÂº¯°æ)
-		{
-			changeState(athenaState::LEFT_STOP);
-		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::RIGHT]))				//¿ÞÂÊÀ¸·Î ÀÌµ¿ÁßÀÏ¶§ ¿À¸¥ÂÊÅ°¸¦ ÇÑ¹ø¸¸ ´­·¶À»¶§ (¿À¸¥ÂÊÀÌµ¿ »óÅÂº¯°æ)
 		{
-			changeState(athenaState::LEFT_BACK_STEP);
+			changeState(athenaState::RIGHT_MOVE);
 		}
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))				//¿ÞÂÊÅ°¸¦ ¶ÂÀ»¶§ »óÅÂ (¿À¸¥ÂÊ ´ë±â »óÅÂº¯°æ)
 		{
-			changeState(athenaState::LEFT_MOVE_JUMP);
-		}
-		
-		if (_isEnemyDirection)											//»ó´ë¹æÀÌ ¿À¸¥ÂÊ¿¡ ÀÖ´Ù¸é
-		{
-			if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))			//¿ÞÂÊÀÌµ¿ Å°¿¡¼­ ¼Õ¶§¸é 
-			{
-				this->changeState(athenaState::RIGHT_STOP);				//¿À¸¥ÂÊ Á¤Áö»óÅÂ·Î º¯È¯
-			}
-		}
-																
-		else if (!_isEnemyDirection)									//»ó´ë¹æÀÌ ¿ÞÂÊ¿¡ ÀÖ´Ù¸é
-		{
-			if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))			//¿ÞÂÊ ÀÌµ¿Å°¿¡¼­ ¼Õ¶§¸é
-			{
-				this->changeState(athenaState::LEFT_STOP);				//¿ÞÂÊ Á¤Áö»óÅÂ·Î º¯È¯ 
-			}
+			changeState(athenaState::RIGHT_STOP);
 		}
 		break;
-
+	
 	case athenaState::RIGHT_JUMP:
-	break;
-
-	case athenaState::RIGHT_MOVE_JUMP:
-		_pos.x += 10;
-	break;
-
-	case athenaState::LEFT_JUMP:
-	break;
-
-	case athenaState::LEFT_MOVE_JUMP:
-		_pos.x -= 10;
 	break;
 
 	case athenaState::RIGHT_SIT:
@@ -496,12 +278,6 @@ void athena::stateUpdate(athenaState::Enum state)						//¾÷µ¥ÀÌÆ®¿¡¼­ °è¼Ó µ¹¾Æ°
 			changeState(athenaState::RIGHT_STOP);
 		}
 	break;
-
-	case athenaState::LEFT_SIT:
-		if (KEYMANAGER->isOnceKeyUp(keyList[key::DOWN]))				//¾Æ·¡Å°¸¦ ¶ÂÀ»¶§ »óÅÂ(¿ÞÂÊ ´ë±â »óÅÂ º¯°æ)
-		{
-			changeState(athenaState::LEFT_STOP);
-		}
 	
 	case athenaState::RIGHT_DASH:
 	break;
@@ -517,33 +293,5 @@ void athena::stateUpdate(athenaState::Enum state)						//¾÷µ¥ÀÌÆ®¿¡¼­ °è¼Ó µ¹¾Æ°
 	
 	case athenaState::RIGHT_HAND_COUNT:
 	break;
-
-	case athenaState::LEFT_DASH:
-		break;		 
-
-	case athenaState::LEFT_FOOT_ATTACK:
-		break;		
-
-	case athenaState::LEFT_HAND_ATTACK:
-		break;		
-
-	case athenaState::LEFT_FOOT_COUNT:
-		break;		  
-
-	case athenaState::LEFT_HAND_COUNT:
-		break;
-	}
-
-}
-
-void athena::enemyDirectiion()
-{
-	if (_pos.x < _enemy->_pos.x&&!_isEnemyDirection)
-	{
-		_isEnemyDirection = true;
-	}
-	else if (_pos.x > _enemy->_pos.x&&_isEnemyDirection)
-	{
-		_isEnemyDirection = false;
 	}
 }

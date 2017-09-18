@@ -54,8 +54,6 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 {
 	switch (_state)
 	{
-		if (_isEnemyRight == true)
-		{
 	case tagIoriState::RIGHT_STOP:
 		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
 		{
@@ -69,7 +67,7 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
 		{
 			changeState(tagIoriState::RIGHT_SIT);
-
+			
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
 		{
@@ -87,54 +85,16 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		{
 			changeState(tagIoriState::STRONG_KICK);
 		}
-
+	
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
 		{
 			changeState(tagIoriState::RIGHT_JUMP);
-
+			
 		}
 
 		break;
-		}
-		case tagIoriState::LEFT_STOP:
-			if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
-			{
-				changeState(tagIoriState::LEFT_BACK_MOVE);
-			}
-
-			if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))
-			{
-				changeState(tagIoriState::LEFT_MOVE);
-			}
-			if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
-			{
-				changeState(tagIoriState::LEFT_SIT);
-
-			}
-			if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
-			{
-				changeState(tagIoriState::ATTAK);
-			}
-			if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
-			{
-				changeState(tagIoriState::KICK);
-			}
-			if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
-			{
-				changeState(tagIoriState::STRONG_ATTACK);
-			}
-			if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
-			{
-				changeState(tagIoriState::STRONG_KICK);
-			}
-
-			if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
-			{
-				changeState(tagIoriState::LEFT_JUMP);
-
-			}
-
-			break;
+		//case tagIoriState::LEFT_STOP:
+		//	break;
 	case tagIoriState::RIGHT_MOVE:
 	{
 		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
@@ -257,9 +217,8 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 	case tagIoriState::RIGHT_STOP:
 		this->setAnimation("이오리_오른쪽_멈춤");
 		break;
-		case tagIoriState::LEFT_STOP:
-			this->setAnimation("이오리_왼쪽_멈춤");
-			break;
+		//case tagIoriState::LEFT_STOP:
+		//	break;
 	case tagIoriState::RIGHT_MOVE:
 	{
 		this->setAnimation("이오리_오른쪽_이동");
@@ -267,33 +226,27 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 	}
 	break;
 	case tagIoriState::LEFT_MOVE:
-		this->setAnimation("이오리_왼쪽_이동");
 		break;
 	case tagIoriState::RIGHT_RUN:
 		this->setAnimation("이오리_오른쪽_대쉬");
 		break;
 	case tagIoriState::LEFT_RUN:
-		this->setAnimation("이오리_오른쪽_대쉬");
 		break;
 	case tagIoriState::RIGHT_BACK_MOVE:
 		this->setAnimation("이오리_오른쪽_뒤_이동");
 		break;
 	case tagIoriState::LEFT_BACK_MOVE:
-		this->setAnimation("이오리_왼쪽_뒤_이동");
 		break;
 	case tagIoriState::RIGHT_SIT:
 		this->setAnimation("이오리_오른쪽_앉음");
 		break;
 	case tagIoriState::LEFT_SIT:
-		this->setAnimation("이오리_왼쪽_앉음");
 		break;
 	case tagIoriState::RIGHT_JUMP:
 		this->setAnimation("이오리_오른쪽_점프");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.1f, tagIoriState::RIGHT_STOP));
 		break;
 	case tagIoriState::LEFT_JUMP:
-		this->setAnimation("이오리_왼쪽_점프");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.1f, tagIoriState::LEFT_STOP));
 		break;
 	case tagIoriState::ATTAK:
 		this->setAnimation("이오리_오른쪽_약손");
