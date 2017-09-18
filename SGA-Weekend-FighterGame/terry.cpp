@@ -54,7 +54,7 @@ HRESULT terry::init(vector2D pos)
 
 	//무브 점프
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightMoveJump", "terryMoveJump", 0, 4, 8, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("terryLefttMoveJump", "terryMoveJump", 5, 9, 8, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftMoveJump", "terryMoveJump", 5, 9, 8, false, false);
 
 	//백 무브 점프
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightBackMoveJump", "terryBackMoveJump", 0, 4, 8, false, false);
@@ -69,17 +69,17 @@ HRESULT terry::init(vector2D pos)
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftSitDefence", "terrySitDefence", 3, 5, 8, false, false);
 
 	//약손
-	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightAttack", "terryAttack", 0, 1, 6, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftAttack", "terryAttack", 3, 2, 6, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightAttack", "terryAttack", 0, 2, 15, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftAttack", "terryAttack", 3, 2, 15, false, false);
 	//약발
-	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightKick", "terryKick", 0, 3, 6, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftKick", "terryKick", 7, 4, 6, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightKick", "terryKick", 0, 4, 15, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftKick", "terryKick", 7, 4, 15, false, false);
 	//강손
-	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightPowerAttack", "terryPowerAttack", 0, 2, 6, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftPowerAttack", "terryPowerAttack", 5, 3, 6, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightPowerAttack", "terryPowerAttack", 0, 2, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftPowerAttack", "terryPowerAttack", 5, 3, 10, false, false);
 	//강발
-	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightPowerKick", "terryPowerKick", 0, 5, 8, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftPowerKick", "terryPowerKick", 11, 6, 8, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightPowerKick", "terryPowerKick", 0, 5, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftPowerKick", "terryPowerKick", 11, 6, 10, false, false);
 
 
 	character::init("테리", pos, "terryLeftIdle");
@@ -89,8 +89,10 @@ HRESULT terry::init(vector2D pos)
 	{
 		this->changeState((tagTerryState::Enum)msg.data);
 	});
+	_isEnemyRight = true;
 
 	
+
 
 	return S_OK;
 }
@@ -105,8 +107,9 @@ void terry::update()
 	character::update();
 
 	stateUpdate(_state);
+	enemyPos();
 	
-
+	
 }
 void terry::render()
 {
@@ -150,31 +153,44 @@ void terry::changeState(tagTerryState::Enum state)
 		break;		
 	case tagTerryState::RIGHT_SIT: 
 		this->setAnimation("terryRightSit");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
 		break;
 	case tagTerryState::LEFT_SIT:
 		this->setAnimation("terryLeftSit");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
 		break;		
 	case tagTerryState::RIGHT_JUMP: 
 		this->setAnimation("terryRightJump");
-		jump(35);
+		jump(55);
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
 		break;
 	case tagTerryState::LEFT_JUMP:
 		this->setAnimation("terryLeftJump");
-		jump(35);
+		jump(55);
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
 		break;
 	case tagTerryState::RIGHT_MOVE_JUMP: 
 		this->setAnimation("terryRightMoveJump");
+		jump(55);
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
 		break;
 	case tagTerryState::LEFT_MOVE_JUMP:
 		this->setAnimation("terryLeftMoveJump");
+		jump(55);
+		
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
 		break;
 	case tagTerryState::RIGHT_BACK_MOVE_JUMP:
 		this->setAnimation("terryRightBackMoveJump");
+		jump(55);
+		
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
 		break;
 	case tagTerryState::LEFT_BACK_MOVE_JUMP:
 		this->setAnimation("terryLeftBackMoveJump");
+		jump(55);
+		
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
 		break;		
 	case tagTerryState::RIGHT_DEFENCE: 
 		this->setAnimation("terryRightDefence");
@@ -189,28 +205,85 @@ void terry::changeState(tagTerryState::Enum state)
 		this->setAnimation("terryLeftSitDefence");
 		break;		
 	case tagTerryState::RIGHT_ATTACK: 
+	{
 		this->setAnimation("terryRightAttack");
+
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x - 170, _pos.y - 120), vector2D(50, 50), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	case tagTerryState::LEFT_ATTACK:
+	{
 		this->setAnimation("terryLeftAttack");
-		break;
-	case tagTerryState::RIGHT_KICK: 
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x + 170, _pos.y - 120), vector2D(50, 50), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
+	break;
+	case tagTerryState::RIGHT_KICK:
+	{
 		this->setAnimation("terryRightKick");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x - 220, _pos.y - 50), vector2D(50, 80), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	case tagTerryState::LEFT_KICK:
+	{
 		this->setAnimation("terryLeftKick");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x + 220, _pos.y - 50), vector2D(50, 80), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	case tagTerryState::RIGHT_POWER_ATTACK: 
+	{
 		this->setAnimation("terryRightPowerAttack");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x - 200, _pos.y - 80), vector2D(50, 60), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	case tagTerryState::LEFT_POWER_ATTACK:
+	{
 		this->setAnimation("terryLeftPowerAttack");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x + 200, _pos.y - 80), vector2D(50, 60), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	case tagTerryState::RIGHT_POWER_KICK: 
+	{
 		this->setAnimation("terryRightPowerKick");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x - 200, _pos.y - 120), vector2D(50, 120), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	case tagTerryState::LEFT_POWER_KICK:
+	{
 		this->setAnimation("terryLeftPowerKick");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
+
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_pos.x + 200, _pos.y - 120), vector2D(50, 120), _enemy, 0.1f);
+		WORLD->addObject(hitbox);
+	}
 		break;
 	}
 	_state = state;
@@ -220,6 +293,43 @@ void terry::stateUpdate(tagTerryState::Enum state)
 	switch (state)
 	{
 	case tagTerryState::RIGHT_STOP:
+		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+		{
+			changeState(tagTerryState::RIGHT_MOVE);
+		}
+		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+		{
+			changeState(tagTerryState::RIGHT_BACK_MOVE);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+		{
+			changeState(tagTerryState::RIGHT_JUMP);
+		}
+		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::RIGHT_SIT);
+		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::RIGHT_STOP);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
+		{
+			changeState(tagTerryState::RIGHT_ATTACK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
+		{
+			changeState(tagTerryState::RIGHT_KICK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
+		{
+			changeState(tagTerryState::RIGHT_POWER_ATTACK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
+		{
+			changeState(tagTerryState::RIGHT_POWER_KICK);
+		}
+		if (_isEnemyRight)changeState(tagTerryState::LEFT_STOP);
 		break;
 	case tagTerryState::LEFT_STOP:
 		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
@@ -238,6 +348,10 @@ void terry::stateUpdate(tagTerryState::Enum state)
 		{
 			changeState(tagTerryState::LEFT_SIT);
 		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::LEFT_STOP);
+		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
 		{
 			changeState(tagTerryState::LEFT_ATTACK);
@@ -254,8 +368,46 @@ void terry::stateUpdate(tagTerryState::Enum state)
 		{
 			changeState(tagTerryState::LEFT_POWER_KICK);
 		}
+		if (!_isEnemyRight)changeState(tagTerryState::RIGHT_STOP);
+
 		break;
 	case tagTerryState::RIGHT_MOVE:
+		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+		{
+			_pos.x -= 10;
+		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
+		{
+			changeState(tagTerryState::RIGHT_STOP);
+		}
+		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::RIGHT_SIT);
+		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::RIGHT_STOP);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
+		{
+			changeState(tagTerryState::RIGHT_ATTACK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
+		{
+			changeState(tagTerryState::RIGHT_KICK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
+		{
+			changeState(tagTerryState::RIGHT_POWER_ATTACK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
+		{
+			changeState(tagTerryState::RIGHT_POWER_KICK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+		{
+			changeState(tagTerryState::RIGHT_MOVE_JUMP);
+		}
 		break;
 	case tagTerryState::LEFT_MOVE:
 		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
@@ -270,10 +422,106 @@ void terry::stateUpdate(tagTerryState::Enum state)
 		{
 			changeState(tagTerryState::LEFT_SIT);
 		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::LEFT_STOP);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
+		{
+			changeState(tagTerryState::LEFT_ATTACK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
+		{
+			changeState(tagTerryState::LEFT_KICK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
+		{
+			changeState(tagTerryState::LEFT_POWER_ATTACK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
+		{
+			changeState(tagTerryState::LEFT_POWER_KICK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+		{
+			changeState(tagTerryState::LEFT_MOVE_JUMP);
+		}
 		break;
 	case tagTerryState::RIGHT_BACK_MOVE:
+		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+		{
+			_pos.x += 10;
+		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
+		{
+			changeState(tagTerryState::RIGHT_STOP);
+		}
+		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::RIGHT_SIT);
+		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::RIGHT_STOP);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
+		{
+			changeState(tagTerryState::RIGHT_ATTACK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
+		{
+			changeState(tagTerryState::RIGHT_KICK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
+		{
+			changeState(tagTerryState::RIGHT_POWER_ATTACK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
+		{
+			changeState(tagTerryState::RIGHT_POWER_KICK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+		{
+			changeState(tagTerryState::RIGHT_BACK_MOVE_JUMP);
+		}
 		break;
 	case tagTerryState::LEFT_BACK_MOVE:
+		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+		{
+			_pos.x -= 10;
+		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
+		{
+			changeState(tagTerryState::LEFT_STOP);
+		}
+		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::LEFT_SIT);
+		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::LEFT_STOP);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
+		{
+			changeState(tagTerryState::LEFT_ATTACK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
+		{
+			changeState(tagTerryState::LEFT_KICK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
+		{
+			changeState(tagTerryState::LEFT_POWER_ATTACK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
+		{
+			changeState(tagTerryState::LEFT_POWER_KICK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+		{
+			changeState(tagTerryState::LEFT_BACK_MOVE_JUMP);
+		}
 		break;
 	case tagTerryState::RIGHT_DASH_MOVE:
 		break;
@@ -284,28 +532,56 @@ void terry::stateUpdate(tagTerryState::Enum state)
 	case tagTerryState::LEFT_BACK_DASH:
 		break;
 	case tagTerryState::RIGHT_SIT:
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::RIGHT_STOP);
+		}
+		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+		{
+			changeState(tagTerryState::RIGHT_SIT_DEFENCE);
+		}
 		break;
 	case tagTerryState::LEFT_SIT:
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::LEFT_STOP);
+		}
+		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+		{
+			changeState(tagTerryState::LEFT_SIT_DEFENCE);
+		}
 		break;
 	case tagTerryState::RIGHT_JUMP:
 		break;
 	case tagTerryState::LEFT_JUMP:
 		break;
 	case tagTerryState::RIGHT_MOVE_JUMP:
+		_pos.x -= 10;
 		break;
 	case tagTerryState::LEFT_MOVE_JUMP:
+		_pos.x += 10;
 		break;
 	case tagTerryState::RIGHT_BACK_MOVE_JUMP:
+		_pos.x += 10;
 		break;
 	case tagTerryState::LEFT_BACK_MOVE_JUMP:
+		_pos.x -= 10;
 		break;
 	case tagTerryState::RIGHT_DEFENCE:
 		break;
 	case tagTerryState::LEFT_DEFENCE:
 		break;
 	case tagTerryState::RIGHT_SIT_DEFENCE:
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
+		{
+			changeState(tagTerryState::RIGHT_SIT);
+		}
 		break;
 	case tagTerryState::LEFT_SIT_DEFENCE:
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
+		{
+			changeState(tagTerryState::LEFT_SIT);
+		}
 		break;
 	case tagTerryState::RIGHT_ATTACK:
 		break;
@@ -328,7 +604,7 @@ void terry::stateUpdate(tagTerryState::Enum state)
 
 
 
-/*void terry::enemyPos()
+void terry::enemyPos()
 {
 	if (this->_pos.x > _enemy->_pos.x && _isEnemyRight)			//내 x좌표값이 상대보다 크다면  (오른쪽에 내가 서있다면)
 	{
@@ -338,4 +614,4 @@ void terry::stateUpdate(tagTerryState::Enum state)
 	{
 		_isEnemyRight = true;									//내 위치 불값 true
 	}
-}*/
+}

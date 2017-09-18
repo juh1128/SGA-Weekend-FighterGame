@@ -21,6 +21,8 @@ HRESULT ioriYagami::init(vector2D pos)
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉은_약손", "ioriYagamiSitAttackA", 4, 0, 15, false, true);
 	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_약손", RectMakeCenter(150, 200, 200, 400));
 
+
+
 	return S_OK;
 }
 void ioriYagami::release()
@@ -32,6 +34,15 @@ void ioriYagami::update()
 	character::update();
 
 	stateUpdate(_state);
+
+	if (this->_pos.x > _enemy->_pos.x && _isEnemyRight)			//내 x좌표값이 상대보다 크다면 
+	{
+		_isEnemyRight = false;						//상대위치 불값 false 
+	}
+	else if (this->_pos.x < _enemy->_pos.x && !_isEnemyRight)	//내	 x좌표값이 상대보다 작다면 
+	{
+		_isEnemyRight = true;						//내 위치 불값 true
+	}
 
 }
 void ioriYagami::render()
@@ -158,6 +169,23 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		{
 			jump(25);
 		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
+		{
+			changeState(tagIoriState::JUMP_ATTAK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
+		{
+			changeState(tagIoriState::JUMP_KICK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
+		{
+			changeState(tagIoriState::JUMP_STRONG_ATTAK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
+		{
+			changeState(tagIoriState::JUMP_STRONG_KICK);
+		}
+
 		break;
 	case tagIoriState::LEFT_JUMP:
 		break;
@@ -171,6 +199,7 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		break;
 	case tagIoriState::STRONG_KICK:
 		break;
+	
 	case tagIoriState::SKILL1:
 		break;
 	case tagIoriState::SKILL2:
@@ -279,6 +308,22 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 		{
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
 		}
+		break;
+	case tagIoriState::JUMP_ATTAK:
+		this->setAnimation("이오리_오른쪽_점프_약손");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		break;
+	case tagIoriState::JUMP_KICK:
+		this->setAnimation("이오리_오른쪽_점프_약발");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		break;
+	case tagIoriState::JUMP_STRONG_ATTAK:
+		this->setAnimation("이오리_오른쪽_점프_강손");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		break;
+	case tagIoriState::JUMP_STRONG_KICK:
+		this->setAnimation("이오리_오른쪽_점프_강발");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
 		break;
 	case tagIoriState::SKILL1:
 		this->setAnimation("이오리_오른쪽_스킬");

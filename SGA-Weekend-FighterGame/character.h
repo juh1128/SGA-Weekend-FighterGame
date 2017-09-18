@@ -9,6 +9,13 @@ namespace key
 		LEFT, RIGHT, JUMP, DOWN, ATTACK, STRONG_ATTACK, KICK, STRONG_KICK, END
 	};
 }
+namespace DIRECTION
+{
+	enum Enum
+	{
+		LEFT, RIGHT
+	};
+}
 
 #define COMMAND_RESET_TIME 0.6f
 #define MAX_COMMAND_NUM	5
@@ -24,6 +31,7 @@ private:
 	vector<pair<vector<int>, string>>	_commandList;	//등록된 커맨드
 
 	bool			_isGravity;
+	bool			_isJump;
 	float			_gravitySpeed;
 
 protected:
@@ -82,5 +90,16 @@ public:
 		_maxHp = maxHp;
 		_damage = damage;
 	}
+
+	//점프 상태인지?
+	bool isJump() { return _isJump; }
+
+
+	//겟셋
+	int getNowHp() { return _nowHp; }
+	int getMaxHp() { return _maxHp; }
+
+private:
+	void attacked(int damage, vector2D hitedPos);
 
 };

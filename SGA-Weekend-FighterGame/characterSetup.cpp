@@ -10,6 +10,10 @@
 #include "solBadGuy.h"
 #include "terry.h"
 #include "athena.h"
+#include "Mauru.h"
+#include "kim.h"
+#include "whip.h"
+
 
 character* getCharacter(int id, vector2D pos)
 {
@@ -37,12 +41,24 @@ character* getCharacter(int id, vector2D pos)
 			((neko*)newCharacter)->init(pos);
 		break;
 		case characterName::sol:
-			newCharacter = new solBadGuy;
-			((solBadGuy*)newCharacter)->init(pos);
+			newCharacter = new testCharacter;
+			((testCharacter*)newCharacter)->init(pos);
 		break;
 		case characterName::athena:
 			newCharacter = new athena;
 			((athena*)newCharacter)->init(pos);
+		break;
+		case characterName::mauru:
+			newCharacter = new Mauru;
+			((Mauru*)newCharacter)->init(pos);
+		break;
+		case characterName::kim:
+			newCharacter = new kim;
+			((kim*)newCharacter)->init(pos);
+		break;
+		case characterName::whip:
+			newCharacter = new whip;
+			((whip*)newCharacter)->init(pos);
 		break;
 		default:
 			newCharacter = new testCharacter;

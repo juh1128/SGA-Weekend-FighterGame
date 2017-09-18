@@ -49,6 +49,8 @@ private :
 
 	
 
+	
+
 public:
 	terry() {}
 	virtual ~terry() {}
@@ -58,7 +60,7 @@ public:
 	void update();
 	void render();
 
-	//void enemyPos();
+	void enemyPos();
 	void changeState(tagTerryState::Enum state);
 	void stateUpdate(tagTerryState::Enum state);
 	
