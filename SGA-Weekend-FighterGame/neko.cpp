@@ -35,17 +35,17 @@ HRESULT neko::init(vector2D pos)
 	//===================DASH=============================
 	int rightDash[]{ 40,41,42,43,44,45,46,47 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoRightDash", "neko1_right", rightDash, 7, 15, false);
-	
+	KEYANIMANAGER->setCollisionRect("nekoRightDash", RectMake(118, 179, 24, 42));
 	int leftDash[]{ 40,41,42,43,44,45,46,47 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftDash", "neko1_left", leftDash, 7, 15, false);
-
+	KEYANIMANAGER->setCollisionRect("nekoLeftDash", RectMake(112, 179, 24, 42));
 	//===================BACK DASH========================
 	int rightBackDash[]{ 34,35,36,37,38,39 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoRightBackDash", "neko1_right", rightBackDash, 6, 15, false);
-	
+	KEYANIMANAGER->setCollisionRect("nekoRightBackDash", RectMake(100, 100, 2, 2));
 	int leftBackDash[]{ 34,35,36,37,38,39 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftBackDash", "neko1_left", leftBackDash, 6, 15, false);
-
+	KEYANIMANAGER->setCollisionRect("nekoLeftBackDash", RectMake(1, 1, 1, 1));
 	//=====================ChangeSIT===========================
 
 	//DOWN
@@ -1177,24 +1177,24 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 
 	case RIGHT_DASH:
 	{
-
+		_pos.x += NEKODASHSPEED;
 	}
 	break;
 	case LEFT_DASH:
 	{
-
+		_pos.x -= NEKODASHSPEED;
 	}
 	break;
 
 	case RIGHT_BACK_DASH:
 	{
-
+		_pos.x -= NEKOBACKDASHSPEED;
 	}
 	break;
 
 	case LEFT_BACK_DASH:
 	{
-
+		_pos.x += NEKOBACKDASHSPEED;
 	}
 	break;
 	//end
@@ -1268,11 +1268,17 @@ void neko::nekoRightFly()
 	}
 	if (_isEnemyRight)
 	{
-
+		if (_state == RIGHT_STOP || _state == RIGHT_MOVE)
+		{
+			this->changeState(RIGHT_DASH);
+		}
 	}
 	else if (!_isEnemyRight)
 	{
-
+		if (_state == LEFT_STOP || _state == RIGHT_MOVE)
+		{
+			this->changeState(LEFT_BACK_DASH);
+		}
 	}
 }
 void neko::nekoLeftFly()
@@ -1282,22 +1288,20 @@ void neko::nekoLeftFly()
 	{
 		this->changeState(LEFT_FLY);
 	}
-}
-
-void neko::nekoRightDash()
-{
-
-}
-
-void neko::nekoLeftDash()
-{
-
-}
-void neko::nekoRightBackDash()
-{
-
-}
-void neko::nekoLeftBackDash()
-{
+	if (_isEnemyRight)
+	{
+		if (_state == RIGHT_STOP || _state == LEFT_MOVE)
+		{
+			this->changeState(RIGHT_BACK_DASH);
+		}
+	}
+	else if (!_isEnemyRight)
+	{
+		if (_state == LEFT_STOP || _state == LEFT_MOVE)
+		{
+			this->changeState(LEFT_DASH);
+		}
+	}
 
 }
+

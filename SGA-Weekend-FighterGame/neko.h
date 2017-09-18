@@ -2,10 +2,12 @@
 #include "character.h"
 #include "effectFire.h"
 
-#define NEKOSPEED		5.0		//기본 이동속도
-#define NEKOSITSPEED	2.0		//앉아서 이동속도 
-#define NEKOJUMPPOWER	25		//점프빠워
-#define NEKOGRAVITY		0.8		//그라비티
+#define NEKOSPEED				5.0		//기본 이동속도
+#define NEKOSITSPEED			2.0		//앉아서 이동속도 
+#define NEKOJUMPPOWER			25		//점프빠워
+#define NEKOGRAVITY				0.8		//그라비티
+#define NEKODASHSPEED			12.0	//대쉬 속도
+#define NEKOBACKDASHSPEED		15.0	//백대쉬 속도
 //s
 namespace tagNekoState
 {
@@ -30,8 +32,8 @@ namespace tagNekoState
 		RIGHT_FLY, LEFT_FLY,					//날기
 		RIGHT_FALL,LEFT_FALL,					//떨어지는 상태
 		RIGHT_DASH,LEFT_DASH,					//대쉬 상태
-		RIGHT_BACK_DASH , LEFT_BACK_DASH		//백대쉬 상태
-		
+		RIGHT_BACK_DASH , LEFT_BACK_DASH,		//백대쉬 상태
+		RIGHT_HIT , LEFT_HIT					//쳐맞는 상태 
 	};
 }
 
@@ -88,9 +90,6 @@ public:
 	void nekoFire();
 	void nekoRightFly();
 	void nekoLeftFly();
-	void nekoRightDash();
-	void nekoLeftDash();
-	void nekoRightBackDash();
-	void nekoLeftBackDash();
+	
 };
 
