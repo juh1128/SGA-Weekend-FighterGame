@@ -36,7 +36,7 @@ public:
 	void stateUpdate(MauruState::Enum state);
 	void changeState(MauruState::Enum State);
 
-	void Dash(); 
+	//void Dash(); 
 	void skill1();
 	void skill2();
 	void skill3(); 

@@ -95,10 +95,10 @@ HRESULT Mauru::init(vector2D pos)
 	int command[2] = { key::RIGHT, key::RIGHT };
 	this->addCommand(command, 2, "dash");
 
-	this->addCallback("dash", [this](tagMessage msg)
-	{
-		this->Dash();
-	});
+	//this->addCallback("dash", [this](tagMessage msg)
+	//{
+	//	this->Dash();
+	//});
 
 	this->setStatus(300, 10);
 	
