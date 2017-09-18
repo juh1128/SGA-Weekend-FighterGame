@@ -262,8 +262,27 @@ void character::move(float moveSpeed, DIRECTION::Enum dir)
 				DIRECTION::Enum dir = (dirEenemyToMe.x > 0) ? DIRECTION::LEFT : DIRECTION::RIGHT;
 
 				//적을 밀어낸다.
-
+				_enemy->_pos.x += dir*(moveSpeed*0.5f);
+				//나도 뒤로 밀림
+				_pos.x -= dir*moveSpeed;
 			}
 		}
 	}
+}
+
+DIRECTION::Enum character::getDirectionEnemy()
+{
+	if (_enemy)
+	{
+		if (_enemy->isActiveObject())
+		{
+			vector2D dirEenemyToMe = _pos - _enemy->_pos;
+			//적이 내 왼쪽에 있는지? 오른쪽에 있는지?
+			DIRECTION::Enum dir = (dirEenemyToMe.x > 0) ? DIRECTION::LEFT : DIRECTION::RIGHT;
+			return dir;
+		}
+	}
+
+	//적이 없을 경우 대충 그냥 RIGHT 반환;;
+	return DIRECTION::RIGHT;
 }
