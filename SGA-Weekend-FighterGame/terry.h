@@ -2,10 +2,9 @@
 #include "character.h"
 
 
-#define NEKOSPEED		5.0		//기본 이동속도
-#define NEKOSITSPEED	2.0		//앉아서 이동속도 
-#define NEKOJUMPPOWER	25		//점프빠워
-#define NEKOGRAVITY		0.8		//그라비티
+#define TERRYSPEED		5.0		//기본 이동속도
+#define TERRYJUMPPOWER	25		//점프빠워
+#define TERRYGRAVITY		0.8		//그라비티
 
 
 namespace tagTerryState
@@ -59,9 +58,9 @@ public:
 	void update();
 	void render();
 
-	void enemyPos();
-
-	void stateUpdate(tagTerryState::Enum state);
+	//void enemyPos();
 	void changeState(tagTerryState::Enum state);
+	void stateUpdate(tagTerryState::Enum state);
+	
 };
 
