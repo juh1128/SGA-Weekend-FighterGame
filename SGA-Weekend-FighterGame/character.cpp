@@ -37,6 +37,9 @@ void character::update()
 	if (_isGravity)
 		gravity();
 
+	//캐릭터 충돌체크
+	collisionCheckToEnemy();
+
 	//캐릭터의 x좌표 보정
 	RECT cameraRC = CAMERAMANAGER->getRenderRect();
 	_pos.fixedPosX(cameraRC.left, cameraRC.right);
@@ -208,10 +211,11 @@ void character::attacked(int damage, vector2D hitedPos)
 {
 	//막기 여부 처리
 	vector2D distance = hitedPos - _pos;
-	int direction = DIRECTION::LEFT;;
+	//피격 위치가 내 왼쪽인지? 오른쪽인지?
+	int direction;
 	if (distance.x > 0)
 	{
-		direction = DIRECTION::LEFT;
+		direction = DIRECTION::RIGHT;
 		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
 		{
 			_nowHp -= (float)damage*0.1f;
@@ -221,7 +225,7 @@ void character::attacked(int damage, vector2D hitedPos)
 	}
 	else
 	{
-		direction = DIRECTION::RIGHT;
+		direction = DIRECTION::LEFT;
 		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
 		{
 			_nowHp -= (float)damage*0.1f;
@@ -244,10 +248,8 @@ void character::attacked(int damage, vector2D hitedPos)
 	}
 }
 
-void character::move(float moveSpeed, DIRECTION::Enum dir)
+void character::collisionCheckToEnemy()
 {
-	_pos.x += moveSpeed * dir;
-
 	RECT rc = this->getCollisionRect();
 	//적과 충돌 했을 경우
 	if (_enemy)
@@ -262,8 +264,28 @@ void character::move(float moveSpeed, DIRECTION::Enum dir)
 				DIRECTION::Enum dir = (dirEenemyToMe.x > 0) ? DIRECTION::LEFT : DIRECTION::RIGHT;
 
 				//적을 밀어낸다.
-
+				int width = temp.right - temp.left;
+				_enemy->_pos.x += dir*(width*0.5f);
+				//나도 뒤로 밀림
+				_pos.x -= dir*width;
 			}
 		}
 	}
+}
+
+DIRECTION::Enum character::getDirectionEnemy()
+{
+	if (_enemy)
+	{
+		if (_enemy->isActiveObject())
+		{
+			vector2D dirEenemyToMe = _pos - _enemy->_pos;
+			//적이 내 왼쪽에 있는지? 오른쪽에 있는지?
+			DIRECTION::Enum dir = (dirEenemyToMe.x > 0) ? DIRECTION::LEFT : DIRECTION::RIGHT;
+			return dir;
+		}
+	}
+
+	//적이 없을 경우 대충 그냥 RIGHT 반환;;
+	return DIRECTION::RIGHT;
 }
