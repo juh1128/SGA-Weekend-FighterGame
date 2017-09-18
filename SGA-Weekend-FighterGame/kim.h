@@ -6,19 +6,6 @@ namespace kimState
 {
 	enum Enum
 	{
-		//RIGHT_MOVE, LEFT_MOVE,
-		//RIGHT_ATTACK, LEFT_ATTACK,
-		//RIGHT_JUMP, LEFT_JUMP,
-		//RIGHT_JUMPATTACK, LEFT_JUMPATTACK,
-		//RIGHT_RUN, LEFT_RUN,
-
-		//-----------------------------
-
-		//IDLE_LEFT, IDLE_RIGHT,
-		//WALK_LEFT, WALK_RIGHT,
-		//JUMP_LEFT, JUMP_RIGHT,
-		//JUMP_FRONT_LEFT, JUMP_FRONT_RIGHT
-
 		NONE,
 		IDLE,
 		WALK_FRONT,

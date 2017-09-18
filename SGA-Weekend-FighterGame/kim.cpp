@@ -37,6 +37,11 @@ HRESULT kim::init(vector2D pos)
 	//테스트 애니메이션은 setupYuhoon에서 만든다. (게임 시작 시 최초 1번만 만들어놓고 씀)
 	//character::init("kim", pos, "테스트_공격_오른쪽");   //뭐지;; 애니메이션 키 바꾸면 이미지 크기 작살나네
 	character::init("kim", pos, "kimIdleRight");
+
+	_lever = _pastLever = LEVER::IDLE;
+	_isLeft = false;
+	_isEnemyLeft = true;
+
 	this->changeState(kimState::IDLE);
 
 	//this->setScale(3.0f, 3.0f);
@@ -46,10 +51,6 @@ HRESULT kim::init(vector2D pos)
 	{
 		this->changeState((kimState::Enum)msg.data);
 	});
-
-	_lever = _pastLever = LEVER::IDLE;
-	_isLeft = false;
-	_isEnemyLeft = true;
 
 	return S_OK;
 }
