@@ -227,6 +227,7 @@ HRESULT neko::init(vector2D pos)
 	{
 		this->hit(msg);
 	});
+
 	this->addCallback("block", [this](tagMessage msg)
 	{
 		this->block();
