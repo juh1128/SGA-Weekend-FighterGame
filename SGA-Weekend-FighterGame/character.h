@@ -91,6 +91,14 @@ public:
 		_damage = damage;
 	}
 
+	//���� ��������?
+	bool isJump() { return _isJump; }
+
+
+	//�ټ�
+	int getNowHp() { return _nowHp; }
+	int getMaxHp() { return _maxHp; }
+
 private:
 	void attacked(int damage, vector2D hitedPos);
 
