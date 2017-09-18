@@ -37,4 +37,8 @@ public:
 	void skill1();
 	void skill2();
 	void skill3();
+
+	void hited();
+	void block();
+	void die();
 };

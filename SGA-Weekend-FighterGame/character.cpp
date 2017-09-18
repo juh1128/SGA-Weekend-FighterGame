@@ -14,6 +14,13 @@ HRESULT character::init(string characterName, vector2D pos, string animationKeyN
 	_isGravity = true;
 	_gravitySpeed = 0;
 
+	//피격 콜백 추가
+	this->addCallback("attacked", [this](tagMessage msg)
+	{
+		this->attacked(msg.data, msg.ptData);	
+	});
+
+
 	return S_OK;
 }
 void character::release()
@@ -188,4 +195,44 @@ void character::gravity()
 		_gravitySpeed = 0;
 	}
 	
+}
+
+void character::attacked(int damage, vector2D hitedPos)
+{
+	//막기 여부 처리
+	vector2D distance = hitedPos - _pos;
+	int direction = DIRECTION::LEFT;;
+	if (distance.x > 0)
+	{
+		direction = DIRECTION::LEFT;
+		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+		{
+			_nowHp -= (float)damage*0.1f;
+			this->sendMessage("block", 0, direction);
+			return;
+		}		
+	}
+	else
+	{
+		direction = DIRECTION::RIGHT;
+		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+		{
+			_nowHp -= (float)damage*0.1f;
+			this->sendMessage("block", 0, direction);
+			return;
+		}
+	}
+
+	_nowHp -= damage;
+	if (_nowHp >= _maxHp) _nowHp = _maxHp;
+	
+	//죽음
+	if (_nowHp <= 0)
+	{
+		this->sendMessage("die", 0, direction);
+	}
+	else
+	{
+		this->sendMessage("hited", 0, direction);
+	}
 }

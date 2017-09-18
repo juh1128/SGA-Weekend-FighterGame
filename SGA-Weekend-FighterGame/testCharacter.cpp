@@ -45,6 +45,20 @@ HRESULT testCharacter::init(vector2D pos)
 	//캐릭터 초기 능력치 설정
 	this->setStatus(100, 10);
 
+	//캐릭터 피격 시 콜백 등록
+	this->addCallback("hited", [this](tagMessage msg)
+	{
+		this->hited();
+	});
+	this->addCallback("block", [this](tagMessage msg)
+	{
+		this->block();
+	});
+	this->addCallback("die", [this](tagMessage msg)
+	{
+		this->die();
+	});
+
 
 	return S_OK;
 }
@@ -236,6 +250,18 @@ void testCharacter::skill3()
 	cout << "스킬3 발동!" << endl;
 }
 
+void testCharacter::hited()
+{
+	cout << "피격!" << endl;
+}
+void testCharacter::block()
+{
+	cout << "막음!" << endl;
+}
+void testCharacter::die()
+{
+	cout << "죽음!" << endl;
+}
 
 
 
