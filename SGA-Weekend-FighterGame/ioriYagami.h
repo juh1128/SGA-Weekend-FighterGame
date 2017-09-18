@@ -31,7 +31,7 @@ class ioriYagami : public character
 {
 private:
 	tagIoriState::Enum _state;
-
+	bool _isEnemyDirection;
 
 	float _jumpPower;
 	float _gravity;
