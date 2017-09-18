@@ -211,10 +211,11 @@ void character::attacked(int damage, vector2D hitedPos)
 {
 	//막기 여부 처리
 	vector2D distance = hitedPos - _pos;
-	int direction = DIRECTION::LEFT;;
+	//피격 위치가 내 왼쪽인지? 오른쪽인지?
+	int direction;
 	if (distance.x > 0)
 	{
-		direction = DIRECTION::LEFT;
+		direction = DIRECTION::RIGHT;
 		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
 		{
 			_nowHp -= (float)damage*0.1f;
@@ -224,7 +225,7 @@ void character::attacked(int damage, vector2D hitedPos)
 	}
 	else
 	{
-		direction = DIRECTION::RIGHT;
+		direction = DIRECTION::LEFT;
 		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
 		{
 			_nowHp -= (float)damage*0.1f;
