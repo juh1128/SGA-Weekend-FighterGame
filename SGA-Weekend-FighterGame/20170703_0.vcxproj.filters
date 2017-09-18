@@ -282,6 +282,9 @@
     <ClInclude Include="athena.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="whip.h">
+      <Filter>playGround\memberFolder\hyeongjoon</Filter>
+    </ClInclude>
     <ClInclude Include="effectFire.h">
       <Filter>playGround\memberFolder\soonyu</Filter>
     </ClInclude>
@@ -451,6 +454,9 @@
     </ClCompile>
     <ClCompile Include="athena.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="whip.cpp">
+      <Filter>playGround\memberFolder\hyeongjoon</Filter>
     </ClCompile>
     <ClCompile Include="effectFire.cpp">
       <Filter>playGround\memberFolder\soonyu</Filter>
