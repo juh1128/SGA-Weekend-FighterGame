@@ -101,10 +101,8 @@ public:
 	int getNowHp() { return _nowHp; }
 	int getMaxHp() { return _maxHp; }
 
-	//이동 함수
-	void move(float moveSpeed, DIRECTION::Enum dir);
-
 private:
 	void attacked(int damage, vector2D hitedPos);
-
+	//적과 충돌체크
+	void collisionCheckToEnemy();
 };

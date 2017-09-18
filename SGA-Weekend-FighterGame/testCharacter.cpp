@@ -179,7 +179,7 @@ void testCharacter::stateUpdate(testCharacterState::Enum state)
 		{
 			if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
 			{
-				move(10, DIRECTION::RIGHT);
+				_pos.x += 10;
 			}
 			if (KEYMANAGER->isStayKeyDown(keyList[key::ATTACK]))
 			{
@@ -201,7 +201,7 @@ void testCharacter::stateUpdate(testCharacterState::Enum state)
 		{
 			if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
 			{
-				move(10, DIRECTION::LEFT);
+				_pos.x -= 10;
 			}
 			if (KEYMANAGER->isStayKeyDown(keyList[key::ATTACK]))
 			{

@@ -37,6 +37,9 @@ void character::update()
 	if (_isGravity)
 		gravity();
 
+	//캐릭터 충돌체크
+	collisionCheckToEnemy();
+
 	//캐릭터의 x좌표 보정
 	RECT cameraRC = CAMERAMANAGER->getRenderRect();
 	_pos.fixedPosX(cameraRC.left, cameraRC.right);
@@ -244,10 +247,8 @@ void character::attacked(int damage, vector2D hitedPos)
 	}
 }
 
-void character::move(float moveSpeed, DIRECTION::Enum dir)
+void character::collisionCheckToEnemy()
 {
-	_pos.x += moveSpeed * dir;
-
 	RECT rc = this->getCollisionRect();
 	//적과 충돌 했을 경우
 	if (_enemy)
@@ -262,9 +263,10 @@ void character::move(float moveSpeed, DIRECTION::Enum dir)
 				DIRECTION::Enum dir = (dirEenemyToMe.x > 0) ? DIRECTION::LEFT : DIRECTION::RIGHT;
 
 				//적을 밀어낸다.
-				_enemy->_pos.x += dir*(moveSpeed*0.5f);
+				int width = temp.right - temp.left;
+				_enemy->_pos.x += dir*(width*0.5f);
 				//나도 뒤로 밀림
-				_pos.x -= dir*moveSpeed;
+				_pos.x -= dir*width;
 			}
 		}
 	}
