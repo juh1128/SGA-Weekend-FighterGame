@@ -16,7 +16,8 @@ namespace kimState
 		SIT,
 		GUARD,
 		SIT_GUARD,
-		DASH
+		DASH,
+		BACK_DASH
 	};
 }
 namespace LEVER
@@ -50,4 +51,7 @@ public:
 	void changeState(kimState::Enum state);
 	void enemyPositionUpdate(void);
 	void leverPositionUpdate(void);
+
+	void leftDouble(void);
+	void rightDouble(void);
 };
