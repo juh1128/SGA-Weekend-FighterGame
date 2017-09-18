@@ -59,22 +59,22 @@ void progressBar::render(bool isAbsolute)
 	//center ÇÇº¿
 	vector2D renderPos = _pos + _offset - getSize() / 2;
 
-	//Àý´ë ÁÂÇ¥°è
 	if (isAbsolute)
 	{
+		RECT cameraRC = CAMERAMANAGER->getRenderRect();
+
+		//Ä«¸Þ¶ó À§Ä¡¿¡ µû¶ó¼­ ·»´õ¸µµÊ. (Àý´ë ÁÂÇ¥°è)
+		renderPos.x += cameraRC.left;
+		renderPos.y += cameraRC.top;
+
 		_progressBack->scaleRender(this->getMemDC(), renderPos.x, renderPos.y,
 			getSize().x, getSize().y);
 
 		_progressFront->scaleRender(this->getMemDC(), renderPos.x, renderPos.y,
 			_progressWidth, getSize().y);
 	}
-	//»ó´ë ÁÂÇ¥°è
 	else
 	{
-		RECT cameraRC = CAMERAMANAGER->getRenderRect();
-		renderPos.x =  renderPos.x - cameraRC.left;
-		renderPos.y =  renderPos.y - cameraRC.top;
-
 		_progressBack->scaleRender(this->getMemDC(), renderPos.x, renderPos.y,
 			getSize().x, getSize().y);
 

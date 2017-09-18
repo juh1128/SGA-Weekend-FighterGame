@@ -12,10 +12,6 @@ HRESULT neko::init(vector2D pos)
 	IMAGEMANAGER->addFrameImage("neko1_right", "resource/soonwoo/neko/neko1_right.bmp", 4352, 1790, 17, 7, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("nekoRightFireEffect", "resource/soonwoo/neko/nekoFire.bmp", 7424, 256, 29, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("nekoLeftFireEffect", "resource/soonwoo/neko/nekoFireLeft.bmp", 7424, 256, 29, 1, true, RGB(255, 0, 255));
-	//IMAGEMANAGER->addFrameImage("nekoRightBeamEffect", "resource/soonwoo/neko/nekoRightBeam.bmp", 6400, 200, 16, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("nekoRightBeamEffect", "resource/soonwoo/neko/nekoRightBeam2.bmp", 19200, 600, 16, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("nekoLeftBeamEffect", "resource/soonwoo/neko/nekoLeftBeam.bmp", 19200, 600, 16, 1, true, RGB(255, 0, 255));
-	
 	//이펙트 로드
 
 	//키애니메니져 설정
@@ -145,14 +141,6 @@ HRESULT neko::init(vector2D pos)
 	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftFire", "neko1_left", leftFire, 6, 10, false);
 	KEYANIMANAGER->setCollisionRect("nekoLeftFire", RectMake(112, 179, 24, 42));
 
-	//skill beam
-	int rightBeam[]{ 117,118 };
-	KEYANIMANAGER->addArrayFrameAnimation("nekoRightBeam", "neko1_right", rightBeam, 2, 10, false);
-	KEYANIMANAGER->setCollisionRect("nekoRightBeam", RectMake(118, 179, 24, 42));
-	int lefttBeam[]{ 117,118 };
-	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftBeam", "neko1_left", lefttBeam, 2, 10, false);
-	KEYANIMANAGER->setCollisionRect("nekoLeftBeam", RectMake(112, 179, 24, 42));
-
 	//=========================DEFENSE===============================
 	//normmal defense
 	int rightDefense[]{ 48 };
@@ -209,8 +197,6 @@ HRESULT neko::init(vector2D pos)
 	_savePosY = this->_pos.y;
 	_isJump = false;
 
-	_effect = NULL;
-
 	//능력치 초기화 (체력 , 공격력)
 	this->setStatus(1000, 10);
 
@@ -227,7 +213,6 @@ HRESULT neko::init(vector2D pos)
 	{
 		this->hit(msg);
 	});
-
 	this->addCallback("block", [this](tagMessage msg)
 	{
 		this->block();
@@ -265,13 +250,6 @@ HRESULT neko::init(vector2D pos)
 	this->addCallback("nekoLeftFly", [this](tagMessage msg)
 	{
 		this->nekoLeftFly();
-	});
-
-	int command4[3] = { DOWN,DOWN,ATTACK };
-	this->addCommand(command4, 3, "nekoBeam");
-	this->addCallback("nekoBeam", [this](tagMessage msg)
-	{
-		this->nekoBeam();
 	});
 
 
@@ -551,28 +529,6 @@ void neko::changeState(tagNekoState::ENUM state)
 	}
 	break;
 
-	case RIGHT_BEAM:
-	{
-		this->setAnimation("nekoRightBeam");
-
-		effectFire* effect = new effectFire;
-		effect->init("nekoRightBeamEffect", vector2D(_pos.x -110, _centerPos.y - 450));
-		WORLD->addObject(effect);
-		_effect = effect;
-	}
-	break;
-
-	case LEFT_BEAM:
-	{
-		this->setAnimation("nekoLeftBeam");
-
-		effectFire* effect = new effectFire;
-		effect->init("nekoLeftBeamEffect", vector2D(_pos.x - 1070, _centerPos.y - 470));
-		WORLD->addObject(effect);
-		_effect = effect;
-	}
-	break;
-
 	case RIGHT_FLY:
 	{
 		this->setAnimation("nekoRightFly");
@@ -679,8 +635,6 @@ void neko::changeState(tagNekoState::ENUM state)
 
 	}
 	break;
-
-	
 
 	//end
 	}
@@ -1183,35 +1137,23 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 
 	case RIGHT_DEFENSE:
 	{
-		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
-		{
-			this->changeState(RIGHT_STOP);
-		}
+
 	}
 	break;
 	case LEFT_DEFENSE:
 	{
-		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
-		{
-			this->changeState(LEFT_STOP);
-		}
+
 	}
 	break;
 
 	case RIGHT_SIT_DEFENSE:
 	{
-		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
-		{
-			this->changeState(RIGHT_SIT);
-		}
+
 	}
 	break;
 	case LEFT_SIT_DEFENSE:
 	{
-		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
-		{
-			this->changeState(LEFT_SIT);
-		}
+
 	}
 	break;
 
@@ -1263,48 +1205,6 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 				this->changeState(LEFT_STOP);
 			}
 		}
-	}
-	break;
-
-	case RIGHT_BEAM:
-	{
-		//공격랙트 생성 
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(1, vector2D(_centerPos.x + 600, _centerPos.y - 150), vector2D(1200, 200), _enemy, 0.1f);
-		WORLD->addObject(hitbox);
-
-
-		if (_effect != NULL)
-		{
-			if (_effect->_frameX >= _effect->_image->getMaxFrameX())
-			{
-				_effect->setDestroy();
-				_effect = NULL;
-		
-				this->changeState(RIGHT_STOP);
-			}
-		}
-	}
-	break;
-
-	case LEFT_BEAM:
-	{
-		//공격랙트 생성 
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(1, vector2D(_centerPos.x - 600, _centerPos.y - 150), vector2D(1200, 200), _enemy, 0.1f);
-		WORLD->addObject(hitbox);
-
-		if (_effect != NULL)
-		{
-			if (_effect->_frameX >= _effect->_image->getMaxFrameX())
-			{
-				_effect->setDestroy();
-				_effect = NULL;
-
-				this->changeState(LEFT_STOP);
-			}
-		}
-	
 	}
 	break;
 
@@ -1418,8 +1318,6 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 
 	}
 	break;
-
-	
 	//end
 	}
 }
@@ -1536,19 +1434,6 @@ void neko::nekoLeftFly()
 
 }
 
-void neko::nekoBeam()
-{
-	if (_isEnemyRight)
-	{
-		this->changeState(RIGHT_BEAM);
-	}
-	else if (!_isEnemyRight)
-	{
-		this->changeState(LEFT_BEAM);
-	}
-}
-
-
 void neko::hit(tagMessage msg)
 {
 	tagMessage message = msg;
@@ -1580,22 +1465,22 @@ void neko::block()
 	if (_state == LEFT_MOVE)
 	{
 		this->changeState(RIGHT_DEFENSE);
-		//this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_MOVE));
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_MOVE));
 	}
 	else if (_state == LEFT_SIT_MOVE)
 	{
 		this->changeState(RIGHT_SIT_DEFENSE);
-		//this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SIT_MOVE));
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SIT_MOVE));
 	}
 
 	else if (_state == RIGHT_MOVE)
 	{
 		this->changeState(LEFT_DEFENSE);
-		//this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_MOVE));
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_MOVE));
 	}
 	else if (_state == RIGHT_SIT_MOVE)
 	{
-		this->changeState(LEFT_SIT_DEFENSE);
-		//this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_SIT_MOVE));
+		this->changeState(LEFT_SIT_MOVE);
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_SIT_MOVE));
 	}
 }

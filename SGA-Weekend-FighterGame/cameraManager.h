@@ -15,6 +15,10 @@ private:
 	vector2D	_mapSize;
 	POINT		_range;
 
+	//float		_speed;
+	//float		_addSpeed;
+	//float		_maxSpeed;
+
 	bool		_isMove;
 
 	gameObject* _nullTarget;
@@ -22,8 +26,6 @@ private:
 	float		_shakeTimer;
 	bool		_isShake;
 	float		_shakeStrenth;
-
-	RECT		_renderRC;
 
 public:
 	HRESULT init();
@@ -46,12 +48,6 @@ public:
 	void shakeCamera(float strenth);
 	RECT getRenderRect();
 	vector2D getPos() { return _pos; }
-
-	void setupRenderRC();
-
-	RECT getRelativeRect(RECT rc);
-	POINT getRelativePoint(POINT pt);
-	vector2D getRelativeVector2D(vector2D v);
 
 	cameraManager() {}
 	~cameraManager() {}

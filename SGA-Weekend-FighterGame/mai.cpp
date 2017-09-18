@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "mai.h"
 #include "playGround.h"
-#include "attackHitbox.h"
 
 
 //=====================================
@@ -11,7 +10,6 @@ HRESULT mai::init(vector2D pos)
 {
 	//이미지와 애니메이션 셋업
 	_playGround->setupSunghoon();
-	setStatus(100, 10);
 
 	if (pos.x == 200) //적보다 왼쪽에있음(오른쪽을바라봄)
 	{
@@ -34,10 +32,6 @@ HRESULT mai::init(vector2D pos)
 	//마지막에 누른 키저장
 	_lastKey = END;
 
-	_lastKeyTime = LASTKEY_TIME;
-	_gravity = 0;
-	_center.x = _pos.x;
-	_center.y = _pos.y;
 	return S_OK;
 }
 
@@ -49,9 +43,6 @@ void mai::update()
 {
 	character::update();
 
-	_center.x = _pos.x;
-	_center.y = _pos.y;
-
 	//항상 상대편을 바라보도록 해라
 	if (_pos.x < _enemy->_pos.x)
 	{
@@ -60,43 +51,6 @@ void mai::update()
 	else
 	{
 		_posEnum = LEFT_SEE;
-	}
-
-	//대쉬키를 사용할때 쓸 라스트키 변수를 일정 시간이 지날때마다 초기화
-	_lastKeyTime -= TIMEMANAGER->getElapsedTime();
-	if (_lastKeyTime <= 0)
-	{
-		_lastKeyTime = LASTKEY_TIME;
-		_lastKey = END;
-	}
-
-	//내 체력이 0이라면 패배
-	if (_nowHp <= 0)
-	{
-		if (_posEnum == RIGHT_SEE)
-		{
-			setAnimation("maiRightDead");
-			_state = RIGHT_DEAD;
-		}
-		else
-		{
-			setAnimation("maiLeftDead");
-			_state = LEFT_DEAD;
-		}
-	}
-	//상대가 죽었다면 승리
-	if (!_enemy->isLive())
-	{
-		if (_posEnum == RIGHT_SEE)
-		{
-			setAnimation("maiRightWin");
-			_state = RIGHT_WIN;
-		}
-		else
-		{
-			setAnimation("maiLeftWin");
-			_state = LEFT_WIN;
-		}
 	}
 
 	stateUpdate(_state);
@@ -130,7 +84,7 @@ void mai::stateUpdate(state)
 		break;
 	case MAI::LEFT_MOVE:
 	{
-		if (_pos.x - _animation->getFrameWidth()/2 > 0)
+		if (_pos.x > 0)
 		{
 			_pos.x -= MOVESPEED;
 		}
@@ -138,7 +92,7 @@ void mai::stateUpdate(state)
 		break;
 	case MAI::RIGHT_MOVE:
 	{
-		if (_pos.x + _animation->getFrameWidth()/2 < WINSIZEX)
+		if (_pos.x < WINSIZEX)
 		{
 			_pos.x += MOVESPEED;
 		}
@@ -146,231 +100,54 @@ void mai::stateUpdate(state)
 		break;
 	case MAI::LEFT_JUMP:
 	{
-		if (_pos.y >= GROUND_LINE)
-		{
-			_pos.y = GROUND_LINE;
-			setAnimation("maiLeftIdle");
-			_state = LEFT_STOP;
-		}
-		_gravity += GRAVITYACCEL;
-		_pos.y -= JUMPPOWER - _gravity;
+	
+		//jump(5);
 	}
 		break;
 	case MAI::RIGHT_JUMP:
 	{
-		if (_pos.y >= GROUND_LINE)
-		{
-			_pos.y = GROUND_LINE;
-			setAnimation("maiRightIdle");
-			_state = RIGHT_STOP;
-		}
-		_gravity += GRAVITYACCEL;
-		_pos.y -= JUMPPOWER - _gravity;
+		//jump(5);
 	}
 		break;
 	case MAI::LEFT_BACK_MOVE:
-		if (_pos.x + _animation->getFrameWidth()/2 <= WINSIZEX)
-		{
-			_pos.x += MOVESPEED / 2;
-		}
 		break;
 	case MAI::RIGHT_BACK_MOVE:
-		if (_pos.x - _animation->getFrameWidth()/2 >= 0)
-		{
-			_pos.x -= MOVESPEED / 2;
-		}
 		break;
 	case MAI::LEFT_SIT:
 		break;
 	case MAI::RIGHT_SIT:
 		break;
 	case MAI::LEFT_PUNCH:
-		if (!_animation->isPlay()) //애니메이션이 끝까지 도달하여 플레이가 끝났을때
-		{
-			setAnimation("maiLeftIdle");//정지상태로 애니메이션을 주고
-			_state = LEFT_STOP;			//상태값을 부여
-		}
-		else
-		{
-			attackHitbox* _atb = new attackHitbox;
-			_atb->init(7, vector2D(_center.x-80, _center.y-50), vector2D(300, 90), _enemy, 0.2f);
-			WORLD->addObject(_atb);
-		}
 		break;
 	case MAI::RIGHT_PUNCH:
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiRightIdle");
-			_state = RIGHT_STOP;
-		}
-		else
-		{
-			attackHitbox* _atb = new attackHitbox;
-			_atb->init(7, vector2D(_center.x + 80, _center.y - 50), vector2D(300, 90), _enemy, 0.2f);
-			WORLD->addObject(_atb);
-		}
 		break;
 	case MAI::LEFT_STRONG_PUNCH:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiLeftIdle");
-			_state = LEFT_STOP;
-		}
-		else
-		{
-			attackHitbox* _atb = new attackHitbox;
-			_atb->init(12, vector2D(_center.x - 80, _center.y- 50), vector2D(300, 300), _enemy, 0.2f);
-			WORLD->addObject(_atb);
-		}
-	}
 		break;
 	case MAI::RIGHT_STRONG_PUNCH:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiRightIdle");
-			_state = RIGHT_STOP;
-		}
-		else
-		{
-			attackHitbox* _atb = new attackHitbox;
-			_atb->init(12, vector2D(_center.x + 80, _center.y - 50), vector2D(300, 300), _enemy, 0.2f);
-			WORLD->addObject(_atb);
-		}
-	}
 		break;
 	case MAI::LEFT_KICK:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiLeftIdle");
-			_state = LEFT_STOP;
-		}
-		else
-		{
-			attackHitbox* _atb = new attackHitbox;
-			_atb->init(10, vector2D(_center.x-50, _center.y-80), vector2D(320, 100), _enemy, 0.2f);
-			WORLD->addObject(_atb);
-		}
-	}
 		break;
 	case MAI::RIGHT_KICK:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiRightIdle");
-			_state = RIGHT_STOP;
-		}
-		else
-		{
-			attackHitbox* _atb = new attackHitbox;
-			_atb->init(10, vector2D(_center.x + 50, _center.y - 80), vector2D(320, 100), _enemy, 0.2f);
-			WORLD->addObject(_atb);
-		}
-	}
 		break;
 	case MAI::LEFT_STRONG_KICK:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiLeftIdle");
-			_state = LEFT_STOP;
-		}
-		else if(_animation->getFrame() == 5)
-		{
-			attackHitbox* _atb = new attackHitbox;
-			_atb->init(10, vector2D(_center.x - 70, _center.y - 60), vector2D(350, 100), _enemy, 0.2f);
-			WORLD->addObject(_atb);
-		}
-	}
 		break;
 	case MAI::RIGHT_STRONG_KICK:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiRightIdle");
-			_state = RIGHT_STOP;
-		}
-		else if(_animation->getFrame() == 5)
-		{
-			attackHitbox* _atb = new attackHitbox;
-			_atb->init(10, vector2D(_center.x + 50, _center.y - 60), vector2D(350, 100), _enemy, 0.2f);
-			WORLD->addObject(_atb);
-		}
-	}
 		break;
 	case MAI::LEFT_SIT_PUNCH:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiLeftSit");
-			_state = LEFT_SIT;
-		}
-	}
 		break;
 	case MAI::RIGHT_SIT_PUNCH:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiRightSit");
-			_state = RIGHT_SIT;
-		}
-	}
 		break;
 	case MAI::LEFT_SIT_KICK:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiLeftSit");
-			_state = LEFT_SIT;
-		}
-	}
 		break;
 	case MAI::RIGHT_SIT_KICK:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiRightSit");
-			_state = RIGHT_SIT;
-		}
-	}
 		break;
 	case MAI::LEFT_SIT_STRONG_PUNCH:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiLeftSit");
-			_state = LEFT_SIT;
-		}
-	}
 		break;
 	case MAI::RIGHT_SIT_STRONG_PUNCH:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiRightSit");
-			_state = RIGHT_SIT;
-		}
-	}
 		break;
 	case MAI::LEFT_SIT_STRONG_KICK:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiLeftSit");
-			_state = LEFT_SIT;
-		}
-	}
 		break;
 	case MAI::RIGHT_SIT_STRONG_KICK:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiRightSit");
-			_state = RIGHT_SIT;
-		}
-	}
 		break;
 	case MAI::LEFT_DEFENCE:
 		break;
@@ -381,98 +158,22 @@ void mai::stateUpdate(state)
 	case MAI::RIGHT_SIT_DEFENCE:
 		break;
 	case MAI::LEFT_DASH:
-	{
-		if (_pos.x - _animation->getFrameWidth() / 2 >= 0)
-		{
-			_pos.x -= MOVESPEED * 2;
-		}
-	}
 		break;
 	case MAI::RIGHT_DASH:
-	{
-		if (_pos.x + _animation->getFrameWidth() / 2 <= WINSIZEX)
-		{
-			_pos.x += MOVESPEED * 2;
-		}
-	}
 		break;
 	case MAI::LEFT_BACK_DASH:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiLeftIdle");
-			_state = LEFT_STOP;
-		}
-		else 
-		{
-			if (_pos.x + _animation->getFrameWidth() / 2 <= WINSIZEX)
-			{
-				_pos.x += MOVESPEED;
-			}
-		}
-	}
 		break;
 	case MAI::RIGHT_BACK_DASH:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiRightIdle");
-			_state = RIGHT_STOP;
-		}
-		else
-		{
-			if (_pos.x >= 0)
-			{
-				_pos.x -= MOVESPEED * 2;
-			}
-		}
-		
-	}
 		break;
 	case MAI::LEFT_KNOCK_DOWN:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiRightIdle");
-			_state = RIGHT_STOP;
-		}
-	}
 		break;
 	case MAI::RIGHT_KNOCK_DOWN:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiRightIdle");
-			_state = RIGHT_STOP;
-		}
-	}
 		break;
 	case MAI::LEFT_KNOCK_DOWN_BACK_MOVE:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiLeftIdle");
-			_state = LEFT_STOP;
-		}
-	}
 		break;
 	case MAI::RIGHT_KNOCK_DOWN_BACK_MOVE:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiRightIdle");
-			_state = RIGHT_STOP;
-		}
-	}
 		break;
 	case MAI::LEFT_DAMAGED:
-	{
-		if (!_animation->isPlay())
-		{
-			setAnimation("maiLeftIdle");
-			_state = LEFT_STOP;
-		}
-	}
 		break;
 	case MAI::RIGHT_DAMAGED:
 		break;
@@ -573,7 +274,7 @@ void mai::changeState(state)
 		//상대가 왼쪽에 있지 않다면
 		if (_posEnum != LEFT_SEE)
 		{
-			setAnimation("maiRightIdle");
+			setAnimation("maiRightStop");
 			_state = RIGHT_STOP;
 		}
 		
@@ -603,7 +304,6 @@ void mai::changeState(state)
 			{
 				setAnimation("maiRightFrontDash");
 				_state = RIGHT_DASH;
-				_lastKey = END;
 			}
 			else
 			{
@@ -662,8 +362,6 @@ void mai::changeState(state)
 		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
 		{
 			//왼쪽으로 이동키를 뗌
-			//키를 가지고 있을 시간 초기화
-			_lastKeyTime = LASTKEY_TIME;
 			_lastKey = LEFT;
 			setAnimation("maiLeftIdle");
 			_state = LEFT_STOP;
@@ -713,8 +411,6 @@ void mai::changeState(state)
 	{
 		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
 		{
-			//키를 가지고 있을 시간 초기화
-			_lastKeyTime = LASTKEY_TIME;
 			_lastKey = RIGHT;
 			setAnimation("maiRightIdle");
 			_state = RIGHT_STOP;
@@ -952,107 +648,82 @@ void mai::changeState(state)
 			setAnimation("maiRightIdle");
 			_state = RIGHT_STOP;
 		}
-		else if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
-		{
-			//점프키를 누르면 stop상태로 바뀜
-			setAnimation("maiRightIdle");
-			_state = RIGHT_STOP;
-		}
-		else if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
-		{
-			//앉아서 약발
-			setAnimation("maiRightSitKick");
-			_state = RIGHT_SIT_KICK;
-		}
-		else if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
-		{
-			//앉아서 약공
-			setAnimation("maiRightSitPunch");
-			_state = RIGHT_SIT_PUNCH;
-		}
-		else if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
-		{
-			setAnimation("maiRightSitStrongPunch");
-			_state = RIGHT_SIT_STRONG_PUNCH;
-		}
-		else if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
-		{
-			setAnimation("maiRightSitStrongKick");
-			_state = RIGHT_SIT_STRONG_KICK;
-		}
-
-		if (_posEnum != RIGHT_SEE)
-		{
-			setAnimation("maiLeftSit");
-			_state = LEFT_SIT;
-		}
 	}
+		break;
+	case MAI::LEFT_PUNCH:
+		break;
+	case MAI::RIGHT_PUNCH:
+		break;
+	case MAI::LEFT_STRONG_PUNCH:
+		break;
+	case MAI::RIGHT_STRONG_PUNCH:
+		break;
+	case MAI::LEFT_KICK:
+		break;
+	case MAI::RIGHT_KICK:
+		break;
+	case MAI::LEFT_STRONG_KICK:
+		break;
+	case MAI::RIGHT_STRONG_KICK:
+		break;
+	case MAI::LEFT_SIT_PUNCH:
+		break;
+	case MAI::RIGHT_SIT_PUNCH:
+		break;
+	case MAI::LEFT_SIT_KICK:
+		break;
+	case MAI::RIGHT_SIT_KICK:
+		break;
+	case MAI::LEFT_SIT_STRONG_PUNCH:
+		break;
+	case MAI::RIGHT_SIT_STRONG_PUNCH:
+		break;
+	case MAI::LEFT_SIT_STRONG_KICK:
+		break;
+	case MAI::RIGHT_SIT_STRONG_KICK:
+		break;
+	case MAI::LEFT_DEFENCE:
+		break;
+	case MAI::RIGHT_DEFENCE:
+		break;
+	case MAI::LEFT_SIT_DEFENCE:
+		break;
+	case MAI::RIGHT_SIT_DEFENCE:
+		break;
+	case MAI::LEFT_DASH:
+		break;
+	case MAI::RIGHT_DASH:
+		break;
+	case MAI::LEFT_BACK_DASH:
+		break;
+	case MAI::RIGHT_BACK_DASH:
 		break;
 	case MAI::LEFT_KNOCK_DOWN:
-	{
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))
-		{
-			setAnimation("maiLeftKnockDownBackMove");
-			_state = LEFT_KNOCK_DOWN_BACK_MOVE;
-		}
-		else if (KEYMANAGER->isOnceKeyDown(keyList[key::RIGHT]))
-		{
-			setAnimation("maiLeftKnockDownBackMove");
-			_state = LEFT_KNOCK_DOWN_FRONT_MOVE;
-		}
-	}
 		break;
 	case MAI::RIGHT_KNOCK_DOWN:
-	{
-		if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))
-		{
-			setAnimation("maiRightKnockDownBackMove");
-			_state = RIGHT_KNOCK_DOWN_BACK_MOVE;
-		}
-		else if(KEYMANAGER->isOnceKeyDown(keyList[key::RIGHT]))
-		{
-			setAnimation("maiRightKnockDownBackMove");
-			_state = RIGHT_KNOCK_DOWN_FRONT_MOVE;
-		}
-	}
-	case MAI::LEFT_DASH:
-	{
-		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
-		{
-			setAnimation("maiLeftIdle");
-			_state = LEFT_STOP;
-		}
-	}
-	break;
-	case MAI::RIGHT_DASH:
-	{
-		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
-		{
-			setAnimation("maiRightIdle");
-			_state = RIGHT_STOP;
-		}
-	}
-	break;
+		break;
+	case MAI::LEFT_KNOCK_DOWN_BACK_MOVE:
+		break;
+	case MAI::RIGHT_KNOCK_DOWN_BACK_MOVE:
+		break;
+	case MAI::LEFT_DAMAGED:
+		break;
+	case MAI::RIGHT_DAMAGED:
+		break;
+	case MAI::LEFT_JUMP_LEFT_MOVE:
+		break;
+	case MAI::RIGHT_JUMP_LFET_MOVE:
+		break;
+	case MAI::LEFT_JUMP_RIGHT_MOVE:
+		break;
+	case MAI::RIGHT_JUMP_RIGHT_MOVE:
+		break;
+	case MAI::STATE_END:
 		break;
 	default:
 		break;
 	}
 
 	
-
-}
-
-void mai::skill1()
-{
-	//KEYANIMANAGER->findAnimation("")->start();
-}
-
-void mai::skill2()
-{
-
-}
-
-void mai::skill3()
-{
 
 }

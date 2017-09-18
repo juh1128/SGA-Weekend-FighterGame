@@ -11,8 +11,6 @@ HRESULT effectFire::init( string imageKey, vector2D pos)
 
 	_fire = pos;
 
-	this->setScale(3.0, 3.0);
-
 	return S_OK;
 }
 void effectFire::release()
@@ -36,7 +34,6 @@ void effectFire::update()
 void effectFire::render()
 {
 	//gameObject::render();
-	RECT rc = CAMERAMANAGER->getRenderRect();
-	_image->frameRender(getMemDC() , _fire.x-rc.left , _fire.y-rc.top,_frameX,0);
 
+	_image->frameRender(getMemDC() , _fire.x , _fire.y,_frameX,0);
 }
