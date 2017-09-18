@@ -279,14 +279,14 @@
     <ClInclude Include="kim.h">
       <Filter>playGround\memberFolder\yongje</Filter>
     </ClInclude>
+    <ClInclude Include="athena.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
     <ClInclude Include="effectFire.h">
       <Filter>playGround\memberFolder\soonyu</Filter>
     </ClInclude>
     <ClInclude Include="whip.h">
       <Filter>playGround\memberFolder\hyeongjoon</Filter>
-    </ClInclude>
-    <ClInclude Include="athena.h">
-      <Filter>playGround\memberFolder\siyeong</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -452,14 +452,14 @@
     <ClCompile Include="kim.cpp">
       <Filter>playGround\memberFolder\yongje</Filter>
     </ClCompile>
+    <ClCompile Include="athena.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="effectFire.cpp">
       <Filter>playGround\memberFolder\soonyu</Filter>
     </ClCompile>
     <ClCompile Include="whip.cpp">
       <Filter>playGround\memberFolder\hyeongjoon</Filter>
-    </ClCompile>
-    <ClCompile Include="athena.cpp">
-      <Filter>playGround\memberFolder\siyeong</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
