@@ -28,6 +28,9 @@ HRESULT	selectScene::init()
 	IMAGEMANAGER->addFrameImage("솔배드가이", "resource/taesung/solBadGuy/jump_attack.bmp", 406, 162, 5, 2, true);
 	// - 나나야 23->12 (670, 409, 759, 659)
 	IMAGEMANAGER->addFrameImage("나나야", "resource/youngjae/nanaya/Nanaya_WalkForward.bmp", 3072, 512, 12, 2, true);
+	// - 아테나 41 -> 46
+	IMAGEMANAGER->addFrameImage("아테나", "resource/siyeong/왼쪽걷기,앉기.bmp", 2880, 2520, 8, 6, true);
+
 
 	//초기 애니메이션 설정
 	_selectedAnimation[characterName::iori] = new animation();
@@ -56,6 +59,10 @@ HRESULT	selectScene::init()
 	_selectedAnimation[characterName::nanaya]->init(3072, 512, 3072 / 12, 512 / 2);
 	_selectedAnimation[characterName::nanaya]->setPlayFrame(23, 12, false, false);
 
+	_selectedAnimation[characterName::athena] = new animation();
+	_selectedAnimation[characterName::athena]->init(2880, 2520, 2880 / 8, 2520 / 6);
+	_selectedAnimation[characterName::athena]->setPlayFrame(41, 46, false, false);
+
 	//애니메이션 속도 설정
 	for (int i = 0; i < characterName::END; ++i)
 	{
@@ -70,6 +77,7 @@ HRESULT	selectScene::init()
 	_characterRC[characterName::sol] = { 819, 315, 1020, 505 };
 	_characterRC[characterName::nanaya] = { 788, 532, 870, 736 };
 	_characterRC[characterName::mai] = { 1053, 471, 1185, 675 };
+	_characterRC[characterName::athena] = { 880, 439, 963, 618 };
 
 
 	//초기 오브젝트 생성
@@ -122,26 +130,30 @@ void selectScene::update()
 		{
 			//마우스 커서랑 이미지 충돌렉트랑 충돌 시
 			static int currentPlay = -1;
-			for (int i = 0; i < characterName::END; ++i)
-			{
-				if (PtInRect(&_characterRC[i], _ptMouse))
-				{
-					if (!_selectedAnimation[i]->isPlay() && i != currentPlay)
-					{
-						_selectedAnimation[i]->start();
-						currentPlay = i;
-					}
-				}
-				else
-				{
-					_selectedAnimation[i]->stop();
-					if (currentPlay == i)
-					{
-						currentPlay = -1;
-					}
-				}
 
-				_selectedAnimation[i]->frameUpdate();
+			if (currentPlay == -1)
+			{
+				for (int i = 0; i < characterName::END; ++i)
+				{
+					if (PtInRect(&_characterRC[i], _ptMouse))
+					{
+						if (!_selectedAnimation[i]->isPlay())
+						{
+							_selectedAnimation[i]->start();
+							currentPlay = i;
+						}
+						break;
+					}
+				}
+			}
+			else
+			{
+				_selectedAnimation[currentPlay]->frameUpdate();
+				if (!PtInRect(&_characterRC[currentPlay], _ptMouse))
+				{
+					_selectedAnimation[currentPlay]->stop();
+					currentPlay = -1;					
+				}
 			}
 
 			//선택 처리
@@ -189,8 +201,10 @@ void selectScene::render()
 	IMAGEMANAGER->findImage("네코")->scaleAniRender(getMemDC(), 100, 201, _selectedAnimation[characterName::neco], 500, 500);
 	
 	IMAGEMANAGER->findImage("솔배드가이")->scaleAniRender(getMemDC(), 759, 267, _selectedAnimation[characterName::sol], 304, 294);
+	IMAGEMANAGER->findImage("아테나")->scaleAniRender(getMemDC(), 795, 351, _selectedAnimation[characterName::athena], 990 - 795, 648 - 351);
 	IMAGEMANAGER->findImage("나나야")->scaleAniRender(getMemDC(), 570, 309, _selectedAnimation[characterName::nanaya], 500, 500);
 	IMAGEMANAGER->findImage("마이")->scaleAniRender(getMemDC(), 950, 437, _selectedAnimation[characterName::mai], 250, 250);
+	
 
 	//1p,2p 렌더링
 	for (int i = 0; i < 2; ++i)
@@ -200,6 +214,29 @@ void selectScene::render()
 			int width = _characterRC[_selectedCharacter[i]].right - _characterRC[_selectedCharacter[i]].left;
 			_playerNumber[i]->frameRender(getMemDC(), _characterRC[_selectedCharacter[i]].right - width/2, 
 				_characterRC[_selectedCharacter[i]].top - 30, i, 0);
+		}
+	}
+
+
+	if (_isDebugMode)
+	{
+		for (int i = 0; i < characterName::END; ++i)
+		{
+			HPEN bluePen = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+			HPEN oldPen;
+			HBRUSH oldBrush;
+			HDC memDC = getMemDC();
+
+			oldPen = (HPEN)SelectObject(memDC, bluePen);
+			oldBrush = (HBRUSH)SelectObject(memDC, GetStockObject(NULL_BRUSH));
+
+			Rectangle(getMemDC(), _characterRC[i].left, _characterRC[i].top, _characterRC[i].right, _characterRC[i].bottom);
+
+			SelectObject(memDC, oldBrush);
+			SelectObject(memDC, oldPen);
+
+			DeleteObject(bluePen);
+			
 		}
 	}
 }

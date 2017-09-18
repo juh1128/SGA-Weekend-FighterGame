@@ -9,6 +9,7 @@
 #include "neko.h"
 #include "solBadGuy.h"
 #include "terry.h"
+#include "athena.h"
 
 character* getCharacter(int id, vector2D pos)
 {
@@ -38,6 +39,10 @@ character* getCharacter(int id, vector2D pos)
 		case characterName::sol:
 			newCharacter = new solBadGuy;
 			((solBadGuy*)newCharacter)->init(pos);
+		break;
+		case characterName::athena:
+			newCharacter = new athena;
+			((athena*)newCharacter)->init(pos);
 		break;
 		default:
 			newCharacter = new testCharacter;
