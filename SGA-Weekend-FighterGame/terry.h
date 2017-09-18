@@ -49,6 +49,8 @@ private :
 
 	
 
+	
+
 public:
 	terry() {}
 	virtual ~terry() {}

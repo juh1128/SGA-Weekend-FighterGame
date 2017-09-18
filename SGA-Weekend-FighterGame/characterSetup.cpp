@@ -93,10 +93,10 @@ void playScene::characterSetup()
 	_player[0]->setupKey(key::STRONG_KICK, 'W');
 
 	//2p 단축키 설정
-	_player[1]->setupKey(key::LEFT, VK_NUMPAD4);
-	_player[1]->setupKey(key::RIGHT, VK_NUMPAD6);
-	_player[1]->setupKey(key::JUMP, VK_NUMPAD8);
-	_player[1]->setupKey(key::DOWN, VK_NUMPAD5);
+	_player[1]->setupKey(key::LEFT, 'G');
+	_player[1]->setupKey(key::RIGHT, 'J');
+	_player[1]->setupKey(key::JUMP, 'Y');
+	_player[1]->setupKey(key::DOWN, 'H');
 	_player[1]->setupKey(key::ATTACK, 'K');
 	_player[1]->setupKey(key::KICK, 'L');
 	_player[1]->setupKey(key::STRONG_ATTACK, 'I');
