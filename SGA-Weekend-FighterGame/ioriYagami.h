@@ -54,7 +54,7 @@ public:
 	void update();
 	void render();
 
-
+	void skill();
 	void stateUpdate(tagIoriState::Enum _state);
 	void changeState(tagIoriState::Enum _state);
 };

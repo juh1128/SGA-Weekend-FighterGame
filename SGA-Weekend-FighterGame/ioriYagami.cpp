@@ -18,8 +18,35 @@ HRESULT ioriYagami::init(vector2D pos)
 	//this->setGravity(true);
 
 
+	//int command[3] = { DOWN,DOWN,KICK };
+	//this->addCommand(command, 3, "nekoFire");
+	//this->addCallback("nekoFire", [this](tagMessage msg)
+	//{
+	//	this->nekoFire();
+	//});
 
+	//커맨드!!!!!!
 
+	int comnand[3] = { key::RIGHT, key::JUMP, key::STRONG_ATTACK };
+	this->addCommand(comnand, 3, "skill");
+	this->addCallback("skill", [this](tagMessage msg)
+	{
+		this->skill();
+	});
+
+	int comnand[3] = { key::RIGHT, key::JUMP, key::STRONG_ATTACK };
+	this->addCommand(comnand, 3, "skill");
+	this->addCallback("skill", [this](tagMessage msg)
+	{
+		this->skill();
+	});
+
+	int comnand[3] = { key::RIGHT, key::JUMP, key::STRONG_ATTACK };
+	this->addCommand(comnand, 3, "skill");
+	this->addCallback("skill", [this](tagMessage msg)
+	{
+		this->skill();
+	});
 
 	return S_OK;
 }
@@ -643,7 +670,16 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 		}
 		break;
 	case tagIoriState::SKILL1:
-		this->setAnimation("이오리_오른쪽_스킬");
+		if (_isEnemyDirection)
+		{
+			this->setAnimation("이오리_오른쪽_스킬");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::RIGHT_STOP));
+		}
+		else if (!_isEnemyDirection)
+		{
+			this->setAnimation("이오리_왼쪽_스킬");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::RIGHT_STOP));
+		}
 		break;
 	case tagIoriState::SKILL2:
 		this->setAnimation("이오리_오른쪽_스킬");
@@ -655,3 +691,7 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 	_state = state;
 }
 
+void ioriYagami::skill()
+{
+	this->changeState(tagIoriState::SKILL1);
+}

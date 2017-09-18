@@ -206,7 +206,7 @@ void playGround::setupDongjin()
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_스킬", "ioriYagamiSkill", 17, 0, 15, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_스킬", RectMakeCenter(150, 200, 200, 400));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽쪽_스킬", "ioriYagamiSkill2", 17, 0, 15, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_스킬", "ioriYagamiSkill2", 0, 17, 15, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_스킬", RectMakeCenter(150, 200, 200, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_스킬2", "ioriYagamiSkill3", 7, 0, 15, false, false);
