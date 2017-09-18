@@ -39,7 +39,7 @@ private:
 	float _startX;
 	float _startY;
 
-	bool _isEnemyRight;
+	bool _isEnemyDirection;
 
 	playGround* _playGround;
 
@@ -54,7 +54,9 @@ public:
 	void update();
 	void render();
 
-	
+	void skill();
+	void skill2();
+	void skill3();
 	void stateUpdate(tagIoriState::Enum _state);
 	void changeState(tagIoriState::Enum _state);
 };
