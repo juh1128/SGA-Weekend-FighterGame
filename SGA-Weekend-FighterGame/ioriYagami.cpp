@@ -17,6 +17,8 @@ HRESULT ioriYagami::init(vector2D pos)
 	});
 	//this->setGravity(true);
 
+	this->setStatus(1000, 10);
+
 
 	IMAGEMANAGER->addFrameImage("skill1Effect", "resource/Dongjin/오른쪽스킬1임팩트.bmp", 12589, 1280, 18, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("skill1Effect6", "resource/Dongjin/스킬3임팩트.bmp", 16332, 1280, 19, 1, true, RGB(255, 0, 255));
@@ -54,10 +56,10 @@ HRESULT ioriYagami::init(vector2D pos)
 	{
 		this->hit(msg);
 	});
-	this->addCallback("block", [this](tagMessage msg)
-	{
-		this->block();
-	});
+	//this->addCallback("block", [this](tagMessage msg)
+	//{
+	//	this->block();
+	//});
 	this->addCallback("die", [this](tagMessage msg)
 	{
 		this->die(msg);
@@ -734,31 +736,24 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 		}
 		break;
 	case tagIoriState::RIGHT_HIT:
-	{
 		this->setAnimation("이오리_오른쪽_맞음");
-		if (_isEnemyDirection)
-		{
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::RIGHT_STOP));
-		}
-		else if (!_isEnemyDirection)
-		{
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::LEFT_STOP));
-		}
-	}
-	break;
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		break;
+
 	case tagIoriState::LEFT_HIT:
-	{
 		this->setAnimation("이오리_왼쪽_맞음");
-		if (_isEnemyDirection)
-		{
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::RIGHT_STOP));
-		}
-		else if (!_isEnemyDirection)
-		{
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::LEFT_STOP));
-		}
-	}
-	break;
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::LEFT_STOP));
+		break;
+
+	case tagIoriState::RIGHT_DIE:
+		this->setAnimation("이오리_오른쪽_죽음");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		break;
+
+	case tagIoriState::LEFT_DIE:
+		this->setAnimation("이오리_왼쪽_죽음");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::LEFT_STOP));
+		break;
 	}
 
 
@@ -802,19 +797,21 @@ void ioriYagami::hit(tagMessage msg)
 	{
 		this->changeState(tagIoriState::LEFT_HIT);
 	}
+
+
 }
 
-//void ioriYagami::die(tagMessage msg)
-//{
-//	tagMessage message = msg;
-//	if (message.data == DIRECTION::LEFT)
-//	{
-//		this->changeState(tagIoriState::RIGHT_DING);
-//	}
-//	else if (message.data == DIRECTION::RIGHT)
-//	{
-//		this->changeState(tagIoriState::LEFT_DING);
-//	}
-//}
+void ioriYagami::die(tagMessage msg)
+{
+	tagMessage message = msg;
+	if (message.data == DIRECTION::LEFT)
+	{
+		this->changeState(tagIoriState::RIGHT_DIE);
+	}
+	else if (message.data == DIRECTION::RIGHT)
+	{
+		this->changeState(tagIoriState::LEFT_DIE);
+	}
+}
 
 

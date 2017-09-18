@@ -72,6 +72,11 @@ void playGround::setupDongjin()
 	IMAGEMANAGER->addFrameImage("ioriYagamiHit", "resource/Dongjin/오른쪽상단기맞음.bmp", 0, 0, 1452, 400, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiHit2", "resource/Dongjin/왼쪽상단기맞음.bmp", 0, 0, 1452, 400, 5, 1, true, RGB(255, 0, 255));
 
+	//죽는당
+	IMAGEMANAGER->addFrameImage("ioriYagamiDie", "resource/Dongjin/오른쪽상죽음.bmp", 0, 0, 1793, 400, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiDie2", "resource/Dongjin/왼쪽상죽음.bmp", 0, 0, 1793, 400, 4, 1, true, RGB(255, 0, 255));
+
+
 	//예시
 	//KEYANIMANAGER->addCoordinateFrameAnimation("테스트_이동_오른쪽", "테스트_이동", 0, 9, 15, false, true);
 	//KEYANIMANAGER->setCollisionRect("테스트_이동_오른쪽", RectMakeCenter(20, 10, 30, 67));
@@ -232,4 +237,12 @@ void playGround::setupDongjin()
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_맞음", "ioriYagamiHit2", 0, 4, 15, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_맞음", RectMakeCenter(150, 200, 200, 400));
+
+
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_죽음", "ioriYagamiDie", 3, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_죽음", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_죽음", "ioriYagamiDie2", 0, 3, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_죽음", RectMakeCenter(150, 200, 200, 400));
 }

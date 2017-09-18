@@ -22,6 +22,7 @@ namespace tagIoriState
 		SKILL1, SKILL2,
 		SKILL3,
 		RIGHT_HIT, LEFT_HIT,
+		RIGHT_DIE, LEFT_DIE
 	};
 }
 
@@ -65,6 +66,6 @@ public:
 
 	void hit(tagMessage msg);
 	void die(tagMessage msg);
-	void block();
+
 };
 
