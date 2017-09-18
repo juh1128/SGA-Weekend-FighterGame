@@ -27,11 +27,13 @@ HRESULT	playScene::init()
 	CAMERAMANAGER->connectTarget(_cameraTarget);
 
 	//UI
-	//for (int i = 0; i < 2; ++i)
-	//{
-	//	_progressBar[i] = new progressBar();
-	//	_progressBar[i]->init(
-	//}
+	for (int i = 0; i < 2; ++i)
+	{
+		_progressBar[i] = new progressBar();
+		_progressBar[i]->init("HPï¿½ï¿½_ï¿½ï¿½", "HPï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½Æ®", 500, 45);
+	}
+	_progressBar[0]->_pos = vector2D(300, 30);
+	_progressBar[1]->_pos = vector2D(980, 30);
 
 	//ÇÃ·¹ÀÌ¾î 0, ÇÃ·¹ÀÌ¾î 1 ¼ÂÆÃ
 	characterSetup();

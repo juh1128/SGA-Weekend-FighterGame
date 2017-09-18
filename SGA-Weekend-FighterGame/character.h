@@ -31,6 +31,7 @@ private:
 	vector<pair<vector<int>, string>>	_commandList;	//등록된 커맨드
 
 	bool			_isGravity;
+	bool			_isJump;
 	float			_gravitySpeed;
 
 protected:
