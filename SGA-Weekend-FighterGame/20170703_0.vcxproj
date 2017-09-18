@@ -94,6 +94,7 @@
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="gameObject.h" />
+    <ClInclude Include="kim.h" />
     <ClInclude Include="mai.h" />
     <ClInclude Include="Mauru.h" />
     <ClInclude Include="Nanaya.h" />
@@ -140,6 +141,7 @@
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="gameObject.cpp" />
+    <ClCompile Include="kim.cpp" />
     <ClCompile Include="mai.cpp" />
     <ClCompile Include="Mauru.cpp" />
     <ClCompile Include="Nanaya.cpp" />

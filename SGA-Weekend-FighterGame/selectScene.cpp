@@ -33,9 +33,15 @@ HRESULT	selectScene::init()
 	IMAGEMANAGER->addFrameImage("나나야", "resource/youngjae/nanaya/Nanaya_WalkForward.bmp", 3072, 512, 12, 2, true);
 	// - 아테나 41 -> 46
 	IMAGEMANAGER->addFrameImage("아테나", "resource/siyeong/왼쪽걷기,앉기.bmp", 1440, 1260, 8, 6, true);
+	// - 김갑 667,323  0->3
+	IMAGEMANAGER->addFrameImage("김", "resource/yongje/앉기(683,796,3,2).bmp", 683, 796, 3, 2, true);
 
 
 	//초기 애니메이션 설정
+	_selectedAnimation[characterName::kim] = new animation();
+	_selectedAnimation[characterName::kim]->init(683, 796, 683 / 3, 796 / 2);
+	_selectedAnimation[characterName::kim]->setPlayFrame(0, 3, false, false);
+
 	_selectedAnimation[characterName::mauru] = new animation();
 	_selectedAnimation[characterName::mauru]->init(550, 580, 550 / 5, 580 /4);
 	_selectedAnimation[characterName::mauru]->setPlayFrame(0, 4, false, false);
@@ -78,6 +84,7 @@ HRESULT	selectScene::init()
 
 
 	//충돌 렉트 설정
+	_characterRC[characterName::kim] = { 667, 323, 830, 568 };
 	_characterRC[characterName::mauru] = { 210, 314, 380, 500 };
 	_characterRC[characterName::iori] = { 358, 288, 493, 526 };
 	_characterRC[characterName::terry] = { 76, 370, 238, 639 };
@@ -209,6 +216,7 @@ void selectScene::render()
 	IMAGEMANAGER->findImage("테리")->scaleAniRender(getMemDC(), 74, 360, _selectedAnimation[characterName::terry], 270 - 74, 651 - 360);
 	IMAGEMANAGER->findImage("네코")->scaleAniRender(getMemDC(), 100, 201, _selectedAnimation[characterName::neco], 500, 500);
 	
+	IMAGEMANAGER->findImage("김")->scaleAniRender(getMemDC(), 667, 323, _selectedAnimation[characterName::kim], 830-667, 568-323);
 	IMAGEMANAGER->findImage("솔배드가이")->scaleAniRender(getMemDC(), 759, 267, _selectedAnimation[characterName::sol], 304, 294);
 	IMAGEMANAGER->findImage("아테나")->scaleAniRender(getMemDC(), 795, 351, _selectedAnimation[characterName::athena], 990 - 795, 648 - 351);
 	IMAGEMANAGER->findImage("나나야")->scaleAniRender(getMemDC(), 570, 309, _selectedAnimation[characterName::nanaya], 500, 500);
