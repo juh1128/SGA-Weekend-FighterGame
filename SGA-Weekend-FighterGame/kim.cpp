@@ -10,15 +10,24 @@ HRESULT kim::init(vector2D pos)
 	IMAGEMANAGER->addFrameImage("kimJump", "resource/yongje/점프(1593,1024,7,2).bmp", 1593, 1024, 7, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("kimFrontJump", "resource/yongje/앞 대점프(3072,1024,9,2).bmp", 3072, 1024, 9, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("kimSit", "resource/yongje/앉기(683,796,3,2).bmp", 683, 796, 3, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("kimDash", "resource/yongje/대쉬(3186,683,8,2).bmp", 3186, 683, 8, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("kimBackDash", "resource/yongje/백대쉬(569,796,2,2).bmp", 569, 796, 2, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("kimA", "resource/yongje/원A(2418,796,4,2).bmp", 2418, 796, 4, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("kimC", "resource/yongje/원C(7040,811,11,2).bmp", 7040, 811, 11, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("kimD", "resource/yongje/원D(9600,996,18,2).bmp", 9600, 996, 18, 2, true, RGB(255, 0, 255));
 
 
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimIdleLeft", "kimIdle", 0, 10, 22, false, true);
+	//KEYANIMANAGER->setCollisionRect("kimIdleLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimIdle")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
+	//	110, 370));
 	KEYANIMANAGER->setCollisionRect("kimIdleLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimIdle")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
-		110, 370));
+		110, 600));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimIdleRight", "kimIdle", 21, 11, 22, false, true);
+	//KEYANIMANAGER->setCollisionRect("kimIdleRight", RectMakeCenter(IMAGEMANAGER->findImage("kimIdle")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
+	//	110, 370));
 	KEYANIMANAGER->setCollisionRect("kimIdleRight", RectMakeCenter(IMAGEMANAGER->findImage("kimIdle")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
-		110, 370));
+		110, 600));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimWalkFrontLeft", "kimWalk", 0, 5, 12, false, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimWalkBackLeft", "kimWalk", 6, 11, 12, false, true);
@@ -32,6 +41,14 @@ HRESULT kim::init(vector2D pos)
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimJumpLeft", "kimJump", 0, 6, 10, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimJumpRight", "kimJump", 13, 7, 10, false, false);
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("kimDashLeft", "kimDash", 0, 7, 15, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("kimDashRight", "kimDash", 15, 8, 15, false, true);
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("kimBackDashLeft", "kimBackDash", 0, 1, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("kimBackDashRight", "kimBackDash", 3, 2, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("kimBackDashReturnLeft", "kimBackDash", 0, 0, 1, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("kimBackDashReturnRight", "kimBackDash", 2, 2, 1, false, false);
 	//------------------------------------------------------
 
 	//테스트 애니메이션은 setupYuhoon에서 만든다. (게임 시작 시 최초 1번만 만들어놓고 씀)
@@ -51,6 +68,25 @@ HRESULT kim::init(vector2D pos)
 	{
 		this->changeState((kimState::Enum)msg.data);
 	});
+
+	//커맨드 등록
+	int leftDouble[2] = { key::LEFT, key::LEFT };
+	this->addCommand(leftDouble, 2, "leftDouble");
+	int rightDouble[2] = { key::RIGHT, key::RIGHT };
+	this->addCommand(rightDouble, 2, "rightDouble");
+
+	//커맨드 메시지에 따른 콜백함수 등록
+	this->addCallback("leftDouble", [this](tagMessage msg)
+	{
+		this->leftDouble();
+	});
+	this->addCallback("rightDouble", [this](tagMessage msg)
+	{
+		this->rightDouble();
+	});
+
+	//캐릭터 초기 능력치 설정
+	this->setStatus(1000, 100);
 
 	return S_OK;
 }
@@ -145,6 +181,8 @@ void kim::changeState(kimState::Enum state)
 	case kimState::JUMP:
 		if (_isLeft) this->setAnimation("kimJumpLeft");
 		else this->setAnimation("kimJumpRight");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
+		jump(35);
 		break;
 	case kimState::JUMP_FRONT:
 		break;
@@ -159,6 +197,13 @@ void kim::changeState(kimState::Enum state)
 	case kimState::SIT_GUARD:
 		break;
 	case kimState::DASH:
+		if (_isLeft) this->setAnimation("kimDashLeft");
+		else this->setAnimation("kimDashRight");
+		break;
+	case kimState::BACK_DASH:
+		if (_isLeft) this->setAnimation("kimBackDashLeft");
+		else this->setAnimation("kimBackDashRight");
+		jump(15);
 		break;
 	}
 
@@ -197,15 +242,12 @@ void kim::stateUpdate(kimState::Enum state)
 			break;
 		case LEVER::LEFTUP:
 			changeState(kimState::JUMP);
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
 			break;
 		case LEVER::UP:
 			changeState(kimState::JUMP);
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
 			break;
 		case LEVER::RIGHTUP:
 			changeState(kimState::JUMP);
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
 			break;
 		}
 		break;
@@ -236,15 +278,12 @@ void kim::stateUpdate(kimState::Enum state)
 			break;
 		case LEVER::LEFTUP:
 			changeState(kimState::JUMP);
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
 			break;
 		case LEVER::UP:
 			changeState(kimState::JUMP);
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
 			break;
 		case LEVER::RIGHTUP:
 			changeState(kimState::JUMP);
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
 			break;
 		}
 		break;
@@ -275,19 +314,17 @@ void kim::stateUpdate(kimState::Enum state)
 			break;
 		case LEVER::LEFTUP:
 			changeState(kimState::JUMP);
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
 			break;
 		case LEVER::UP:
 			changeState(kimState::JUMP);
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
 			break;
 		case LEVER::RIGHTUP:
 			changeState(kimState::JUMP);
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
 			break;
 		}
 		break;
 	case kimState::JUMP:
+		//jump(10);
 		break;
 	case kimState::JUMP_FRONT:
 		break;
@@ -326,10 +363,84 @@ void kim::stateUpdate(kimState::Enum state)
 		}
 		break;
 	case kimState::GUARD:
+		if (_lever == LEVER::IDLE) changeState(kimState::IDLE);
 		break;
 	case kimState::SIT_GUARD:
+		if (_lever == LEVER::IDLE) changeState(kimState::IDLE);
 		break;
 	case kimState::DASH:
+		switch (_lever)
+		{
+		case LEVER::IDLE:
+		case LEVER::DOWN:
+		case LEVER::LEFTUP:
+		case LEVER::UP:
+		case LEVER::RIGHTUP:
+			changeState(kimState::IDLE);
+			break;
+		case LEVER::LEFT: case LEVER::LEFTDOWN:
+			if (_isLeft)
+			{
+				_pos.x -= 15;
+			}
+			else
+			{
+				changeState(kimState::IDLE);
+			}
+			break;
+		case LEVER::RIGHT: case LEVER::RIGHTDOWN:
+			if (_isLeft)
+			{
+				changeState(kimState::IDLE);
+			}
+			else
+			{
+				_pos.x += 15;
+			}
+			break;
+		}
+		break;
+	case kimState::BACK_DASH:
+		if (_lever == LEVER::IDLE) changeState(kimState::IDLE);
+		if (_isLeft) _pos.x += 18;
+		else _pos.x -= 18;
+		break;
+	}
+}
+
+void kim::leftDouble(void)
+{
+	switch (_state)
+	{
+	case kimState::IDLE:
+		if (_isLeft) changeState(kimState::DASH);
+		else changeState(kimState::BACK_DASH);
+		break;
+	case kimState::WALK_FRONT:
+		if (_isLeft) changeState(kimState::DASH);
+		else changeState(kimState::BACK_DASH);
+		break;
+	case kimState::WALK_BACK:
+		if (_isLeft) changeState(kimState::DASH);
+		else changeState(kimState::BACK_DASH);
+		break;
+	}
+}
+void kim::rightDouble(void)
+{
+	switch (_state)
+	{
+	case kimState::IDLE:
+		if (_isLeft) changeState(kimState::BACK_DASH);
+		else changeState(kimState::DASH);
+		break;
+	case kimState::WALK_FRONT:
+		if (_isLeft) changeState(kimState::BACK_DASH);
+		else changeState(kimState::DASH);
+		break;
+	case kimState::WALK_BACK:
+		if (_isLeft) changeState(kimState::BACK_DASH);
+		else changeState(kimState::DASH);
 		break;
 	}
 }
