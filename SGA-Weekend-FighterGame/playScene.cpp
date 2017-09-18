@@ -63,7 +63,6 @@ void playScene::update()
 {
 	sceneBase::update();
 
-
 	//배경 프레임
 	_backgroundAnimation->frameUpdate();
 
@@ -79,10 +78,34 @@ void playScene::update()
 	else
 		_progressBar[1]->update(0, 1000);
 
+
+	//카메라 타겟 위치 셋업
+	gameObject* left = _player[1];
+	gameObject* right = _player[0];
+	if (_player[0]->_pos.x <= _player[1]->_pos.x)
+	{
+		left = _player[0];
+		right = _player[1];
+	}
+	float distance = right->getCollisionRect().right - left->getCollisionRect().left;
+	vector2D averagePos = (_player[0]->_pos + _player[1]->_pos) / 2;
+	vector2D dir = averagePos - _cameraTarget->_pos;
+	if (dir.getLength() <= 5.0f)
+	{
+		_cameraTarget->_pos = averagePos;
+	}
+	else
+	{
+		_cameraTarget->_pos = _cameraTarget->_pos + dir.normalize()*5.0f;
+	}
+
+	CAMERAMANAGER->updateCamera();
+
 }
 void playScene::render()		
 {
-	_background->scaleAniRender(getMemDC(), 0, 0, _backgroundAnimation, 1800, 768);
+	RECT rc = CAMERAMANAGER->getRenderRect();
+	_background->scaleAniRender(getMemDC(), -rc.left, -rc.top, _backgroundAnimation, 1800, 768);
 
 	_progressBar[0]->render();
 	_progressBar[1]->render();

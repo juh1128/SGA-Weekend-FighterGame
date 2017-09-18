@@ -29,7 +29,9 @@ void playGround::setupSunghoon()
 	//Left -> 왼쪽을보는 Right -> 오른쪽을 보는
 	//정지상태
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftIdle", "maiIdle", 12,23, 6, false, true);
+	KEYANIMANAGER->setCollisionRect("maiLeftIdle", RectMake(80, 0, 200, 400));
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightIdle", "maiIdle", 0, 11, 6, false,true);
+	KEYANIMANAGER->setCollisionRect("maiRightIdle", RectMake(0, 0, 200, 400));
 
 	//이동
 	//KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftMove")
@@ -38,32 +40,45 @@ void playGround::setupSunghoon()
 	int arrLeftBackMove[] = { 0,1,2,3,4,5 };
 	int arrRightBackMove[] = { 6,7,8,9,10,11 };
 	KEYANIMANAGER->addArrayFrameAnimation("maiLeftBackMove", "maiBackMove", arrRightBackMove, 6, 6, true);
-	
+	KEYANIMANAGER->setCollisionRect("maiLeftBackMove", RectMake(80, 0, 200, 400));
 	KEYANIMANAGER->addArrayFrameAnimation("maiRightBackMove", "maiBackMove", arrLeftBackMove, 6, 6, true);
+	KEYANIMANAGER->setCollisionRect("maiRightBackMove", RectMake(0, 0, 200, 400));
 
 	//뒤로대쉬
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftBackDash", "maiBackDash", 0, 5, 16, false, false);
+	KEYANIMANAGER->setCollisionRect("maiLeftBackDash", RectMake(30, 0, 250, 457));
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightBackDash", "maiBackDash", 6, 11, 16, false, false);
+	KEYANIMANAGER->setCollisionRect("maiRightBackDash", RectMake(0, 0, 250, 457));
 
 	//앉아서막기
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftSitDefence", "maiSitDefence", 0, 1, 2, false, false);
+	KEYANIMANAGER->setCollisionRect("maiLeftSitDefence", RectMake(50, 0, 130, 250));
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightSitDefence", "maiSitDefence", 2, 3, 2, false, false);
+	KEYANIMANAGER->setCollisionRect("maiRightSitDefence", RectMake(20, 0, 130, 250));
 
 	//앞대쉬
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftFrontDash", "maiFrontDash", 0, 5, 9, false, true);
+	KEYANIMANAGER->setCollisionRect("maiLeftFrontDash", RectMake(0, 0, 381, 303));
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightFrontDash", "maiFrontDash", 6, 11, 9, false, true);
+	KEYANIMANAGER->setCollisionRect("maiRightFrontDash", RectMake(0, 0, 381, 303));
 
 	//점프
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftJump", "maiJump", 0, 13, 8, false, false);
+	KEYANIMANAGER->setCollisionRect("maiLeftJump", RectMake(0, 0, 343, 514));
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightJump", "maiJump", 14, 17, 8, false, false);
+	KEYANIMANAGER->setCollisionRect("maiRightJump", RectMake(0, 0, 343, 514));
 
 	//앉기
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftSit", "maiSit", 0, 0, 1, false, true);
+	KEYANIMANAGER->setCollisionRect("maiLeftSit", RectMake(20, 0, 200, 228));
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightSit", "maiSit", 1, 1, 1, false, true);
+	KEYANIMANAGER->setCollisionRect("maiRightSit", RectMake(0, 0, 200, 228));
 
 	//막기
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftDefence", "maiDefence", 0, 4, 5, false, false);
+	KEYANIMANAGER->setCollisionRect("maiLeftDefence", RectMake(30, 0, 232, 352));
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightDefence", "maiDefence", 5, 9, 5, false, false);
+	KEYANIMANAGER->setCollisionRect("maiRightDefence", RectMake(0, 0, 232, 352));
 
 	//데미지받는모션
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftDamaged", "maiDamaged", 0, 0, 1, false, false);
@@ -71,7 +86,9 @@ void playGround::setupSunghoon()
 
 	//약발
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftKick", "maiKick", 0, 5, 6, false, false);
+	KEYANIMANAGER->setCollisionRect("maiLeftKick", RectMake(200, 0, 190, 419));
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightKick", "maiKick", 6, 11, 6, false, false);
+	KEYANIMANAGER->setCollisionRect("maiRightKick", RectMake(50, 0, 190, 419));
 
 	//넘어짐
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftKnockDown", "maiKnockDown", 0, 3, 4, false, false);
@@ -79,15 +96,21 @@ void playGround::setupSunghoon()
 
 	//뒤로일어나기
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftKnockDownBackMove", "maiKnockDownBackMove", 0, 7, 8, false, false);
+	KEYANIMANAGER->setCollisionRect("maiLeftKnockDownBackMove", RectMake(60, 0, 510, 426));
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightKnockDownBackMove", "maiKnockDownBackMove", 8, 15, 8, false, false);
+	KEYANIMANAGER->setCollisionRect("maiRightKnockDownBackMove", RectMake(60, 0, 510, 426));
 
 	//약공
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftPunch", "maiPunch", 0, 3, 4, false, false);
+	KEYANIMANAGER->setCollisionRect("maiLeftPunch", RectMake(200, 0, 245, 352));//465
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightPunch", "maiPunch", 4, 7, 4, false, false);
+	KEYANIMANAGER->setCollisionRect("maiRightPunch", RectMake(20, 0, 225, 352));
 
 	//앉아서방어
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftSitDefence", "maiSitDefence", 0, 1, 2, false, false);
+	KEYANIMANAGER->setCollisionRect("maiLeftSitDefence", RectMake(10, 0, 188, 250));
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightSitDefence", "maiSitDefence", 2, 3, 2, false, false);
+	KEYANIMANAGER->setCollisionRect("maiRightSitDefence", RectMake(0, 0, 188, 250));
 
 	//앉아서약발
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftSitKcik", "maiSitKick", 0, 2, 3, false, false);
@@ -107,11 +130,15 @@ void playGround::setupSunghoon()
 
 	//강공
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftStrongPunch", "maiStrongPunch", 0, 7, 8, false, false);
+	KEYANIMANAGER->setCollisionRect("maiLeftStrongPunch", RectMake(200, 0, 226, 445));
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightStrongPunch", "maiStrongPunch", 8, 15, 8, false, false);
+	KEYANIMANAGER->setCollisionRect("maiRightStrongPunch", RectMake(30, 0, 236, 445));
 
 	//강발
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftStrongKick", "maiStrongKick", 0, 7, 8, true, false);
+	KEYANIMANAGER->setCollisionRect("maiLeftStrongKick", RectMake(200, 0, 180, 401));//436
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightStrongKick", "maiStrongKick", 8, 15, 8, true, false);
+	KEYANIMANAGER->setCollisionRect("maiRightStrongKick", RectMake(70, 0, 180, 401));
 
 	//패배
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftDead", "maiDead", 0, 9, 9, false, false);

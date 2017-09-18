@@ -128,7 +128,7 @@ void trigger::render()
 		triggerBrush = CreateSolidBrush(RGB(255, 0, 0));
 		oldBrush = (HBRUSH)SelectObject(getMemDC(), triggerBrush);
 
-		RECT rc = this->getRect();
+		RECT rc = CAMERAMANAGER->getRelativeRect(this->getRect());
 		Rectangle(getMemDC(), rc.left, rc.top, rc.right, rc.bottom);
 
 		SelectObject(getMemDC(), oldBrush);
