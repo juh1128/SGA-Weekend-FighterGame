@@ -21,6 +21,9 @@ HRESULT	selectScene::init()
 	IMAGEMANAGER->addFrameImage("테리", "resource/geunhwa/terryIdle.bmp", 2288, 800, 8, 2, true);
 	// - 네코 오른쪽 0, 17 (2프레임) (298, 541, 383, 659)
 	IMAGEMANAGER->addFrameImage("네코", "resource/soonwoo/neko/neko1_right.bmp", 4352, 1790, 17, 7, true);
+	// - 마우루 오른쪽 0~4
+	IMAGEMANAGER->addFrameImage("마우루", "resource/yoonsam/Mauru/Mauru_sit_.bmp", 550, 580, 5, 4, true);
+
 	//왼쪽 보는 애니메이션
 	// - 마이 0->7 (1010, 437, 1207, 687)
 	IMAGEMANAGER->addFrameImage("마이", "resource/sunghoon/maiStrongKick.bmp", 3624, 802, 8, 2, true);
@@ -33,6 +36,10 @@ HRESULT	selectScene::init()
 
 
 	//초기 애니메이션 설정
+	_selectedAnimation[characterName::mauru] = new animation();
+	_selectedAnimation[characterName::mauru]->init(550, 580, 550 / 5, 580 /4);
+	_selectedAnimation[characterName::mauru]->setPlayFrame(0, 4, false, false);
+
 	_selectedAnimation[characterName::iori] = new animation();
 	_selectedAnimation[characterName::iori]->init(3568, 400, 3568 / 9, 400);
 	_selectedAnimation[characterName::iori]->setPlayFrame(8, 0, false, false);
@@ -71,6 +78,7 @@ HRESULT	selectScene::init()
 
 
 	//충돌 렉트 설정
+	_characterRC[characterName::mauru] = { 210, 314, 380, 500 };
 	_characterRC[characterName::iori] = { 358, 288, 493, 526 };
 	_characterRC[characterName::terry] = { 76, 370, 238, 639 };
 	_characterRC[characterName::neco] = { 325, 552, 386, 640 };
@@ -196,6 +204,7 @@ void selectScene::render()
 	_title->render(getMemDC(), 200, 84);
 
 	//캐릭터 렌더링
+	IMAGEMANAGER->findImage("마우루")->scaleAniRender(getMemDC(), 210, 274, _selectedAnimation[characterName::mauru], 180, 250);
 	IMAGEMANAGER->findImage("이오리")->scaleAniRender(getMemDC(), 357, 267, _selectedAnimation[characterName::iori], 230, 259);
 	IMAGEMANAGER->findImage("테리")->scaleAniRender(getMemDC(), 74, 360, _selectedAnimation[characterName::terry], 270 - 74, 651 - 360);
 	IMAGEMANAGER->findImage("네코")->scaleAniRender(getMemDC(), 100, 201, _selectedAnimation[characterName::neco], 500, 500);

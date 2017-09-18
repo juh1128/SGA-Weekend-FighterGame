@@ -95,6 +95,7 @@
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="gameObject.h" />
     <ClInclude Include="mai.h" />
+    <ClInclude Include="Mauru.h" />
     <ClInclude Include="Nanaya.h" />
     <ClInclude Include="neko.h" />
     <ClInclude Include="playGround.h" />
@@ -140,6 +141,7 @@
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="mai.cpp" />
+    <ClCompile Include="Mauru.cpp" />
     <ClCompile Include="Nanaya.cpp" />
     <ClCompile Include="neko.cpp" />
     <ClCompile Include="playGround.cpp" />
