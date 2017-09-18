@@ -9,7 +9,7 @@ HRESULT ioriYagami::init(vector2D pos)
 	_playGround->setupDongjin();
 
 	character::init("이오리", pos, "이오리_오른쪽_멈춤");
-	this->changeState(tagIoriState::RIGHT_STOP);
+	_state = tagIoriState::RIGHT_STOP;
 
 	this->addCallback("changeState", [this](tagMessage msg)
 	{
@@ -18,9 +18,7 @@ HRESULT ioriYagami::init(vector2D pos)
 	//this->setGravity(true);
 	
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉은_약손", "ioriYagamiSitAttackA", 4, 0, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_약손", RectMakeCenter(150, 200, 200, 400));
-
+	
 
 
 	return S_OK;
