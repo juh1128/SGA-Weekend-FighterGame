@@ -69,6 +69,10 @@ public:
 		_size.y = height;
 		_isScaled = true;
 	}
+	vector2D getOriginSize()
+	{
+		return _size;
+	}
 	vector2D getSize() 
 	{
 		float scaledX = _size.x * _scale.x;

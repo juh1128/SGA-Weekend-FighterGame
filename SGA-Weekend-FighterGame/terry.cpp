@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "terry.h"
+#include "attackHitbox.h"
 
 
 HRESULT terry::init(vector2D pos)
@@ -49,7 +50,7 @@ HRESULT terry::init(vector2D pos)
 
 	//제자리 점프
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightJump", "terryJump", 0, 5, 8, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("terryLefttJump", "terryJump", 6, 11, 8, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftJump", "terryJump", 6, 11, 8, false, false);
 
 	//무브 점프
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryRightMoveJump", "terryMoveJump", 0, 4, 8, false, false);
@@ -81,13 +82,15 @@ HRESULT terry::init(vector2D pos)
 	KEYANIMANAGER->addCoordinateFrameAnimation("terryLeftPowerKick", "terryPowerKick", 11, 6, 8, false, false);
 
 
-	character::init("테리", pos, "terryRightIdle");
-	this->changeState(tagTerryState::RIGHT_STOP);
+	character::init("테리", pos, "terryLeftIdle");
+	_state = tagTerryState::LEFT_STOP;
 
 	this->addCallback("changeState", [this](tagMessage msg)
 	{
 		this->changeState((tagTerryState::Enum)msg.data);
 	});
+
+	
 
 	return S_OK;
 }
@@ -101,6 +104,9 @@ void terry::update()
 {
 	character::update();
 
+	stateUpdate(_state);
+	
+
 }
 void terry::render()
 {
@@ -110,178 +116,160 @@ void terry::render()
 
 void terry::changeState(tagTerryState::Enum state)
 {
-	switch (_state)
+	switch (state)
 	{
 	case tagTerryState::RIGHT_STOP:
-	{
 		this->setAnimation("terryRightIdle");
-	}
 		break;
 	case tagTerryState::LEFT_STOP:
-	{
 		this->setAnimation("terryLeftIdle");
-	}
 		break;
 	case tagTerryState::RIGHT_MOVE:
-	{
 		this->setAnimation("terryRightMove");
-	}
 		break;
 	case tagTerryState::LEFT_MOVE:
-	{
 		this->setAnimation("terryLeftMove");
-	}
-	break;
+		break;
 	case tagTerryState::RIGHT_BACK_MOVE:
-	{
 		this->setAnimation("terryRightBackMove");
-	}
-	break;
+		break; 
 	case tagTerryState::LEFT_BACK_MOVE:
-	{
 		this->setAnimation("terryLeftBackMove");
-	}
-	break;
+		break;
 	case tagTerryState::RIGHT_DASH_MOVE:
-	{
 		this->setAnimation("terryRightDashMove");
-	}
-	break;
+		break; 
 	case tagTerryState::LEFT_DASH_MOVE:
-	{
 		this->setAnimation("terryLeftDashMove");
-	}
-	break;
+			break;
 	case tagTerryState::RIGHT_BACK_DASH:
-	{
 		this->setAnimation("terryRightBackDash");
-	}
-	break;
+		break; 
 	case tagTerryState::LEFT_BACK_DASH:
-	{
 		this->setAnimation("terryLeftBackDash");
-	}
-	break;
-	case tagTerryState::RIGHT_SIT:
-	{
+		break;		
+	case tagTerryState::RIGHT_SIT: 
 		this->setAnimation("terryRightSit");
-	}
-	break;
+		break;
 	case tagTerryState::LEFT_SIT:
-	{
 		this->setAnimation("terryLeftSit");
-	}
-	break;
-	case tagTerryState::RIGHT_JUMP:
-	{
+		break;		
+	case tagTerryState::RIGHT_JUMP: 
 		this->setAnimation("terryRightJump");
-	}
-	break;
+		jump(35);
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::RIGHT_STOP));
+		break;
 	case tagTerryState::LEFT_JUMP:
-	{
 		this->setAnimation("terryLeftJump");
-	}
-	break;
-	case tagTerryState::RIGHT_MOVE_JUMP:
-	{
+		jump(35);
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagTerryState::LEFT_STOP));
+		break;
+	case tagTerryState::RIGHT_MOVE_JUMP: 
 		this->setAnimation("terryRightMoveJump");
-	}
-	break;
+		break;
 	case tagTerryState::LEFT_MOVE_JUMP:
-	{
 		this->setAnimation("terryLeftMoveJump");
-	}
-	break;
+		break;
 	case tagTerryState::RIGHT_BACK_MOVE_JUMP:
-	{
 		this->setAnimation("terryRightBackMoveJump");
-	}
-	break;
+		break;
 	case tagTerryState::LEFT_BACK_MOVE_JUMP:
-	{
 		this->setAnimation("terryLeftBackMoveJump");
-	}
-	break;
-	case tagTerryState::RIGHT_DEFENCE:
-	{
+		break;		
+	case tagTerryState::RIGHT_DEFENCE: 
 		this->setAnimation("terryRightDefence");
-	}
-	break;
+		break;
 	case tagTerryState::LEFT_DEFENCE:
-	{
 		this->setAnimation("terryLeftDefence");
-	}
-	break;
-	case tagTerryState::RIGHT_SIT_DEFENCE:
-	{
+		break;
+	case tagTerryState::RIGHT_SIT_DEFENCE: 
 		this->setAnimation("terryRightSitDefence");
-	}
-	break;
+		break;
 	case tagTerryState::LEFT_SIT_DEFENCE:
-	{
 		this->setAnimation("terryLeftSitDefence");
-	}
-	break;
-	case tagTerryState::RIGHT_ATTACK:
-	{
+		break;		
+	case tagTerryState::RIGHT_ATTACK: 
 		this->setAnimation("terryRightAttack");
-	}
-	break;
+		break;
 	case tagTerryState::LEFT_ATTACK:
-	{
 		this->setAnimation("terryLeftAttack");
-	}
-	break;
-	case tagTerryState::RIGHT_KICK:
-	{
+		break;
+	case tagTerryState::RIGHT_KICK: 
 		this->setAnimation("terryRightKick");
-	}
-	break;
+		break;
 	case tagTerryState::LEFT_KICK:
-	{
 		this->setAnimation("terryLeftKick");
-	}
-	break;
-	case tagTerryState::RIGHT_POWER_ATTACK:
-	{
+		break;
+	case tagTerryState::RIGHT_POWER_ATTACK: 
 		this->setAnimation("terryRightPowerAttack");
-	}
-	break;
+		break;
 	case tagTerryState::LEFT_POWER_ATTACK:
-	{
 		this->setAnimation("terryLeftPowerAttack");
-	}
-	break;
-	case tagTerryState::RIGHT_POWER_KICK:
-	{
+		break;
+	case tagTerryState::RIGHT_POWER_KICK: 
 		this->setAnimation("terryRightPowerKick");
-	}
-	break;
+		break;
 	case tagTerryState::LEFT_POWER_KICK:
-	{
-		this->setAnimation("terryLeftpowerKick");
+		this->setAnimation("terryLeftPowerKick");
+		break;
 	}
-	break;
-	}
-	
+	_state = state;
 }
 void terry::stateUpdate(tagTerryState::Enum state)
 {
-	switch (_state)
+	switch (state)
 	{
 	case tagTerryState::RIGHT_STOP:
-	{
-		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
-		{
-			tagTerryState::RIGHT_MOVE;
-		}
-	}
 		break;
 	case tagTerryState::LEFT_STOP:
+		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+		{
+			this->changeState(tagTerryState::LEFT_MOVE);
+		}
+		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+		{
+			changeState(tagTerryState::LEFT_BACK_MOVE);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+		{
+			changeState(tagTerryState::LEFT_JUMP);
+		}
+		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::LEFT_SIT);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
+		{
+			changeState(tagTerryState::LEFT_ATTACK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
+		{
+			changeState(tagTerryState::LEFT_KICK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
+		{
+			changeState(tagTerryState::LEFT_POWER_ATTACK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
+		{
+			changeState(tagTerryState::LEFT_POWER_KICK);
+		}
 		break;
 	case tagTerryState::RIGHT_MOVE:
 		break;
 	case tagTerryState::LEFT_MOVE:
+		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+		{
+			_pos.x += 10;
+		}
+		if (KEYMANAGER->isOnceKeyUp (keyList[key::RIGHT]))
+		{
+			changeState(tagTerryState::LEFT_STOP);
+		}
+		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			changeState(tagTerryState::LEFT_SIT);
+		}
 		break;
 	case tagTerryState::RIGHT_BACK_MOVE:
 		break;
@@ -338,14 +326,16 @@ void terry::stateUpdate(tagTerryState::Enum state)
 	}
 }
 
-void terry::enemyPos()
+
+
+/*void terry::enemyPos()
 {
-	if (this->_pos.x > _enemy->_pos.x && _isEnemyRight)			//내 x좌표값이 상대보다 크다면 
+	if (this->_pos.x > _enemy->_pos.x && _isEnemyRight)			//내 x좌표값이 상대보다 크다면  (오른쪽에 내가 서있다면)
 	{
 		_isEnemyRight = false;									//상대위치 불값 false 
 	}
-	else if (this->_pos.x < _enemy->_pos.x && !_isEnemyRight)	//내	 x좌표값이 상대보다 작다면 
+	else if (this->_pos.x < _enemy->_pos.x && !_isEnemyRight)	//내	 x좌표값이 상대보다 작다면  (왼쪽에 내가 서있다면)
 	{
 		_isEnemyRight = true;									//내 위치 불값 true
 	}
-}
+}*/
