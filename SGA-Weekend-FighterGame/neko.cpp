@@ -3,14 +3,16 @@
 #include "attackHitbox.h"
 
 
+
 //s
 HRESULT neko::init(vector2D pos)
 {
 	//이미지 로드 
-	IMAGEMANAGER->addFrameImage("neko1_left", "resource/soonwoo/neko/neko1_left.bmp", 4352, 1790, 17, 7, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("neko1_left", "resource/soonwoo/neko/neko1_left.bmp", 4352, 1795, 17, 7, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("neko1_right", "resource/soonwoo/neko/neko1_right.bmp", 4352, 1790, 17, 7, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("nekoRightFireEffect", "resource/soonwoo/neko/nekoFire.bmp", 7424, 256, 29, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("nekoLeftFireEffect", "resource/soonwoo/neko/nekoFireLeft.bmp", 7424, 256, 29, 1, true,RGB(255,0,255));
 	//이펙트 로드
-	EFFECTMANAGER->addEffect("neko_strong_kick", "resource/soonwoo/neko/neko_kick_effect.bmp", 256, 256, 256, 256, 1, 1);
 	
 	//키애니메니져 설정
 
@@ -27,9 +29,23 @@ HRESULT neko::init(vector2D pos)
 	KEYANIMANAGER->addArrayFrameAnimation("nekoRightMove", "neko1_right", rightMove, 8, 7, true);
 	KEYANIMANAGER->setCollisionRect("nekoRightMove", RectMake(118, 179, 24, 42));
 	int leftMove[]{ 5,6,7,8,9,10,11,12 };
-
 	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftMove", "neko1_left", leftMove, 8, 7, true);
 	KEYANIMANAGER->setCollisionRect("nekoLeftMove", RectMake(112, 179, 24, 42));
+
+	//===================DASH=============================
+	int rightDash[]{ 40,41,42,43,44,45,46,47 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoRightDash", "neko1_right", rightDash, 7, 15, false);
+	
+	int leftDash[]{ 40,41,42,43,44,45,46,47 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftDash", "neko1_left", leftDash, 7, 15, false);
+
+	//===================BACK DASH========================
+	int rightBackDash[]{ 34,35,36,37,38,39 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoRightBackDash", "neko1_right", rightBackDash, 6, 15, false);
+	
+	int leftBackDash[]{ 34,35,36,37,38,39 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftBackDash", "neko1_left", leftBackDash, 6, 15, false);
+
 	//=====================ChangeSIT===========================
 
 	//DOWN
@@ -68,6 +84,14 @@ HRESULT neko::init(vector2D pos)
 	int leftJump[]{ 17,18,19,20,21,22,23,24,25,26,27,28,29 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftJump", "neko1_left", leftJump, 13, 8, false);
 	KEYANIMANAGER->setCollisionRect("nekoLeftJump", RectMake(112, 179, 24, 42));
+
+	//neko falling
+	int rightFall[]{26};
+	KEYANIMANAGER->addArrayFrameAnimation("nekoRightFall", "neko1_right", rightFall, 1, 1, false);
+	KEYANIMANAGER->setCollisionRect("nekoRightFall", RectMake(118, 179, 24, 42));
+	int  leftFall[]{ 26 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftFall", "neko1_left", leftFall, 1, 1, false);
+	KEYANIMANAGER->setCollisionRect("nekoLeftFall", RectMake(112, 179, 24, 42));
 
 	//back Jump
 	int  rightBackJump[]{ 51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67 };
@@ -109,6 +133,14 @@ HRESULT neko::init(vector2D pos)
 	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftSitKick", "neko1_left", leftSitKick, 4, 10, false);
 	KEYANIMANAGER->setCollisionRect("nekoLeftSitKick", RectMake(107, 203, 26, 22));
 
+	//skiil Fire
+	int rightFire[]{ 96,97,98,99,100,101 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoRightFire", "neko1_right", rightFire, 6, 10, false);
+	KEYANIMANAGER->setCollisionRect("nekoRightFire", RectMake(118, 179, 24, 42));
+	int leftFire[]{ 96,97,98,99,100,101 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftFire", "neko1_left", leftFire, 6, 10, false);
+	KEYANIMANAGER->setCollisionRect("nekoLeftFire", RectMake(112, 179, 24, 42));
+
 	//=========================DEFENSE===============================
 	//normmal defense
 	int rightDefense[]{ 48 };
@@ -125,6 +157,15 @@ HRESULT neko::init(vector2D pos)
 	int leftSitDefense[]{ 49 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftSitDefense", "neko1_left", leftSitDefense, 1, 1, false);
 	KEYANIMANAGER->setCollisionRect("nekoLeftSitDefense", RectMake(107, 203, 26, 22));
+
+	//===================================fly===========================
+	int rightFly[]{ 103,104,105,106,107 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoRightFly", "neko1_right", rightFly, 5, 10, true);
+	KEYANIMANAGER->setCollisionRect("nekoRightFly", RectMake(120, 203, 56, 14));
+	int leftFly[]{ 103,104,105,106,107 };
+	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftFly", "neko1_left", leftFly, 5, 10, true);
+	KEYANIMANAGER->setCollisionRect("nekoLeftFly", RectMake(85, 200, 56, 14));
+	
 	//===============================neko code 초기화=====================================================
 	character::init("네코", pos, "nekoRightStop");
 
@@ -154,6 +195,29 @@ HRESULT neko::init(vector2D pos)
 
 	_centerPos = _pos;
 	_centerPos.y = _pos.y + 50;
+
+	//====================커맨드 추가====================================
+	int command[3] = { DOWN,DOWN,KICK };
+	this->addCommand(command, 3, "nekoFire");
+	this->addCallback("nekoFire", [this](tagMessage msg)
+	{
+		this->nekoFire();
+	});
+
+	int command2[2] = { RIGHT,RIGHT };
+	this->addCommand(command2, 2, "nekoRightFly");
+	this->addCallback("nekoRightFly", [this](tagMessage msg)
+	{
+		this->nekoRightFly();
+	});
+
+	int command3[2] = { LEFT,LEFT };
+	this->addCommand(command3, 2, "nekoLeftFly");
+	this->addCallback("nekoLeftFly", [this](tagMessage msg)
+	{
+		this->nekoLeftFly();
+	});
+
 	
 	return S_OK;
 }
@@ -397,6 +461,102 @@ void neko::changeState(tagNekoState::ENUM state)
 		this->setAnimation("nekoLeftSitDefense");	//왼쪽 앉아 막기 프레임으로 변환 
 	}
 	break;
+
+	case RIGHT_FIRE:							//오른쪽 불뿜기
+	{
+		this->setAnimation("nekoRightFire");	//오른쪽 불뿜기 프레임으로 변경
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_STAY_FIRE));
+	}
+	break;
+	case LEFT_FIRE:								//왼쪽 불뿜기 
+	{
+		this->setAnimation("nekoLeftFire");	//왼쪽 불뿜기 프레임으로 변경
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_STAY_FIRE));
+	}
+	break;
+
+	case RIGHT_STAY_FIRE:						//오른쪽 불지속뿜기
+	{
+		effectFire* effect = new effectFire;
+		effect->init("nekoRightFireEffect" ,vector2D(_pos.x + 10, _centerPos.y - 190));
+		WORLD->addObject(effect);
+		_effect = effect;
+
+		//공격랙트 생성 
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_centerPos.x + 135, _centerPos.y + 10), vector2D(180, 60), _enemy, 1.5f);
+		WORLD->addObject(hitbox);
+	}
+	break;
+
+	case LEFT_STAY_FIRE:
+	{
+		effectFire* effect = new effectFire;
+		effect->init("nekoLeftFireEffect", vector2D(_pos.x - 250, _centerPos.y - 190));
+		WORLD->addObject(effect);
+		_effect = effect;
+
+		//공격랙트 생성 
+		attackHitbox* hitbox = new attackHitbox;
+		hitbox->init(30, vector2D(_centerPos.x - 135, _centerPos.y + 10), vector2D(180, 60), _enemy, 1.5f);
+		WORLD->addObject(hitbox);
+	}
+	break;
+
+	case RIGHT_FLY :
+	{
+		this->setAnimation("nekoRightFly");
+		_isJump = false;
+		_jumpPower = 0;
+	}
+	break;
+	case LEFT_FLY :
+	{
+		this->setAnimation("nekoLeftFly");
+		_isJump = false;
+		_jumpPower = 0;
+	}
+	break;
+
+	case RIGHT_FALL:
+	{
+		this->setAnimation("nekoRightFall");
+	}
+	break;
+
+	case LEFT_FALL:
+	{
+		this->setAnimation("nekoLeftFall");
+	}
+	break;
+
+	case RIGHT_DASH : 
+	{
+		this->setAnimation("nekoRightDash");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_MOVE));
+	}
+	break;
+	case LEFT_DASH :
+	{
+		this->setAnimation("nekoLeftDash");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_MOVE));
+	}
+	break;
+
+	case RIGHT_BACK_DASH :
+	{
+		this->setAnimation("nekoRightBackDash");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_STOP));
+	}
+	break;
+
+	case LEFT_BACK_DASH : 
+	{
+		this->setAnimation("nekoLeftBackDash");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_STOP));
+	}
+	break;
+
 
 	//end
 	}
@@ -919,6 +1079,124 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 	}
 	break;
 
+	case RIGHT_FIRE :
+	{
+
+	}
+	break;
+	case LEFT_FIRE :
+	{
+
+	}
+	break;
+
+	case RIGHT_STAY_FIRE :
+	{
+		if (_effect != NULL)
+		{
+			if (_effect->_frameX >= _effect->_image->getMaxFrameX())
+			{
+				_effect->setDestroy();
+				_effect = NULL;
+
+				this->changeState(RIGHT_STOP);
+			}
+		}
+	}
+	break;
+
+	case LEFT_STAY_FIRE :
+	{
+		if (_effect != NULL)
+		{
+			if (_effect->_frameX >= _effect->_image->getMaxFrameX())
+			{
+				_effect->setDestroy();
+				_effect = NULL;
+
+				this->changeState(LEFT_STOP);
+			}
+		}
+	}
+	break;
+
+	case RIGHT_FLY:
+	{
+		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+		{
+			_pos.x += NEKOSPEED;
+		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
+		{
+			this->changeState(RIGHT_FALL);
+			_isJump = true;
+			_saveLastKey = END;
+		}
+	}
+	break;
+	case LEFT_FLY:
+	{
+		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+		{
+			_pos.x -= NEKOSPEED;
+		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
+		{
+			this->changeState(LEFT_FALL);
+			_isJump = true;
+			_saveLastKey = END;
+		}
+	}
+	break;
+
+	case RIGHT_FALL : 
+	{
+		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+		{
+			_saveLastKey = RIGHT;
+		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
+		{
+			_saveLastKey = END;
+		}
+	}
+	break;
+
+	case LEFT_FALL : 
+	{
+		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+		{
+			_saveLastKey = LEFT;
+		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
+		{
+			_saveLastKey = END;
+		}
+	}
+	break;
+
+	case RIGHT_DASH:
+	{
+
+	}
+	break;
+	case LEFT_DASH:
+	{
+
+	}
+	break;
+
+	case RIGHT_BACK_DASH:
+	{
+
+	}
+	break;
+
+	case LEFT_BACK_DASH:
+	{
+
+	}
+	break;
 	//end
 	}
 }
@@ -950,7 +1228,8 @@ void neko::jumping()
 		_pos.y = _savePosY;								//y좌표 값은 점프전 saveY좌표 값으로 초기화 
 
 		if (_state == RIGHT_JUMP || _state == LEFT_JUMP ||
-			_state == RIGHT_BACK_JUMP || _state == LEFT_BACK_JUMP )	//점프 상태였다면
+			_state == RIGHT_BACK_JUMP || _state == LEFT_BACK_JUMP
+			||_state == RIGHT_FALL || _state == LEFT_FALL)	//점프 상태였다면
 		{
 			if (_isEnemyRight)							//만약 상대가 오른쪽에 있다면 
 			{
@@ -968,3 +1247,57 @@ void neko::jumping()
 	}
 }
 
+void neko::nekoFire()
+{
+	if (_isEnemyRight)					//적이 오른쪽에 있으면 
+	{
+		this->changeState(RIGHT_FIRE);	//오른쪽 불뿜기상태로
+	}
+	else								//적이 왼쪽에 있으면
+	{
+		this->changeState(LEFT_FIRE);	//왼쪽 불뿜기 상태로
+	}
+}
+
+void neko::nekoRightFly()
+{
+	if (_state == RIGHT_JUMP || _state == LEFT_JUMP || _state == RIGHT_FALL || _state == LEFT_FALL
+		|| _state == RIGHT_BACK_JUMP || _state == LEFT_BACK_JUMP)
+	{
+		this->changeState(RIGHT_FLY);
+	}
+	if (_isEnemyRight)
+	{
+
+	}
+	else if (!_isEnemyRight)
+	{
+
+	}
+}
+void neko::nekoLeftFly()
+{
+	if (_state == RIGHT_JUMP || _state == LEFT_JUMP || _state == RIGHT_FALL || _state == LEFT_FALL
+		|| _state == RIGHT_BACK_JUMP || _state == LEFT_BACK_JUMP)
+	{
+		this->changeState(LEFT_FLY);
+	}
+}
+
+void neko::nekoRightDash()
+{
+
+}
+
+void neko::nekoLeftDash()
+{
+
+}
+void neko::nekoRightBackDash()
+{
+
+}
+void neko::nekoLeftBackDash()
+{
+
+}
