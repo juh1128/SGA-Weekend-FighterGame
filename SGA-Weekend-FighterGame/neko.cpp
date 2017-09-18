@@ -697,6 +697,13 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 				this->changeState(LEFT_SIT_ATTACK);				//왼쪽 앉아 공격
 			}
 		}
+		if (_isEnemyRight)										//적이 오른쪽에 있다면
+		{
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))	//킥 키를 눌렀다면
+			{
+				this->changeState(RIGHT_SIT_KICK);				//오른쪽 앉아 킥상태로 변환해라 
+			}
+		}
 	}
 	break;
 	
@@ -736,6 +743,13 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 			else												//적이 왼쪽에 있다면
 			{
 				this->changeState(LEFT_SIT_ATTACK);				//왼쪽 앉아 공격
+			}
+		}
+		if (!_isEnemyRight)										//적이 왼쪽에 있다면
+		{
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))	//킥 키를 눌렀다면
+			{
+				this->changeState(LEFT_SIT_KICK);				//왼쪽 앉아 킥상태로 변환해라 
 			}
 		}
 	
