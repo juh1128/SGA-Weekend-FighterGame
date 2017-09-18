@@ -39,17 +39,7 @@ void character::update()
 
 	//캐릭터의 x좌표 보정
 	RECT cameraRC = CAMERAMANAGER->getRenderRect();
-	RECT rc = getCollisionRect();
-	int width = rc.right - rc.left;
-
-	if (rc.left <= cameraRC.left)
-	{
-		_pos.x += cameraRC.left - rc.left;
-	}
-	else if (rc.right > cameraRC.right)
-	{
-		_pos.x -= rc.right - cameraRC.right;
-	}
+	_pos.fixedPosX(cameraRC.left, cameraRC.right);
 
 	this->_animation->frameUpdate();
 }
