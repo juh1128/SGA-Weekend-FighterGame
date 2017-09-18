@@ -30,11 +30,15 @@ void playGround::setupSunghoon()
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightIdle", "maiIdle", 0, 11, 6, false,true);
 
+	//이동
+	//KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftMove")
+
 	//뒤로가기
 	int arrLeftBackMove[] = { 0,1,2,3,4,5 };
-	KEYANIMANAGER->addArrayFrameAnimation("maiLeftBackMove", "maiBackMove", arrLeftBackMove, 6, 3, true);
 	int arrRightBackMove[] = { 6,7,8,9,10,11 };
-	KEYANIMANAGER->addArrayFrameAnimation("maiRightBackMove", "maiBackMove", arrRightBackMove, 6, 3, true);
+	KEYANIMANAGER->addArrayFrameAnimation("maiLeftBackMove", "maiBackMove", arrRightBackMove, 6, 6, true);
+	
+	KEYANIMANAGER->addArrayFrameAnimation("maiRightBackMove", "maiBackMove", arrLeftBackMove, 6, 6, true);
 
 	//뒤로대쉬
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftBackDash", "maiBackDash", 0, 5, 3, false, false);
