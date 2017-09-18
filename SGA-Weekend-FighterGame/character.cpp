@@ -39,17 +39,7 @@ void character::update()
 
 	//캐릭터의 x좌표 보정
 	RECT cameraRC = CAMERAMANAGER->getRenderRect();
-	RECT rc = getCollisionRect();
-	int width = rc.right - rc.left;
-
-	if (rc.left <= cameraRC.left)
-	{
-		_pos.x += cameraRC.left - rc.left;
-	}
-	else if (rc.right > cameraRC.right)
-	{
-		_pos.x -= rc.right - cameraRC.right;
-	}
+	_pos.fixedPosX(cameraRC.left, cameraRC.right);
 
 	this->_animation->frameUpdate();
 }
@@ -73,10 +63,6 @@ void character::render()
 		//충돌 영역 렉트
 		RECT collisionRC = this->getCollisionRect();
 		MoveRect(&collisionRC, -cameraRC.left, -cameraRC.top);
-
-		//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-		if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-			return;
 
 		//히트박스 영역 표시
 		HPEN bluePen = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
@@ -276,8 +262,27 @@ void character::move(float moveSpeed, DIRECTION::Enum dir)
 				DIRECTION::Enum dir = (dirEenemyToMe.x > 0) ? DIRECTION::LEFT : DIRECTION::RIGHT;
 
 				//적을 밀어낸다.
-
+				_enemy->_pos.x += dir*(moveSpeed*0.5f);
+				//나도 뒤로 밀림
+				_pos.x -= dir*moveSpeed;
 			}
 		}
 	}
+}
+
+DIRECTION::Enum character::getDirectionEnemy()
+{
+	if (_enemy)
+	{
+		if (_enemy->isActiveObject())
+		{
+			vector2D dirEenemyToMe = _pos - _enemy->_pos;
+			//적이 내 왼쪽에 있는지? 오른쪽에 있는지?
+			DIRECTION::Enum dir = (dirEenemyToMe.x > 0) ? DIRECTION::LEFT : DIRECTION::RIGHT;
+			return dir;
+		}
+	}
+
+	//적이 없을 경우 대충 그냥 RIGHT 반환;;
+	return DIRECTION::RIGHT;
 }

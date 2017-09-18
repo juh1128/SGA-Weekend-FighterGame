@@ -139,10 +139,6 @@ void gameObject::render(void)
 		vector2D size = getSize();
 		RECT renderRC = RectMakeCenter(renderPos.x, renderPos.y, size.x, size.y);
 
-		//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-		if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-			return;
-
 		if (_alpha < 0) _alpha = 0.0f;
 		if (_alpha > 1.0f) _alpha = 1.0f;
 

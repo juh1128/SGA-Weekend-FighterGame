@@ -36,7 +36,7 @@ void effectFire::update()
 void effectFire::render()
 {
 	//gameObject::render();
-
-	_image->frameRender(getMemDC() , _fire.x , _fire.y,_frameX,0);
+	RECT rc = CAMERAMANAGER->getRenderRect();
+	_image->frameRender(getMemDC() , _fire.x-rc.left , _fire.y-rc.top,_frameX,0);
 
 }

@@ -80,7 +80,7 @@ public:
 	void jump(float jumpPower)
 	{
 		_gravitySpeed = -jumpPower;
-		_pos.y -= 1;
+		_pos.y -= jumpPower;
 	}
 
 	//캐릭터 스탯 설정
@@ -93,6 +93,8 @@ public:
 
 	//점프 상태인지?
 	bool isJump() { return _isJump; }
+	//적이 내 캐릭터의 어느 방향에 있는지 반환
+	DIRECTION::Enum getDirectionEnemy();
 
 
 	//겟셋

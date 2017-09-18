@@ -88,19 +88,17 @@ void playScene::update()
 		right = _player[1];
 	}
 	float distance = right->getCollisionRect().right - left->getCollisionRect().left;
-	if (distance < WINSIZEX*0.95f)
+	vector2D averagePos = (_player[0]->_pos + _player[1]->_pos) / 2;
+	vector2D dir = averagePos - _cameraTarget->_pos;
+	if (dir.getLength() <= 5.0f)
 	{
-		vector2D averagePos = (_player[0]->_pos + _player[1]->_pos) / 2;
-		vector2D dir = averagePos - _cameraTarget->_pos;
-		if (dir.getLength() <= 5.0f)
-		{
-			_cameraTarget->_pos = averagePos;
-		}
-		else
-		{
-			_cameraTarget->_pos = _cameraTarget->_pos + dir.normalize()*5.0f;
-		}
+		_cameraTarget->_pos = averagePos;
 	}
+	else
+	{
+		_cameraTarget->_pos = _cameraTarget->_pos + dir.normalize()*5.0f;
+	}
+
 	CAMERAMANAGER->updateCamera();
 
 }
