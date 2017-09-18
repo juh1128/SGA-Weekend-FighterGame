@@ -2,10 +2,47 @@
 #include "Nanaya.h"
 #include "attackHitbox.h"
 
-using namespace NanayaState;
-
 HRESULT Nanaya::init(vector2D pos)
 {
+	//이미지 로드
+	IMAGEMANAGER->addFrameImage("Nanaya_Stand", "resource/youngjae/Nanaya/Nanaya_Stand", 4096, 512, 16, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Nanaya_WalkForward", "resource/youngjae/Nanaya/Nanaya_WalkForward", 3072, 512, 12, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Nanaya_WalkBackward", "resouce/youngjae/Nanaya/Nanaya_WalkBackward", 4352, 512, 17, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Nanaya_SitAndUp", "resource/youngjae/Nanaya/Nanaya_SitAndUp", 2560, 512, 10, 2, true, RGB(255, 0, 255));
+
+	//키애니매니저 설정
+
+	//서있을 시
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_Stand", "Nanaya_Stand", 0, 15, 8, true, true);
+	KEYANIMANAGER->setCollisionRect("Nanaya_Left_Stand", RectMake(670, 409, 759, 659));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_Stand", "Nanaya_Stand", 31, 16, 8, true, true);
+	KEYANIMANAGER->setCollisionRect("Nanaya_Right_Stand", RectMake(670, 409, 759, 659));
+
+	//앞으로 걸을 때
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_WalkForward", "Nanaya_WalkForward", 0, 11, 8, false, true);
+	KEYANIMANAGER->setCollisionRect("Nanaya_Left_WalkForward", RectMake(670, 409, 759, 659));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_WalkForward", "Nanaya_WalkForward", 23, 12, 8, false, true);
+	KEYANIMANAGER->setCollisionRect("Nanaya_Right_WalkForward", RectMake(670, 409, 759, 659));
+
+	//뒤로 걸을 때
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_WalkBackward", "Nanaya_WalkBackward", 0, 16, 8, false, true);
+	KEYANIMANAGER->setCollisionRect("Nanaya_Left_WalkBackward", RectMake(670, 409, 759, 659));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_WalkBackward", "Nanaya_WalkBackward", 33, 17, 8, false, true);
+	KEYANIMANAGER->setCollisionRect("Nanaya_Right_WalkBackWard", RectMake(670, 409, 759, 659));
+
+	//앉았을 때
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_Sit", "Nanaya_SitAndUp", 0, 4, 8, false, true);
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_Sit", "Nanaya_SitAndUp", 15, 19, 8, false, true);
+
+	//일어날 때
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_SitUp", "Nanaya_SitAndUp", 5, 9, 8, false, true);
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_SitUp", "Nanaya_SitAndUp", 10, 14, 8, false, true);
+
 	character::init("Nanaya", pos, "Nanaya_Stand");
 	this->changeState(NanayaState::RIGHT_STAND);
 
@@ -38,10 +75,15 @@ void Nanaya::stateUpdate(NanayaState::Enum state)
 {
 	switch (state)
 	{
-		case RIGHT_STAND:
+		case NanayaState::RIGHT_STAND:
 		{
-			this->setAnimation("Nanaya_Stand");
+			this->setAnimation("Nanaya_Right_Stand");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, NanayaState::RIGHT_STAND));
+		}
+		case NanayaState::LEFT_STAND:
+		{
+			this->setAnimation("Nanaya_Left_Stand");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, NanayaState::LEFT_STAND));
 		}
 		break;
 	}
