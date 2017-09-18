@@ -5,11 +5,11 @@
 
 HRESULT kim::init(vector2D pos)
 {
-	IMAGEMANAGER->addFrameImage("kimIdle", "resource/yongjae/서있는거(2053,796,11,2).bmp", 2053, 796, 11, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("kimWalk", "resource/yongjae/앞뒤이동(1365,1593,6,4).bmp", 1365, 1593, 6, 4, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("kimJump", "resource/yongjae/점프(1593,1024,7,2).bmp", 1593, 1024, 7, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("kimFrontJump", "resource/yongjae/앞 대점프(3072,1024,9,2).bmp", 3072, 1024, 9, 2, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("kimSit", "resource/yongjae/앉기(683,796,3,2).bmp", 683, 796, 3, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("kimIdle", "resource/yongje/서있는거(2053,796,11,2).bmp", 2053, 796, 11, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("kimWalk", "resource/yongje/앞뒤이동(1365,1593,6,4).bmp", 1365, 1593, 6, 4, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("kimJump", "resource/yongje/점프(1593,1024,7,2).bmp", 1593, 1024, 7, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("kimFrontJump", "resource/yongje/앞 대점프(3072,1024,9,2).bmp", 3072, 1024, 9, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("kimSit", "resource/yongje/앉기(683,796,3,2).bmp", 683, 796, 3, 2, true, RGB(255, 0, 255));
 
 
 
