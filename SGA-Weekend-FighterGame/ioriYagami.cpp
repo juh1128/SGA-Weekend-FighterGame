@@ -34,15 +34,15 @@ HRESULT ioriYagami::init(vector2D pos)
 		this->skill();
 	});
 
-	int comnand[3] = { key::DOWN, key::RIGHT, key::ATTACK };
-	this->addCommand(comnand, 3, "skill2");
+	int comnand2[3] = { key::DOWN, key::RIGHT, key::ATTACK };
+	this->addCommand(comnand2, 3, "skill2");
 	this->addCallback("skill2", [this](tagMessage msg)
 	{
 		this->skill2();
 	});
 
-	int comnand[4] = { key::DOWN, key::RIGHT, key::JUMP, key::STRONG_KICK };
-	this->addCommand(comnand, 4, "skill3");
+	int comnand3[4] = { key::DOWN, key::RIGHT, key::JUMP, key::STRONG_KICK };
+	this->addCommand(comnand3, 4, "skill3");
 	this->addCallback("skill", [this](tagMessage msg)
 	{
 		this->skill3();
