@@ -188,11 +188,13 @@ void character::gravity()
 	if (rc.bottom < GROUND_LINE)
 	{
 		_pos.y += _gravitySpeed;
+		_isJump = true;
 	}
 	else
 	{
 		_pos.y = GROUND_LINE - (rc.bottom - _pos.y);
 		_gravitySpeed = 0;
+		_isJump = false;
 	}
 	
 }

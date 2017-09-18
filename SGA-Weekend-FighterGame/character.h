@@ -31,6 +31,7 @@ private:
 	vector<pair<vector<int>, string>>	_commandList;	//등록된 커맨드
 
 	bool			_isGravity;
+	bool			_isJump;
 	float			_gravitySpeed;
 
 protected:
@@ -89,6 +90,9 @@ public:
 		_maxHp = maxHp;
 		_damage = damage;
 	}
+
+	//점프 상태인지?
+	bool isJump() { return _isJump; }
 
 private:
 	void attacked(int damage, vector2D hitedPos);
