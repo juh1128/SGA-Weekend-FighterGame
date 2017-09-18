@@ -17,13 +17,11 @@ HRESULT ioriYagami::init(vector2D pos)
 	});
 	//this->setGravity(true);
 
+	this->setStatus(1000, 10);
 
-	//int command[3] = { DOWN,DOWN,KICK };
-	//this->addCommand(command, 3, "nekoFire");
-	//this->addCallback("nekoFire", [this](tagMessage msg)
-	//{
-	//	this->nekoFire();
-	//});
+
+	IMAGEMANAGER->addFrameImage("skill1Effect", "resource/Dongjin/오른쪽스킬1임팩트.bmp", 12589, 1280, 18, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("skill1Effect6", "resource/Dongjin/스킬3임팩트.bmp", 16332, 1280, 19, 1, true, RGB(255, 0, 255));
 
 	//커맨드!!!!!!
 
@@ -43,9 +41,28 @@ HRESULT ioriYagami::init(vector2D pos)
 
 	int comnand3[4] = { key::DOWN, key::RIGHT, key::JUMP, key::STRONG_KICK };
 	this->addCommand(comnand3, 4, "skill3");
-	this->addCallback("skill", [this](tagMessage msg)
+	this->addCallback("skill3", [this](tagMessage msg)
 	{
 		this->skill3();
+	});
+
+
+	this->addCallback("changeState", [this](tagMessage msg)
+	{
+		this->changeState((tagIoriState::Enum)msg.data);
+	});
+
+	this->addCallback("hited", [this](tagMessage msg)
+	{
+		this->hit(msg);
+	});
+	//this->addCallback("block", [this](tagMessage msg)
+	//{
+	//	this->block();
+	//});
+	this->addCallback("die", [this](tagMessage msg)
+	{
+		this->die(msg);
 	});
 
 	return S_OK;
@@ -329,6 +346,7 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		break;
 
 	case tagIoriState::SKILL1:
+		
 		break;
 	case tagIoriState::SKILL2:
 		break;
@@ -674,11 +692,17 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 		{
 			this->setAnimation("이오리_오른쪽_스킬");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::RIGHT_STOP));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x + 350, _pos.y), vector2D(300, 1028), _enemy, 0.8f);
+			WORLD->addObject(hitbox);
 		}
 		else if (!_isEnemyDirection)
 		{
 			this->setAnimation("이오리_왼쪽_스킬");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::LEFT_STOP));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x - 350, _pos.y), vector2D(300, 1028), _enemy, 0.8f);
+			WORLD->addObject(hitbox);
 		}
 		break;
 	case tagIoriState::SKILL2:
@@ -698,20 +722,51 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 		{
 			this->setAnimation("이오리_오른쪽_스킬3");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::RIGHT_STOP));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x + 450, _pos.y), vector2D(500, 1028), _enemy, 0.8f);
+			WORLD->addObject(hitbox);
 		}
 		else if (!_isEnemyDirection)
 		{
 			this->setAnimation("이오리_오른쪽_스킬3");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::LEFT_STOP));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x - 450, _pos.y), vector2D(500, 1028), _enemy, 0.8f);
+			WORLD->addObject(hitbox);
 		}
 		break;
+	case tagIoriState::RIGHT_HIT:
+		this->setAnimation("이오리_오른쪽_맞음");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		break;
+
+	case tagIoriState::LEFT_HIT:
+		this->setAnimation("이오리_왼쪽_맞음");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::LEFT_STOP));
+		break;
+
+	case tagIoriState::RIGHT_DIE:
+		this->setAnimation("이오리_오른쪽_죽음");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		break;
+
+	case tagIoriState::LEFT_DIE:
+		this->setAnimation("이오리_왼쪽_죽음");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::LEFT_STOP));
+		break;
 	}
+
+
 	_state = state;
 }
 
 void ioriYagami::skill()
 {
 	this->changeState(tagIoriState::SKILL1);
+	effectFire* effect = new effectFire;
+	effect->init("skill1Effect", vector2D(_pos.x + 10, _pos.y - 1000));
+	WORLD->addObject(effect);
+	_effect = effect;
 }
 
 void ioriYagami::skill2()
@@ -722,4 +777,41 @@ void ioriYagami::skill2()
 void ioriYagami::skill3()
 {
 	this->changeState(tagIoriState::SKILL3);
+
+	effectFire* effect = new effectFire;
+	effect->init("skill1Effect6", vector2D(_pos.x + 10, _pos.y - 1000));
+	WORLD->addObject(effect);
+	_effect = effect;
+
+
 }
+
+void ioriYagami::hit(tagMessage msg)
+{
+	tagMessage message = msg;
+	if (message.data == DIRECTION::LEFT)
+	{
+		this->changeState(tagIoriState::RIGHT_HIT);
+	}
+	else if (message.data == DIRECTION::RIGHT)
+	{
+		this->changeState(tagIoriState::LEFT_HIT);
+	}
+
+
+}
+
+void ioriYagami::die(tagMessage msg)
+{
+	tagMessage message = msg;
+	if (message.data == DIRECTION::LEFT)
+	{
+		this->changeState(tagIoriState::RIGHT_DIE);
+	}
+	else if (message.data == DIRECTION::RIGHT)
+	{
+		this->changeState(tagIoriState::LEFT_DIE);
+	}
+}
+
+
