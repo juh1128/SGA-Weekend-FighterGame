@@ -91,27 +91,13 @@ void cameraManager::updateCamera()
 		_nullTarget->_pos = _pos;
 		connectNullTarget();
 	}
+
+	setupRenderRC();
 }
 
 void cameraManager::moveCamera()
 {
 	vector2D targetCenterPos = _target->_pos;
-	//vector2D dir = targetCenterPos - _pos;
-	//float distance = dir.getLength();
-	//dir = dir.normalize();
-
-	////타겟의 방향으로 이동한다.
-	//_pos = _pos + dir*_speed;
-	////가속도
-	//_speed = (_speed < _maxSpeed) ? _speed + _addSpeed : _maxSpeed;
-
-	////어느정도 근접했으면, 위치 보정 후 이동 종료
-	//if (distance <= _maxSpeed)
-	//{
-	//	//_speed = 0;
-	//	_pos = targetCenterPos;
-	//	_isMove = false;
-	//}
 
 	_pos = targetCenterPos;
 	_isMove = false;
@@ -154,17 +140,7 @@ void cameraManager::moveCamera()
 
 RECT cameraManager::getRenderRect()
 {
-	//카메라 위치를 중심으로 화면 크기만큼 Rect를 만들어서 반환.
-	vector2D renderPos = _pos;
-	if (_isShake)
-	{
-		static int dir = 1;
-		renderPos.y += _shakeStrenth * dir;
-		dir *= -1;
-
-	}
-	RECT rc = RectMakeCenter((int)renderPos.x, (int)renderPos.y, WINSIZEX, WINSIZEY);
-	return rc;
+	return _renderRC;
 }
 
 void cameraManager::shakeCamera(float strenth)
@@ -184,3 +160,36 @@ void cameraManager::release()
 	SAFE_DELETE(_nullTarget);
 }
 
+
+
+void cameraManager::setupRenderRC()
+{
+	//카메라 위치를 중심으로 화면 크기만큼 Rect를 만들어서 반환.
+	vector2D renderPos = _pos;
+	if (_isShake)
+	{
+		static int dir = 1;
+		renderPos.y += _shakeStrenth * dir;
+		dir *= -1;
+
+	}
+	_renderRC = RectMakeCenter((int)renderPos.x, (int)renderPos.y, WINSIZEX, WINSIZEY);
+}
+
+RECT cameraManager::getRelativeRect(RECT rc)
+{
+	MoveRect(&rc, -_renderRC.left, -_renderRC.top);
+	return std::move(rc);
+}
+POINT cameraManager::getRelativePoint(POINT pt)
+{
+	pt.x -= _renderRC.left;
+	pt.y -= _renderRC.top;
+	return std::move(pt);
+}
+vector2D cameraManager::getRelativeVector2D(vector2D v)
+{
+	v.x -= _renderRC.left;
+	v.y -= _renderRC.top;
+	return std::move(v);
+}

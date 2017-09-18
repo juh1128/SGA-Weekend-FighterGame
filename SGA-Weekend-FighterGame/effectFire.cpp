@@ -11,6 +11,8 @@ HRESULT effectFire::init( string imageKey, vector2D pos)
 
 	_fire = pos;
 
+	this->setScale(3.0, 3.0);
+
 	return S_OK;
 }
 void effectFire::release()
@@ -36,4 +38,5 @@ void effectFire::render()
 	//gameObject::render();
 
 	_image->frameRender(getMemDC() , _fire.x , _fire.y,_frameX,0);
+
 }
