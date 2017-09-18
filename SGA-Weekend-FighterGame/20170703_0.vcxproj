@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
+    <ClInclude Include="athena.h" />
     <ClInclude Include="attackHitbox.h" />
     <ClInclude Include="callbackTest.h" />
     <ClInclude Include="cameraManager.h" />
@@ -123,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="athena.cpp" />
     <ClCompile Include="attackHitbox.cpp" />
     <ClCompile Include="callbackTest.cpp" />
     <ClCompile Include="cameraManager.cpp" />

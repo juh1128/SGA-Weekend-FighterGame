@@ -29,7 +29,7 @@ HRESULT	selectScene::init()
 	// - 나나야 23->12 (670, 409, 759, 659)
 	IMAGEMANAGER->addFrameImage("나나야", "resource/youngjae/nanaya/Nanaya_WalkForward.bmp", 3072, 512, 12, 2, true);
 	// - 아테나 41 -> 46
-	IMAGEMANAGER->addFrameImage("아테나", "resource/siyeong/왼쪽걷기,앉기.bmp", 2880, 2520, 8, 6, true);
+	IMAGEMANAGER->addFrameImage("아테나", "resource/siyeong/왼쪽걷기,앉기.bmp", 1440, 1260, 8, 6, true);
 
 
 	//초기 애니메이션 설정
@@ -60,7 +60,7 @@ HRESULT	selectScene::init()
 	_selectedAnimation[characterName::nanaya]->setPlayFrame(23, 12, false, false);
 
 	_selectedAnimation[characterName::athena] = new animation();
-	_selectedAnimation[characterName::athena]->init(2880, 2520, 2880 / 8, 2520 / 6);
+	_selectedAnimation[characterName::athena]->init(1440, 1260, 1440 / 8, 1260 / 6);
 	_selectedAnimation[characterName::athena]->setPlayFrame(41, 46, false, false);
 
 	//애니메이션 속도 설정
