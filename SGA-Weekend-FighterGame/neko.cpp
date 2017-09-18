@@ -1183,23 +1183,35 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 
 	case RIGHT_DEFENSE:
 	{
-
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
+		{
+			this->changeState(RIGHT_STOP);
+		}
 	}
 	break;
 	case LEFT_DEFENSE:
 	{
-
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
+		{
+			this->changeState(LEFT_STOP);
+		}
 	}
 	break;
 
 	case RIGHT_SIT_DEFENSE:
 	{
-
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
+		{
+			this->changeState(RIGHT_SIT);
+		}
 	}
 	break;
 	case LEFT_SIT_DEFENSE:
 	{
-
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
+		{
+			this->changeState(LEFT_SIT);
+		}
 	}
 	break;
 
@@ -1568,22 +1580,22 @@ void neko::block()
 	if (_state == LEFT_MOVE)
 	{
 		this->changeState(RIGHT_DEFENSE);
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_MOVE));
+		//this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_MOVE));
 	}
 	else if (_state == LEFT_SIT_MOVE)
 	{
 		this->changeState(RIGHT_SIT_DEFENSE);
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SIT_MOVE));
+		//this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SIT_MOVE));
 	}
 
 	else if (_state == RIGHT_MOVE)
 	{
 		this->changeState(LEFT_DEFENSE);
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_MOVE));
+		//this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_MOVE));
 	}
 	else if (_state == RIGHT_SIT_MOVE)
 	{
-		this->changeState(LEFT_SIT_MOVE);
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_SIT_MOVE));
+		this->changeState(LEFT_SIT_DEFENSE);
+		//this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_SIT_MOVE));
 	}
 }
