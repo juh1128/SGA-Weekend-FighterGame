@@ -13,10 +13,18 @@ namespace tagNekoState
 		RIGHT_STOP, LEFT_STOP,				//기본상태
 		RIGHT_MOVE, LEFT_MOVE,				//이동상태
 		RIGHT_JUMP, LEFT_JUMP,				//점프
+		RIGHT_BACK_JUMP,LEFT_BACK_JUMP,		//백점프
 		RIGHT_SIT, LEFT_SIT,				//앉기
 		RIGHT_CHANGE_SIT, LEFT_CHANGE_SIT,	//앉는 모션
 		RIGHT_CHANGE_UP , LEFT_CHAGNE_UP,	//일어서는 모션
-		RIGHT_SIT_MOVE , LEFT_SIT_MOVE		//앉아서 이동
+		RIGHT_SIT_MOVE , LEFT_SIT_MOVE,		//앉아서 이동
+		RIGHT_ATTACK,LEFT_ATTACK,			//약공	
+		RIGHT_SIT_ATTACK,LEFT_SIT_ATTACK,	//앉아서 약공
+		RIGHT_DEFENSE ,LEFT_DEFENSE,		//막기
+		RIGHT_SIT_DEFENSE,LEFT_SIT_DEFENSE,	//앉아 막기
+		RIGHT_KICK,LEFT_KICK,				//발차기
+		RIGHT_SIT_KICK,LEFT_SIT_KICK		//앉아 발차기
+
 	};
 }
 
@@ -34,6 +42,10 @@ private:
 	float _gravity;						//중력 
 	float _savePosY;					//좌표 저장 변수
 	bool  _isJump;						//점프 상태인지 제어 변수
+
+	vector2D _centerPos;				//캐릭터 가운데 좌표
+
+	float _bottom;						//발 좌표
 
 	key::Enum   _saveLastKey;			//마지막에 누른 stayKeyDown 키 저장 변수 
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "playGround.h"
-#include "playScene.h"
+#include "selectScene.h"
 
 playGround::playGround()
 {
@@ -16,22 +16,22 @@ HRESULT playGround::init(void)
 	gameNode::init(true);
 
 	//각 팀원별 리소스 로딩
-	setupGuenhwa();
-	setupDongjin();
-	setupHyunjin();
-	setupSiyeong();
-//	setupSoonyu();
-	setupYuhoon();
-	setupHyeongjoon();
-	setupSunghoon();
-	setupTaesung();
-	setupYongjae();
-	setupYoonsam();
-	setupHalim();
-	setupYoungjae();
+	//setupGuenhwa();
+	//setupDongjin();
+	//setupHyunjin();
+	//setupSiyeong();
+	//setupSoonyu();
+	//setupYuhoon();
+	//setupHyeongjoon();
+	//setupSunghoon();
+	//setupTaesung();
+	//setupYongje();
+	//setupYoonsam();
+	//setupHalim();
+	//setupYoungjae();
 
 	//초기 시작 씬 생성
-	SCENEMANAGER->pushScene(new playScene);
+	SCENEMANAGER->pushScene(new selectScene);
 
 	return S_OK;
 }

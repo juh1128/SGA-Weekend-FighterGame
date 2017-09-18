@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #include "ioriYagami.h"
 #include "attackHitbox.h"
-
+#include "playGround.h"
 
 HRESULT ioriYagami::init(vector2D pos)
 {
+
+	_playGround->setupDongjin();
+
 	character::init("이오리", pos, "이오리_오른쪽_멈춤");
 	this->changeState(tagIoriState::RIGHT_STOP);
 
@@ -12,11 +15,11 @@ HRESULT ioriYagami::init(vector2D pos)
 	{
 		this->changeState((tagIoriState::Enum)msg.data);
 	});
+	//this->setGravity(true);
+	
 
-
-
-
-
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉은_약손", "ioriYagamiSitAttackA", 4, 0, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_약손", RectMakeCenter(150, 200, 200, 400));
 
 	return S_OK;
 }
@@ -53,6 +56,7 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
 		{
 			changeState(tagIoriState::RIGHT_SIT);
+			
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
 		{
@@ -70,7 +74,12 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		{
 			changeState(tagIoriState::STRONG_KICK);
 		}
-
+	
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+		{
+			changeState(tagIoriState::RIGHT_JUMP);
+			
+		}
 
 		break;
 		//case tagIoriState::LEFT_STOP:
@@ -125,11 +134,30 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		{
 			changeState(tagIoriState::RIGHT_STOP);
 		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
+		{
+			changeState(tagIoriState::SIT_ATTAK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
+		{
+			changeState(tagIoriState::SIT_KICK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
+		{
+			changeState(tagIoriState::SIT_STRONG_ATTAK);
+		}
+		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
+		{
+			changeState(tagIoriState::SIT_STRONG_KIKC);
+		}
 		break;
 	case tagIoriState::LEFT_SIT:
 		break;
 	case tagIoriState::RIGHT_JUMP:
-
+		if (KEYMANAGER->isStayKeyDown(keyList[key::JUMP]))
+		{
+			jump(25);
+		}
 		break;
 	case tagIoriState::LEFT_JUMP:
 		break;
@@ -143,7 +171,12 @@ void ioriYagami::stateUpdate(tagIoriState::Enum state)
 		break;
 	case tagIoriState::STRONG_KICK:
 		break;
-
+	case tagIoriState::SKILL1:
+		break;
+	case tagIoriState::SKILL2:
+		break;
+	case tagIoriState::SKILL3:
+		break;
 	}
 
 }
@@ -182,6 +215,7 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 		break;
 	case tagIoriState::RIGHT_JUMP:
 		this->setAnimation("이오리_오른쪽_점프");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.1f, tagIoriState::RIGHT_STOP));
 		break;
 	case tagIoriState::LEFT_JUMP:
 		break;
@@ -201,6 +235,59 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 	case tagIoriState::STRONG_KICK:
 		this->setAnimation("이오리_오른쪽_강발");
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		break;
+	case tagIoriState::SIT_ATTAK:
+		this->setAnimation("이오리_오른쪽_앉은_약손");
+		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_SIT));
+		}
+		if (!KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		}
+		break;
+	case tagIoriState::SIT_KICK:
+		this->setAnimation("이오리_오른쪽_앉은_약발");
+		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_SIT));
+		}
+		if (!KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		}
+		break;
+	case tagIoriState::SIT_STRONG_ATTAK:
+		this->setAnimation("이오리_오른쪽_앉은_강손");
+		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_SIT));
+		}
+		if (!KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		}
+		break;
+	case tagIoriState::SIT_STRONG_KIKC:
+		this->setAnimation("이오리_오른쪽_앉은_강발");
+		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_SIT));
+		}
+		if (!KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+		{
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, tagIoriState::RIGHT_STOP));
+		}
+		break;
+	case tagIoriState::SKILL1:
+		this->setAnimation("이오리_오른쪽_스킬");
+		break;
+	case tagIoriState::SKILL2:
+		this->setAnimation("이오리_오른쪽_스킬");
+		break;
+	case tagIoriState::SKILL3:
+		this->setAnimation("이오리_오른쪽_스킬");
 		break;
 	}
 	_state = state;

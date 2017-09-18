@@ -48,7 +48,7 @@ using namespace OMICRON_UTIL;
 //========================================
 
 #define WINNAME (LPTSTR)(TEXT("Omicron 격투게임"))
-#define WINSTARTX 50
+#define WINSTARTX 80
 #define WINSTARTY 0
 #define WINSIZEX 1280
 #define WINSIZEY 768

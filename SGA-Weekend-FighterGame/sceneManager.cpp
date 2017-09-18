@@ -56,11 +56,6 @@ void sceneManager::update()
 			{
 				_sceneList[_sceneList.size() - 1]->resume();
 			}
-			//모든 씬이 삭제되었다면, 게임을 종료한다.
-			else
-			{
-				exit(1);
-			}
 		}
 	}
 	_messageQueue.clear();

@@ -43,5 +43,7 @@ public:
 	//현재 씬을 삭제하고, 새로운 씬을 추가한다.
 	void					changeScene(sceneBase* scene);
 	//현재 씬을 가져온다.
-	sceneBase*					getNowScene();
+	sceneBase*				getNowScene();
+
+	void					gameExit() { exit(1); }
 };

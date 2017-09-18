@@ -13,10 +13,16 @@ namespace tagIoriState
 		RIGHT_SIT, LEFT_SIT,
 		RIGHT_JUMP, LEFT_JUMP,
 		ATTAK, KICK,
-		STRONG_ATTACK, STRONG_KICK
+		STRONG_ATTACK, STRONG_KICK,
+		SIT_ATTAK, SIT_KICK,
+		SIT_STRONG_ATTAK, SIT_STRONG_KIKC,
+		SKILL1, SKILL2,
+		SKILL3
 	};
 }
 
+
+class playGround;
 
 
 class ioriYagami : public character
@@ -31,7 +37,7 @@ private:
 	float _startX;
 	float _startY;
 
-
+	playGround* _playGround;
 
 	bool _isJumping;
 
@@ -44,7 +50,7 @@ public:
 	void update();
 	void render();
 
-
+	
 	void stateUpdate(tagIoriState::Enum _state);
 	void changeState(tagIoriState::Enum _state);
 };

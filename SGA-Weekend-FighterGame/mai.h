@@ -31,11 +31,23 @@ namespace MAI
 }
 
 using namespace MAI;
+using namespace key;
+
+#define MOVESPEED 5
+
+class playGround;
 
 class mai : public character
 {
 private:
+	//상태이넘
 	state _state;
+	//키 이넘
+	Enum _enum;
+	//전방선언플레이그라운드
+	playGround* _playGround;
+
+
 public:
 	mai() {}
 	virtual ~mai() {}
