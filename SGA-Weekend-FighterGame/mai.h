@@ -65,6 +65,8 @@ private:
 
 	bool _isCharPos; //false == 왼쪽바라봄 true == 오른쪽바라봄
 
+	POINT _center;
+
 	Enum _lastKey;
 
 	float _lastKeyTime; //키를 가지고있는 시간
