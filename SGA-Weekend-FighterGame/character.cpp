@@ -64,10 +64,6 @@ void character::render()
 		RECT collisionRC = this->getCollisionRect();
 		MoveRect(&collisionRC, -cameraRC.left, -cameraRC.top);
 
-		//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-		if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-			return;
-
 		//히트박스 영역 표시
 		HPEN bluePen = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
 		HPEN oldPen;
