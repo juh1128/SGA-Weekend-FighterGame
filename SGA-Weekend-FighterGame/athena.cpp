@@ -710,11 +710,11 @@ void athena::skill()
 void athena::hit(tagMessage msg)
 {
 	tagMessage massege = msg;
-	if (massege.data == DIRECTION::RIGHT)
+	if (massege.data == DIRECTION::LEFT)
 	{
 		changeState(athenaState::RIGHT_HIT);
 	}
-	else if (massege.data == DIRECTION::LEFT)
+	else if (massege.data == DIRECTION::RIGHT)
 	{
 		changeState(athenaState::LEFT_HIT);
 	}
