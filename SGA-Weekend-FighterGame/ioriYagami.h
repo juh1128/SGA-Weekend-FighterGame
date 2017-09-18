@@ -55,6 +55,8 @@ public:
 	void render();
 
 	void skill();
+	void skill2();
+	void skill3();
 	void stateUpdate(tagIoriState::Enum _state);
 	void changeState(tagIoriState::Enum _state);
 };

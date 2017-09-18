@@ -34,18 +34,18 @@ HRESULT ioriYagami::init(vector2D pos)
 		this->skill();
 	});
 
-	int comnand[3] = { key::RIGHT, key::JUMP, key::STRONG_ATTACK };
-	this->addCommand(comnand, 3, "skill");
-	this->addCallback("skill", [this](tagMessage msg)
+	int comnand[3] = { key::DOWN, key::RIGHT, key::ATTACK };
+	this->addCommand(comnand, 3, "skill2");
+	this->addCallback("skill2", [this](tagMessage msg)
 	{
-		this->skill();
+		this->skill2();
 	});
 
-	int comnand[3] = { key::RIGHT, key::JUMP, key::STRONG_ATTACK };
-	this->addCommand(comnand, 3, "skill");
+	int comnand[4] = { key::DOWN, key::RIGHT, key::JUMP, key::STRONG_KICK };
+	this->addCommand(comnand, 4, "skill3");
 	this->addCallback("skill", [this](tagMessage msg)
 	{
-		this->skill();
+		this->skill3();
 	});
 
 	return S_OK;
@@ -678,14 +678,32 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 		else if (!_isEnemyDirection)
 		{
 			this->setAnimation("이오리_왼쪽_스킬");
-			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::RIGHT_STOP));
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::LEFT_STOP));
 		}
 		break;
 	case tagIoriState::SKILL2:
-		this->setAnimation("이오리_오른쪽_스킬");
+		if (_isEnemyDirection)
+		{
+			this->setAnimation("이오리_오른쪽_스킬2");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::RIGHT_STOP));
+		}
+		else if (!_isEnemyDirection)
+		{
+			this->setAnimation("이오리_왼쪽_스킬2");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::LEFT_STOP));
+		}
 		break;
 	case tagIoriState::SKILL3:
-		this->setAnimation("이오리_오른쪽_스킬");
+		if (_isEnemyDirection)
+		{
+			this->setAnimation("이오리_오른쪽_스킬3");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::RIGHT_STOP));
+		}
+		else if (!_isEnemyDirection)
+		{
+			this->setAnimation("이오리_오른쪽_스킬3");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, tagIoriState::LEFT_STOP));
+		}
 		break;
 	}
 	_state = state;
@@ -694,4 +712,14 @@ void ioriYagami::changeState(tagIoriState::Enum state)
 void ioriYagami::skill()
 {
 	this->changeState(tagIoriState::SKILL1);
+}
+
+void ioriYagami::skill2()
+{
+	this->changeState(tagIoriState::SKILL2);
+}
+
+void ioriYagami::skill3()
+{
+	this->changeState(tagIoriState::SKILL3);
 }
