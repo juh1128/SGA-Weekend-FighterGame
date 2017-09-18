@@ -9,6 +9,13 @@ namespace key
 		LEFT, RIGHT, JUMP, DOWN, ATTACK, STRONG_ATTACK, KICK, STRONG_KICK, END
 	};
 }
+namespace DIRECTION
+{
+	enum Enum
+	{
+		LEFT, RIGHT
+	};
+}
 
 #define COMMAND_RESET_TIME 0.6f
 #define MAX_COMMAND_NUM	5
@@ -82,5 +89,8 @@ public:
 		_maxHp = maxHp;
 		_damage = damage;
 	}
+
+private:
+	void attacked(int damage, vector2D hitedPos);
 
 };

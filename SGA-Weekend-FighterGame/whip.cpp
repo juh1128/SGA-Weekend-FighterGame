@@ -181,46 +181,46 @@ void whip::setupResource()
 
 		//리소스 로드
 		//일반움직임
-		IMAGEMANAGER->addFrameImage("위프_정지", "resource/hyeongjoon/whip/whip_motion/whip_stop.bmp", 5427, 836,
+		IMAGEMANAGER->addFrameImage("위프_정지", "resource/hyeongjoon/whip/whip_motion/whip_stop.bmp", 5427/4, 836 / 4,
 			19, 2, true);
-		IMAGEMANAGER->addFrameImage("위프_이동", "resource/hyeongjoon/whip/whip_motion/whip_move.bmp", 2753, 862,
+		IMAGEMANAGER->addFrameImage("위프_이동", "resource/hyeongjoon/whip/whip_motion/whip_move.bmp", 2753 / 4, 862 / 4,
 			8, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_달리기", "resource/hyeongjoon/whip/whip_motion/whip_run.bmp", 2989, 794,
+		//IMAGEMANAGER->addFrameImage("위프_달리기", "resource/hyeongjoon/whip/whip_motion/whip_run.bmp", 2989/4, 794/4,
 		//	8, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_앉기", "resource/hyeongjoon/whip/whip_motion/whip_sit.bmp", 2100, 600,
+		//IMAGEMANAGER->addFrameImage("위프_앉기", "resource/hyeongjoon/whip/whip_motion/whip_sit.bmp", 2100/4, 600/4,
 		//	7, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_점프", "resource/hyeongjoon/whip/whip_motion/whip_jump.bmp", 2720, 886,
+		//IMAGEMANAGER->addFrameImage("위프_점프", "resource/hyeongjoon/whip/whip_motion/whip_jump.bmp", 2720/4, 886/4,
 		//	8, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_무브점프", "resource/hyeongjoon/whip/whip_motion/whip_moveJump.bmp", 3102, 1188,
+		//IMAGEMANAGER->addFrameImage("위프_무브점프", "resource/hyeongjoon/whip/whip_motion/whip_moveJump.bmp", 3102/4, 1188/4,
 		//	9, 2, true);
 		//일반공격 
-		//IMAGEMANAGER->addFrameImage("위프_약손", "resource/hyeongjoon/whip/whip_attack/whip_weakHand.bmp", 11210, 1680,
+		//IMAGEMANAGER->addFrameImage("위프_약손", "resource/hyeongjoon/whip/whip_attack/whip_weakHand.bmp", 11210/4, 1680/4,
 		//	9, 4, true);
-		//IMAGEMANAGER->addFrameImage("위프_약발", "resource/hyeongjoon/whip/whip_attack/whip_strongFoot.bmp", 3000, 806,
+		//IMAGEMANAGER->addFrameImage("위프_약발", "resource/hyeongjoon/whip/whip_attack/whip_strongFoot.bmp", 3000/4, 806/4,
 		//	5, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_강손", "resource/hyeongjoon/whip/whip_attack/whip_strongFoot.bmp", 16500, 2068,
+		//IMAGEMANAGER->addFrameImage("위프_강손", "resource/hyeongjoon/whip/whip_attack/whip_strongFoot.bmp", 16500/4, 2068/4,
 		//	11, 4, true);
-		//IMAGEMANAGER->addFrameImage("위프_강발", "resource/hyeongjoon/whip/whip_attack/whip_strongFoot.bmp", 4950, 912,
+		//IMAGEMANAGER->addFrameImage("위프_강발", "resource/hyeongjoon/whip/whip_attack/whip_strongFoot.bmp", 4950/4, 912/4,
 		//	11, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_앉기_약손", "resource/hyeongjoon/whip/whip_attack/whip_weakHand.bmp", 10660, 874,
+		//IMAGEMANAGER->addFrameImage("위프_앉기_약손", "resource/hyeongjoon/whip/whip_attack/whip_weakHand.bmp", 10660/4, 874/4,
 		//	13, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_앉기_약발", "resource/hyeongjoon/whip/whip_attack/whip_sitWeakFoot.bmp", 4900, 520,
+		//IMAGEMANAGER->addFrameImage("위프_앉기_약발", "resource/hyeongjoon/whip/whip_attack/whip_sitWeakFoot.bmp", 4900/4, 520/4,
 		//	7, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_앉기_강손", "resource/hyeongjoon/whip/whip_attack/whip_sitStrongHand.bmp", 11000, 1200,
+		//IMAGEMANAGER->addFrameImage("위프_앉기_강손", "resource/hyeongjoon/whip/whip_attack/whip_sitStrongHand.bmp", 11000/4, 1200/4,
 		//	19, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_앉기_강발", "resource/hyeongjoon/whip/whip_attack/whip_sitStrongFoot.bmp", 4800, 520,
+		//IMAGEMANAGER->addFrameImage("위프_앉기_강발", "resource/hyeongjoon/whip/whip_attack/whip_sitStrongFoot.bmp", 4800/4, 520/4,
 		//	6, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_점프_손", "resource/hyeongjoon/whip/whip_attack/whip_jumpHand.bmp", 2280, 819,
+		//IMAGEMANAGER->addFrameImage("위프_점프_손", "resource/hyeongjoon/whip/whip_attack/whip_jumpHand.bmp", 2280/4, 819/4,
 		//	8, 2, true);
-		//IMAGEMANAGER->addFrameImage("위프_점프_발", "resource/hyeongjoon/whip/whip_attack/whip_jumpFoot.bmp", 2850, 746,
+		//IMAGEMANAGER->addFrameImage("위프_점프_발", "resource/hyeongjoon/whip/whip_attack/whip_jumpFoot.bmp", 2850/4, 746/4,
 		//	5, 2, true);
 		//
 		////스킬1,2 + 필살기
-		//IMAGEMANAGER->addFrameImage("위프_스킬1", "resource/hyeongjoon/whip/whip_skill/whip_skill1.bmp", 12430, 4260,
+		//IMAGEMANAGER->addFrameImage("위프_스킬1", "resource/hyeongjoon/whip/whip_skill/whip_skill1.bmp", 12430/4, 4260/4,
 		//	11, 6, true);
-		//IMAGEMANAGER->addFrameImage("위프_스킬2", "resource/hyeongjoon/whip/whip_skill/whip_skill2.bmp", 3300, 4836,
+		//IMAGEMANAGER->addFrameImage("위프_스킬2", "resource/hyeongjoon/whip/whip_skill/whip_skill2.bmp", 3300/4, 4836/4,
 		//	10, 4, true);
-		//IMAGEMANAGER->addFrameImage("위프_필살기", "resource/hyeongjoon/whip/whip_skill/whip_specialSkill.bmp", 12120, 6128,
+		//IMAGEMANAGER->addFrameImage("위프_필살기", "resource/hyeongjoon/whip/whip_skill/whip_specialSkill.bmp", 12120/4, 6128/4,
 		//	12, 8, true);
 
 		//예시
