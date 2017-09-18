@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "playScene.h"
 #include "progressBar.h"
+#include "character.h"
 
 HRESULT	playScene::init()
 {
@@ -27,11 +28,13 @@ HRESULT	playScene::init()
 	CAMERAMANAGER->connectTarget(_cameraTarget);
 
 	//UI
-	//for (int i = 0; i < 2; ++i)
-	//{
-	//	_progressBar[i] = new progressBar();
-	//	_progressBar[i]->init(
-	//}
+	for (int i = 0; i < 2; ++i)
+	{
+		_progressBar[i] = new progressBar();
+		_progressBar[i]->init("HP바_백", "HP바_프론트", 500, 45);
+	}
+	_progressBar[0]->_pos = vector2D(300, 30);
+	_progressBar[1]->_pos = vector2D(980, 30);
 
 	//플레이어 0, 플레이어 1 셋팅
 	characterSetup();
@@ -64,10 +67,25 @@ void playScene::update()
 	//배경 프레임
 	_backgroundAnimation->frameUpdate();
 
+
+	//UI
+	if(_player[0]->isLive())
+		_progressBar[0]->update(_player[0]->getNowHp(), _player[0]->getMaxHp());
+	else
+		_progressBar[0]->update(0, 1000);
+
+	if (_player[1]->isLive())
+		_progressBar[1]->update(_player[1]->getNowHp(), _player[1]->getMaxHp());
+	else
+		_progressBar[1]->update(0, 1000);
+
 }
 void playScene::render()		
 {
 	_background->scaleAniRender(getMemDC(), 0, 0, _backgroundAnimation, 1800, 768);
+
+	_progressBar[0]->render();
+	_progressBar[1]->render();
 
 	sceneBase::render();
 }
