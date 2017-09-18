@@ -14,32 +14,24 @@ HRESULT kim::init(vector2D pos)
 
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimIdleLeft", "kimIdle", 0, 10, 22, false, true);
-	KEYANIMANAGER->setCollisionRect("kimIdleLeft", RectMakeCenter(20, 10, 30, 67));
+	KEYANIMANAGER->setCollisionRect("kimIdleLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimIdle")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
+		110, 370));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimIdleRight", "kimIdle", 21, 11, 22, false, true);
-	KEYANIMANAGER->setCollisionRect("kimIdleRight", RectMakeCenter(20, 10, 30, 67));
+	KEYANIMANAGER->setCollisionRect("kimIdleRight", RectMakeCenter(IMAGEMANAGER->findImage("kimIdle")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimIdle")->getFrameHeight() / 2,
+		110, 370));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimWalkFrontLeft", "kimWalk", 0, 5, 12, false, true);
-	KEYANIMANAGER->setCollisionRect("kimWalkFrontLeft", RectMakeCenter(20, 10, 30, 67));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimWalkBackLeft", "kimWalk", 6, 11, 12, false, true);
-	KEYANIMANAGER->setCollisionRect("kimWalkBackLeft", RectMakeCenter(20, 10, 30, 67));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimWalkFrontRight", "kimWalk", 17, 12, 12, false, true);
-	KEYANIMANAGER->setCollisionRect("kimWalkFrontRight", RectMakeCenter(20, 10, 30, 67));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimWalkBackRight", "kimWalk", 23, 18, 12, false, true);
-	KEYANIMANAGER->setCollisionRect("kimWalkBackRight", RectMakeCenter(20, 10, 30, 67));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimSitLeft", "kimSit", 0, 2, 60, false, false);
-	KEYANIMANAGER->setCollisionRect("kimSitLeft", RectMakeCenter(20, 10, 30, 67));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimSitRight", "kimSit", 5, 3, 60, false, false);
-	KEYANIMANAGER->setCollisionRect("kimSitRight", RectMakeCenter(20, 10, 30, 67));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimStandUpLeft", "kimSit", 1, 0, 60, false, false);
-	KEYANIMANAGER->setCollisionRect("kimStandUpLeft", RectMakeCenter(20, 10, 30, 67));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimStandUpRight", "kimSit", 4, 5, 60, false, false);
-	KEYANIMANAGER->setCollisionRect("kimStandUpRight", RectMakeCenter(20, 10, 30, 67));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimJumpLeft", "kimJump", 0, 6, 10, false, false);
-	KEYANIMANAGER->setCollisionRect("kimJumpLeft", RectMakeCenter(20, 10, 30, 67));
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimJumpRight", "kimJump", 13, 7, 10, false, false);
-	KEYANIMANAGER->setCollisionRect("kimJumpRight", RectMakeCenter(20, 10, 30, 67));
 	//------------------------------------------------------
 
 	//테스트 애니메이션은 setupYuhoon에서 만든다. (게임 시작 시 최초 1번만 만들어놓고 씀)
@@ -56,7 +48,8 @@ HRESULT kim::init(vector2D pos)
 	});
 
 	_lever = _pastLever = LEVER::IDLE;
-	_isLeft = _isEnemyLeft = false;
+	_isLeft = false;
+	_isEnemyLeft = true;
 
 	return S_OK;
 }
