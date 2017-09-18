@@ -285,6 +285,9 @@
     <ClInclude Include="effectFire.h">
       <Filter>playGround\memberFolder\soonyu</Filter>
     </ClInclude>
+    <ClInclude Include="whip.h">
+      <Filter>playGround\memberFolder\hyeongjoon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -454,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="effectFire.cpp">
       <Filter>playGround\memberFolder\soonyu</Filter>
+    </ClCompile>
+    <ClCompile Include="whip.cpp">
+      <Filter>playGround\memberFolder\hyeongjoon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
