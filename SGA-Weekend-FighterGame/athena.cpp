@@ -13,7 +13,8 @@ HRESULT athena::init(vector2D pos)
 	IMAGEMANAGER->addFrameImage("athenaAction", "resource/siyeong/강약손발.bmp", 100, WINSIZEY / 2 - 50, 1440, 840, 8, 4, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("athenaAction2", "resource/siyeong/왼쪽강약손발.bmp", 100, WINSIZEY / 2 - 50, 1440, 840, 8, 4, true, RGB(255, 0, 255));
 
-	////애니메이션
+
+	//애니메이션
 	
 	int rightStop[] = { 0,1,2,3,4,5,6,7 };
 	KEYANIMANAGER->addArrayFrameAnimation("athenaRightStop", "athena", rightStop, 8, 10, true);
