@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "playScene.h"
+#include "selectScene.h"
 #include "progressBar.h"
 #include "character.h"
 
@@ -11,6 +12,7 @@ HRESULT	playScene::init()
 	// - 인터페이스
 	IMAGEMANAGER->addImage("HP바_백", "resource/yuhoon/ui/hpBarBack.bmp", 53, 5, true);
 	IMAGEMANAGER->addImage("HP바_프론트", "resource/yuhoon/ui/hpBarFront.bmp", 53, 5, true);
+	IMAGEMANAGER->addImage("KO", "resource/yuhoon/KO.bmp", 507, 219, true);
 
 	//초기 오브젝트 생성
 	_background = IMAGEMANAGER->addFrameImage("맵", "resource/yuhoon/background2.bmp", 914, 3072, 1, 8, true);
@@ -39,6 +41,13 @@ HRESULT	playScene::init()
 	//플레이어 0, 플레이어 1 셋팅
 	characterSetup();
 
+	_state = playSceneState::PLAY;
+
+	//게임오버 메시지 콜백
+	this->addCallback("gameover", [this](tagMessage msg) {
+		this->gameOver();
+	});
+
 
 	return S_OK;
 }
@@ -63,7 +72,6 @@ void playScene::update()
 {
 	sceneBase::update();
 
-
 	//배경 프레임
 	_backgroundAnimation->frameUpdate();
 
@@ -79,13 +87,57 @@ void playScene::update()
 	else
 		_progressBar[1]->update(0, 1000);
 
+
+	//카메라 타겟 위치 셋업
+	gameObject* left = _player[1];
+	gameObject* right = _player[0];
+	if (_player[0]->_pos.x <= _player[1]->_pos.x)
+	{
+		left = _player[0];
+		right = _player[1];
+	}
+	float distance = right->getCollisionRect().right - left->getCollisionRect().left;
+	vector2D averagePos = (_player[0]->_pos + _player[1]->_pos) / 2;
+	vector2D dir = averagePos - _cameraTarget->_pos;
+	if (dir.getLength() <= 5.0f)
+	{
+		_cameraTarget->_pos = averagePos;
+	}
+	else
+	{
+		_cameraTarget->_pos = _cameraTarget->_pos + dir.normalize()*5.0f;
+	}
+
+
+	if (_state == playSceneState::END)
+	{
+		_gameResetTimer -= TIMEMANAGER->getElapsedTime();
+		if (_gameResetTimer <= 0)
+		{
+			SCENEMANAGER->changeScene(new selectScene);
+		}
+	}
+
 }
 void playScene::render()		
 {
-	_background->scaleAniRender(getMemDC(), 0, 0, _backgroundAnimation, 1800, 768);
+	RECT rc = CAMERAMANAGER->getRenderRect();
+	_background->scaleAniRender(getMemDC(), -rc.left, -rc.top, _backgroundAnimation, 1800, 768);
+
+	sceneBase::render();
 
 	_progressBar[0]->render();
 	_progressBar[1]->render();
 
-	sceneBase::render();
+	if (_state == playSceneState::END)
+	{
+		vector2D renderPos = vector2D(WINSIZEX / 2 - 253, WINSIZEY / 2 - 110);
+		IMAGEMANAGER->findImage("KO")->render(getMemDC(), renderPos.x, renderPos.y);
+	}
+}
+
+void playScene::gameOver()
+{
+	_state = playSceneState::END;
+	_gameResetTimer = 5.0f;
 }
