@@ -55,7 +55,7 @@ void keyAniManager::addDefaultFrameAnimation(string animationKeyName, char* imag
 	ani->setFPS(fps);
 
 	ani->setImage(img);
-	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameWidth());
+	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameHeight());
 	ani->setCollisionRect(rc);
 
 	_mTotalAnimation.insert(pair<string, animation*>(animationKeyName, ani));
@@ -73,7 +73,7 @@ void keyAniManager::addDefaultFrameAnimation(string animationKeyName, char* imag
 	ani->setFPS(fps);
 
 	ani->setImage(img);
-	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameWidth());
+	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameHeight());
 	ani->setCollisionRect(rc);
 
 	_mTotalAnimation.insert(pair<string, animation*>(animationKeyName, ani));
@@ -89,7 +89,7 @@ void keyAniManager::addDefaultFrameAnimation(string animationKeyName, char* imag
 	ani->setFPS(fps);
 
 	ani->setImage(img);
-	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameWidth());
+	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameHeight());
 	ani->setCollisionRect(rc);
 
 	_mTotalAnimation.insert(pair<string, animation*>(animationKeyName, ani));
@@ -106,7 +106,7 @@ void keyAniManager::addArrayFrameAnimation(string animationKeyName, char* imageK
 	ani->setFPS(fps);
 
 	ani->setImage(img);
-	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameWidth());
+	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameHeight());
 	ani->setCollisionRect(rc);
 
 	_mTotalAnimation.insert(pair<string, animation*>(animationKeyName, ani));
@@ -122,7 +122,7 @@ void keyAniManager::addArrayFrameAnimation(string animationKeyName, char* imageK
 	ani->setFPS(fps);
 
 	ani->setImage(img);
-	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameWidth());
+	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameHeight());
 	ani->setCollisionRect(rc);
 
 	_mTotalAnimation.insert(pair<string, animation*>(animationKeyName, ani));
@@ -138,7 +138,7 @@ void keyAniManager::addArrayFrameAnimation(string animationKeyName, char* imageK
 	ani->setFPS(fps);
 
 	ani->setImage(img);
-	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameWidth());
+	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameHeight());
 	ani->setCollisionRect(rc);
 
 	_mTotalAnimation.insert(pair<string, animation*>(animationKeyName, ani));
@@ -156,7 +156,7 @@ void keyAniManager::addCoordinateFrameAnimation(string animationKeyName, char* i
 	ani->setFPS(fps);
 
 	ani->setImage(img);
-	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameWidth());
+	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameHeight());
 	ani->setCollisionRect(rc);
 
 	_mTotalAnimation.insert(pair<string, animation*>(animationKeyName, ani));
@@ -172,7 +172,7 @@ void keyAniManager::addCoordinateFrameAnimation(string animationKeyName, char* i
 	ani->setFPS(fps);
 
 	ani->setImage(img);
-	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameWidth());
+	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameHeight());
 	ani->setCollisionRect(rc);
 
 	_mTotalAnimation.insert(pair<string, animation*>(animationKeyName, ani));
@@ -188,7 +188,7 @@ void keyAniManager::addCoordinateFrameAnimation(string animationKeyName, char* i
 	ani->setFPS(fps);
 
 	ani->setImage(img);
-	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameWidth());
+	RECT rc = RectMake(0, 0, img->getFrameWidth(), img->getFrameHeight());
 	ani->setCollisionRect(rc);
 
 	_mTotalAnimation.insert(pair<string, animation*>(animationKeyName, ani));
@@ -228,6 +228,11 @@ animation* keyAniManager::findAnimation(string animationKeyName)
 	{
 		return iter->second;
 	}
+
+
+	char buf[200];
+	wsprintf(buf, "[ 에러 ] %s 애니메이션을 찾지 못했습니다.", animationKeyName.c_str());
+	MessageBox(_hWnd, buf, TEXT("오류"), MB_OK);
 
 	return NULL;
 }

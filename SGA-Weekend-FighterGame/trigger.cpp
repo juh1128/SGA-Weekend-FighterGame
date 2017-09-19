@@ -78,7 +78,7 @@ void trigger::update()
 			{
 				if (IntersectRect(&temp, &objectList.at(i)->getCollisionRect(), &rc))
 				{
-					objectList.at(i)->sendMessage(_msg.text, _msg.delayTime, _msg.data, _msg.data2, _msg.targetList);
+					objectList.at(i)->sendMessage(_msg.text, _msg.delayTime, _msg.data, _msg.data2, _msg.ptData, _msg.targetList);
 
 					if (_count != -1 && !_isMultipleTarget)		//카운트가 -1이면 무한대
 					{
@@ -128,7 +128,7 @@ void trigger::render()
 		triggerBrush = CreateSolidBrush(RGB(255, 0, 0));
 		oldBrush = (HBRUSH)SelectObject(getMemDC(), triggerBrush);
 
-		RECT rc = this->getRect();
+		RECT rc = CAMERAMANAGER->getRelativeRect(this->getRect());
 		Rectangle(getMemDC(), rc.left, rc.top, rc.right, rc.bottom);
 
 		SelectObject(getMemDC(), oldBrush);

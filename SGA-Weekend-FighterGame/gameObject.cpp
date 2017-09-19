@@ -13,7 +13,7 @@ HRESULT gameObject::init(string objectName, string imageKey, vector2D pos, Pivot
 		_image = IMAGEMANAGER->findImage(imageKey);
 		_size.x = _image->getFrameWidth();
 		_size.y = _image->getFrameHeight();
-
+	
 		_animation->init(_image->getWidth(), _image->getHeight(), _image->getFrameWidth(), _image->getFrameHeight());
 	}
 	//이미지가 없을 경우
@@ -121,7 +121,7 @@ void gameObject::update(void)
 		{
 			iter->second(_messageList[i]);
 		}
-		_messageList.pop_back();
+		_messageList.erase(_messageList.begin()+i);
 	}
 }
 
@@ -129,9 +129,15 @@ void gameObject::render(void)
 {
 	image* renderImage = (_animation->getImage()) ? _animation->getImage() : _image;
 	if (renderImage)
-	{
-		//게임 오브젝트의 현재 RECT
-		RECT renderRC = getRect();	
+	{	
+		//카메라 렌더링 영역
+		RECT cameraRC = CAMERAMANAGER->getRenderRect();
+		//상대좌표 구하기
+		POINT renderPos = { _pos.x - cameraRC.left, _pos.y - cameraRC.top };
+
+		//상대좌표를 기준으로 만든 렌더링 렉트
+		vector2D size = getSize();
+		RECT renderRC = RectMakeCenter(renderPos.x, renderPos.y, size.x, size.y);
 
 		if (_alpha < 0) _alpha = 0.0f;
 		if (_alpha > 1.0f) _alpha = 1.0f;
@@ -195,17 +201,17 @@ void gameObject::setDestroy(float delayTime)
 }
 
 //메시지 처리 관련
-void gameObject::sendMessage(string text, float delayTime, int data, float data2, vector<gameObject*> targetList)
+void gameObject::sendMessage(string text, float delayTime, int data, float data2, POINT ptData, vector<gameObject*> targetList)
 {
 	//딜레이타임이 없으면 바로 메시지 벡터에 넣는다.
 	if (delayTime == 0.0f)
 	{
-		_messageList.emplace_back(text, 0.0f, data, data2, targetList);
+		_messageList.emplace_back(text, 0.0f, data, data2, ptData, targetList);
 	}
 	//딜레이타임이 있으면 메시지 예약 리스트에 넣는다.
 	else
 	{
-		_reservedMessage.emplace_back(text, delayTime, data, data2, targetList);
+		_reservedMessage.emplace_back(text, delayTime, data, data2, ptData, targetList);
 	}
 }
 
@@ -220,7 +226,18 @@ void gameObject::addBaseCallback()
 
 void gameObject::setAnimation(string animationKeyName)
 {
+	RECT oldRC = this->getCollisionRect();
+
 	auto anim = KEYANIMANAGER->findAnimation(animationKeyName);
 	*_animation = *anim;
 	_animation->start();
+
+	_size.x = _animation->getFrameWidth();
+	_size.y = _animation->getFrameHeight();
+
+	RECT newRC = this->getCollisionRect();
+
+	//애니메이션 사이즈에 따라서 y위치 보정
+	float gapY = oldRC.bottom - newRC.bottom;
+	_pos.y += gapY;
 }

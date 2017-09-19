@@ -9,6 +9,13 @@ namespace key
 		LEFT, RIGHT, JUMP, DOWN, ATTACK, STRONG_ATTACK, KICK, STRONG_KICK, END
 	};
 }
+namespace DIRECTION
+{
+	enum Enum
+	{
+		LEFT = -1, RIGHT = 1
+	};
+}
 
 #define COMMAND_RESET_TIME 0.6f
 #define MAX_COMMAND_NUM	5
@@ -24,7 +31,12 @@ private:
 	vector<pair<vector<int>, string>>	_commandList;	//등록된 커맨드
 
 	bool			_isGravity;
+	bool			_isJump;
 	float			_gravitySpeed;
+
+	//죽음
+	bool				_isDie;
+
 
 protected:
 	key::Enum					keyList[key::END];		//단축키 리스트
@@ -72,7 +84,7 @@ public:
 	void jump(float jumpPower)
 	{
 		_gravitySpeed = -jumpPower;
-		_pos.y -= 1;
+		_pos.y -= jumpPower;
 	}
 
 	//캐릭터 스탯 설정
@@ -83,4 +95,20 @@ public:
 		_damage = damage;
 	}
 
+	//점프 상태인지?
+	bool isJump() { return _isJump; }
+	//적이 내 캐릭터의 어느 방향에 있는지 반환
+	DIRECTION::Enum getDirectionEnemy();
+	//죽었나?
+	bool isDie() { return _isDie; }
+
+
+	//겟셋
+	int getNowHp() { return _nowHp; }
+	int getMaxHp() { return _maxHp; }
+
+private:
+	void attacked(int damage, vector2D hitedPos);
+	//적과 충돌체크
+	void collisionCheckToEnemy();
 };

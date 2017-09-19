@@ -37,6 +37,10 @@ image* imageManager::addImage(string strKey, int width, int height)
 	{
 		SAFE_DELETE(img);
 
+		char buf[200];
+		wsprintf(buf, "[ 에러 ] %s 이미지 로드 실패.", strKey.c_str());
+		MessageBox(_hWnd, buf, TEXT("오류"), MB_OK);
+
 		return NULL;
 	}
 
@@ -59,6 +63,10 @@ image* imageManager::addImage(string strKey, const char* fileName, int width, in
 	{
 		SAFE_DELETE(img);
 
+		char buf[200] = {};
+		wsprintf(buf, "[ 에러 ] %s 이미지 로드 실패.", strKey.c_str());
+		MessageBox(_hWnd, buf, TEXT("오류"), MB_OK);
+
 		return NULL;
 	}
 
@@ -79,6 +87,10 @@ image* imageManager::addImage(string strKey, const char* fileName, float x, floa
 	if (FAILED(img->init(fileName, x, y, width, height, trans, transColor)))
 	{
 		SAFE_DELETE(img);
+
+		char buf[200] = {};
+		wsprintf(buf, "[ 에러 ] %s 이미지 로드 실패.", strKey.c_str());
+		MessageBox(_hWnd, buf, TEXT("오류"), MB_OK);
 
 		return NULL;
 	}
@@ -102,6 +114,10 @@ image* imageManager::addFrameImage(string strKey, const char* fileName, float x,
 	{
 		SAFE_DELETE(img);
 
+		char buf[200] = {};
+		wsprintf(buf, "[ 에러 ] %s 이미지 로드 실패.", strKey.c_str());
+		MessageBox(_hWnd, buf, TEXT("오류"), MB_OK);
+
 		return NULL;
 	}
 
@@ -123,6 +139,10 @@ image* imageManager::addFrameImage(string strKey, const char* fileName, int widt
 	{
 		SAFE_DELETE(img);
 
+		char buf[200] = {};
+		wsprintf(buf, "[ 에러 ] %s 이미지 로드 실패.", strKey.c_str());
+		MessageBox(_hWnd, buf, TEXT("오류"), MB_OK);
+
 		return NULL;
 	}
 
@@ -141,7 +161,6 @@ image* imageManager::findImage(string strKey)
 	{
 		return key->second;
 	}
-
 	return NULL;
 }
 
@@ -180,6 +199,27 @@ BOOL imageManager::deleteAll(void)
 	_mImageList.clear();
 
 	return TRUE;
+}
+
+void imageManager::resetImage()
+{
+	mapImageIter iter = _mImageList.begin();
+
+	for (; iter != _mImageList.end();)
+	{
+		if (iter->second != NULL)
+		{
+			if (iter->first != "backBuffer")
+			{
+				SAFE_DELETE(iter->second);
+				iter = _mImageList.erase(iter);
+			}
+			else ++iter;
+		}
+		else ++iter;
+	}
+
+	_mImageList.clear();
 }
 
 void imageManager::render(string strKey, HDC hdc)

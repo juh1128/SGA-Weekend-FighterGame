@@ -38,11 +38,12 @@ void attackHitbox::update()
 		RECT temp;
 		if (IntersectRect(&temp, &_target->getCollisionRect(), &getRect()))
 		{
-			_target->sendMessage("addHp", 0.0f, -_damage);
+			POINT hitedPos = { (temp.right + temp.left) / 2, (temp.top + temp.bottom) / 2 };
+
+			_target->sendMessage("attacked", 0.0f, _damage, 0, hitedPos);
 
 			if (_hitedEffectKey != "NONE")
-			{
-				POINT hitedPos = { (temp.right + temp.left) / 2, (temp.top + temp.bottom) / 2 };
+			{				
 				EFFECTMANAGER->play(_hitedEffectKey, hitedPos.x, hitedPos.y);
 			}
 			this->setDestroy();
@@ -53,6 +54,9 @@ void attackHitbox::render()
 {
 	if (_isDebugMode)
 	{
+		//카메라 렌더링 영역
+		RECT cameraRC = CAMERAMANAGER->getRenderRect();
+
 		HPEN redPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 		HPEN oldPen;
 		HBRUSH oldBrush;
@@ -62,6 +66,7 @@ void attackHitbox::render()
 		oldBrush = (HBRUSH)SelectObject(memDC, GetStockObject(NULL_BRUSH));
 
 		RECT rc = this->getRect();
+		MoveRect(&rc, -cameraRC.left, -cameraRC.top);
 		Rectangle(getMemDC(), rc.left, rc.top, rc.right, rc.bottom);
 
 		SelectObject(memDC, oldBrush);

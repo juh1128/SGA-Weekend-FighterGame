@@ -13,12 +13,13 @@ struct tagMessage
 	string text;
 	int data;
 	float data2;
+	POINT ptData;
 	vector<gameObject*> targetList;
 
 	float delayTime;
 
 	tagMessage();
-	tagMessage(string text, float delay = 0.0f, int data = 0, float data2 = 0.0f, vector<gameObject*> targetList = vector<gameObject*>());
+	tagMessage(string text, float delay = 0.0f, int data = 0, float data2 = 0.0f, POINT ptData = POINT(), vector<gameObject*> targetList = vector<gameObject*>());
 };
 
 //NULL메시지 정의

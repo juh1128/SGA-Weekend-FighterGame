@@ -5,7 +5,7 @@ namespace MAI
 {
 	enum state	//상태
 	{
-		LEFT_IDLE,RIGHT_IDLE,									//정지
+		LEFT_STOP,RIGHT_STOP,									//정지
 		LEFT_MOVE,RIGHT_MOVE,									//앞으로이동
 		LEFT_JUMP,RIGHT_JUMP,									//점프
 		LEFT_BACK_MOVE,RIGHT_BACK_MOVE,							//뒤로이동
@@ -25,17 +25,43 @@ namespace MAI
 		LEFT_KNOCK_DOWN,RIGHT_KNOCK_DOWN,						//쓰러짐
 		LEFT_KNOCK_DOWN_BACK_MOVE,RIGHT_KNOCK_DOWN_BACK_MOVE,	//쓰러진상태에서뒤로이동
 		LEFT_DAMAGED,RIGHT_DAMAGED,								//피해입음
+		LEFT_JUMP_LEFT_MOVE,RIGHT_JUMP_LFET_MOVE,				//점프상태에서 왼쪽으로 이동
+		LEFT_JUMP_RIGHT_MOVE,RIGHT_JUMP_RIGHT_MOVE,				//점프상태에서 오른쪽으로 이동
 		STATE_END												//매무리
 
+	};
+
+	enum POS
+	{
+		LEFT_SEE,RIGHT_SEE,POS_END
 	};
 }
 
 using namespace MAI;
+using namespace key;
+
+#define MOVESPEED 5
+
+class playGround;
 
 class mai : public character
 {
 private:
+	//상태이넘
 	state _state;
+	//키 이넘
+	Enum _enum;
+	//전방선언플레이그라운드
+	playGround* _playGround;
+
+	//현재 자신의 상태를 알수있는 이넘
+	POS _posEnum;
+
+	bool _isCharPos; //false == 왼쪽바라봄 true == 오른쪽바라봄
+
+	Enum _lastKey;
+
+
 public:
 	mai() {}
 	virtual ~mai() {}

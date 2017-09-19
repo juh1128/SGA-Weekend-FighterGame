@@ -14,6 +14,15 @@ HRESULT character::init(string characterName, vector2D pos, string animationKeyN
 	_isGravity = true;
 	_gravitySpeed = 0;
 
+	//피격 콜백 추가
+	this->addCallback("attacked", [this](tagMessage msg)
+	{
+		this->attacked(msg.data, msg.ptData);	
+	});
+
+	_isDie = false;
+
+
 	return S_OK;
 }
 void character::release()
@@ -30,6 +39,13 @@ void character::update()
 	if (_isGravity)
 		gravity();
 
+	//캐릭터 충돌체크
+	collisionCheckToEnemy();
+
+	//캐릭터의 x좌표 보정
+	RECT cameraRC = CAMERAMANAGER->getRenderRect();
+	_pos.fixedPosX(cameraRC.left, cameraRC.right);
+
 	this->_animation->frameUpdate();
 }
 
@@ -40,6 +56,18 @@ void character::render()
 	//디버그 모드일 경우 히트박스 렉트를 그려준다.
 	if (_isDebugMode)
 	{
+		//카메라 렌더링 영역
+		RECT cameraRC = CAMERAMANAGER->getRenderRect();
+		//상대좌표 구하기
+		POINT renderPos = { _pos.x - cameraRC.left, _pos.y - cameraRC.top };
+
+		//상대좌표를 기준으로 만든 렌더링 렉트
+		vector2D size = getSize();
+		RECT renderRC = RectMakeCenter(renderPos.x, renderPos.y, size.x, size.y);
+
+		//충돌 영역 렉트
+		RECT collisionRC = this->getCollisionRect();
+		MoveRect(&collisionRC, -cameraRC.left, -cameraRC.top);
 
 		//히트박스 영역 표시
 		HPEN bluePen = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
@@ -50,8 +78,7 @@ void character::render()
 		oldPen = (HPEN)SelectObject(memDC, bluePen);
 		oldBrush = (HBRUSH)SelectObject(memDC, GetStockObject(NULL_BRUSH));
 
-		RECT rc = getCollisionRect();
-		Rectangle(memDC, rc.left, rc.top, rc.right, rc.bottom);
+		Rectangle(memDC, collisionRC.left, collisionRC.top, collisionRC.right, collisionRC.bottom);
 
 		SelectObject(memDC, oldBrush);
 		SelectObject(memDC, oldPen);
@@ -64,8 +91,7 @@ void character::render()
 		oldPen = (HPEN)SelectObject(memDC, yelloBrush);
 		oldBrush = (HBRUSH)SelectObject(memDC, GetStockObject(NULL_BRUSH));
 
-		RECT imageRC = getRect();
-		Rectangle(memDC, imageRC.left, imageRC.top, imageRC.right, imageRC.bottom);
+		Rectangle(memDC, renderRC.left, renderRC.top, renderRC.right, renderRC.bottom);
 
 		SelectObject(memDC, oldBrush);
 		SelectObject(memDC, oldPen);
@@ -74,58 +100,27 @@ void character::render()
 
 		//캐릭터의 중심점 그리기
 		oldBrush = (HBRUSH)SelectObject(memDC, GetStockObject(COLOR_BACKGROUND));
-		Ellipse(memDC, _pos.x - 3, _pos.y - 3, _pos.x + 3, _pos.y + 3);
+		Ellipse(memDC, renderPos.x - 3, renderPos.y - 3, renderPos.x + 3, renderPos.y + 3);
 		SelectObject(memDC, oldBrush);
 
-		//입력한 커맨드 표시
-	/*	string buf;
-		for (int i = 0; i<_commandHistory.size(); ++i)
-		{
-			switch (_commandHistory[i])
-			{
-			case key::ATTACK:
-				buf.append("[ATTACK] ");
-				break;
-			case key::RIGHT:
-				buf.append("[RIGHT] ");
-				break;
-			case key::LEFT:
-				buf.append("[LEFT] ");
-				break;
-			case key::JUMP:
-				buf.append("[JUMP] ");
-				break;
-			case key::DOWN:
-				buf.append("[DOWN] ");
-				break;
-			case key::KICK:
-				buf.append("[KICK] ");
-				break;
-			case key::STRONG_ATTACK:
-				buf.append("[STRONG_ATTACK] ");
-				break;
-			case key::STRONG_KICK:
-				buf.append("[STRONG_KICK] ");
-				break;
-			}
-		}
-		TextOut(getMemDC(), _pos.x, _pos.y - 100, buf.c_str(), buf.length());*/
 	}
 }
 
 RECT character::getCollisionRect()
 {
 	//LEFT_TOP 좌표를 구한다.
+	vector2D oldSize = this->getOriginSize();
 	vector2D size = this->getSize();
+
 	vector2D leftTop;
-	leftTop.x = _pos.x - size.x * 0.5f;
-	leftTop.y = _pos.y - size.y * 0.5f;
+	leftTop.x = _pos.x - (size.x * 0.5f);
+	leftTop.y = _pos.y - (size.y * 0.5f);
 
 	RECT collisionRC = _animation->getCollisionRect();
-	collisionRC.left *= this->getScale().x;
-	collisionRC.top *= this->getScale().y;
-	collisionRC.right *= this->getScale().x;
-	collisionRC.bottom *= this->getScale().y;
+	collisionRC.left *= size.x / oldSize.x;
+	collisionRC.top *= size.y / oldSize.y;
+	collisionRC.right *= size.x / oldSize.x;
+	collisionRC.bottom *= size.y / oldSize.y;
 
 	MoveRect(&collisionRC, leftTop.x, leftTop.y);
 	return collisionRC;
@@ -203,11 +198,101 @@ void character::gravity()
 	if (rc.bottom < GROUND_LINE)
 	{
 		_pos.y += _gravitySpeed;
+		_isJump = true;
 	}
 	else
 	{
 		_pos.y = GROUND_LINE - (rc.bottom - _pos.y);
 		_gravitySpeed = 0;
+		_isJump = false;
 	}
 	
+}
+
+void character::attacked(int damage, vector2D hitedPos)
+{
+	//막기 여부 처리
+	vector2D distance = hitedPos - _pos;
+	//피격 위치가 내 왼쪽인지? 오른쪽인지?
+	int direction;
+	if (distance.x > 0)
+	{
+		direction = DIRECTION::RIGHT;
+		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+		{
+			_nowHp -= (float)damage*0.1f;
+			this->sendMessage("block", 0, direction);
+			return;
+		}		
+	}
+	else
+	{
+		direction = DIRECTION::LEFT;
+		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+		{
+			_nowHp -= (float)damage*0.1f;
+			this->sendMessage("block", 0, direction);
+			return;
+		}
+	}
+
+	_nowHp -= damage;
+	if (_nowHp >= _maxHp) _nowHp = _maxHp;
+	
+	//죽음
+	if (_nowHp <= 0)
+	{
+		this->sendMessage("die", 0, direction);
+		_isDie = true;
+	}
+	else
+	{
+		this->sendMessage("hited", 0, direction);
+	}
+}
+
+void character::collisionCheckToEnemy()
+{
+	RECT rc = this->getCollisionRect();
+	//적과 충돌 했을 경우
+	if (_enemy)
+	{
+		if (_enemy->isActiveObject())
+		{
+			//살아있을 때만 충돌체크
+			if (!((character*)_enemy)->isDie())
+			{
+				RECT temp;
+				if (IntersectRect(&temp, &rc, &_enemy->getCollisionRect()))
+				{
+					vector2D dirEenemyToMe = _pos - _enemy->_pos;
+					//적이 내 왼쪽에 있는지? 오른쪽에 있는지?
+					DIRECTION::Enum dir = (dirEenemyToMe.x > 0) ? DIRECTION::LEFT : DIRECTION::RIGHT;
+
+					//적을 밀어낸다.
+					int width = temp.right - temp.left;
+					_enemy->_pos.x += dir*(width*0.5f);
+					//나도 뒤로 밀림
+					_pos.x -= dir*width;
+				}
+			}
+		}
+	}
+}
+
+DIRECTION::Enum character::getDirectionEnemy()
+{
+	if (_enemy)
+	{
+		if (_enemy->isActiveObject())
+		{
+			vector2D dirEenemyToMe = _pos - _enemy->_pos;
+			//적이 내 왼쪽에 있는지? 오른쪽에 있는지?
+			DIRECTION::Enum dir = (dirEenemyToMe.x > 0) ? DIRECTION::LEFT : DIRECTION::RIGHT;
+			return dir;
+		}
+	}
+
+	//적이 없을 경우 대충 그냥 RIGHT 반환;;
+	return DIRECTION::RIGHT;
 }

@@ -20,7 +20,7 @@ public:
 	void setupHyeongjoon();
 	void setupSunghoon();
 	void setupTaesung();
-	void setupYongjae();
+	void setupYongje();
 	void setupYoonsam();
 	void setupHalim();
 	void setupYoungjae();

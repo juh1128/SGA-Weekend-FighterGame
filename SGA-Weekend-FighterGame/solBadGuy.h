@@ -1,5 +1,5 @@
-#pragma once#pragma once
-#include "stdafx.h"
+#pragma once
+//#include "stdafx.h"
 #include "character.h"
 
 

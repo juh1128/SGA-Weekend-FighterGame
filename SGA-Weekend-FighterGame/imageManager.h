@@ -30,6 +30,7 @@ public:
 	BOOL deleteImage(string strKey);
 
 	BOOL deleteAll(void);
+	void resetImage();	//백버퍼만 빼고 다 날림
 
 	void render(string strKey, HDC hdc);
 	void render(string strKey, HDC hdc, int destX, int destY);
