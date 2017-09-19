@@ -24,9 +24,10 @@ namespace tagWhip
 		RIGHT_SITSTRONGFOOT, LEFT_SITSTRONGFOOT,
 		RIGHT_JUMPHAND, LEFT_JUMPFOOT,
 		//스킬, 필살기
-		//RIGHT_SKILL1, LEFT_SKILL1,
-		//RIGHT_SKILL2, LEFT_SKILL2,
-		//RIGHT_SPECIALSKILL, LEFT_SPECIALSKILL,
+		RIGHT_SKILL1, LEFT_SKILL1,
+		RIGHT_SKILL2, LEFT_SKILL2,
+		RIGHT_SKILL2_1, LEFT_SKILL2_1,
+		RIGHT_SPECIALSKILL, LEFT_SPECIALSKILL,
 
 	};
 }
@@ -51,4 +52,13 @@ public:
 	void changeState(tagWhip::Enum _state);
 
 	void setupResource();
+
+	void skill1();
+	void skill2();
+	void skill3();
+
+	void hited();
+	void block();
+	void die();
+
 };
