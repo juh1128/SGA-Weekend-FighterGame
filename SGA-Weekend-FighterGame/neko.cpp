@@ -25,7 +25,9 @@ HRESULT neko::init(vector2D pos)
 	SOUNDMANAGER->addSound("nekoDead", "resource/soonwoo/neko/nekoDead.ogg", false, false);
 	SOUNDMANAGER->addSound("start", "resource/soonwoo/neko/start.ogg", false, false);
 	SOUNDMANAGER->addSound("skill", "resource/soonwoo/neko/skill.ogg", false, false);
-	SOUNDMANAGER->addSound("NECO05", "resource/soonwoo/neko/skill.ogg", false, false);
+	SOUNDMANAGER->addSound("NECO05", "resource/soonwoo/neko/NECO05.ogg", false, false);
+	SOUNDMANAGER->addSound("NECO13", "resource/soonwoo/neko/NECO13.ogg", false, false);
+	SOUNDMANAGER->addSound("NECO60", "resource/soonwoo/neko/NECO60.ogg", false, true);
 	//키애니메니져 설정
 
 	//======================STOP======================
@@ -438,6 +440,8 @@ void neko::changeState(tagNekoState::ENUM state)
 		attackHitbox* hitbox = new attackHitbox;
 		hitbox->init(30, vector2D(_centerPos.x + 70, _centerPos.y - 5), vector2D(50, 75), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
+
+		SOUNDMANAGER->play("NECO13", 1.0f);
 	}
 	break;
 
@@ -449,6 +453,8 @@ void neko::changeState(tagNekoState::ENUM state)
 		attackHitbox* hitbox = new attackHitbox;
 		hitbox->init(30, vector2D(_centerPos.x - 70, _centerPos.y - 5), vector2D(50, 75), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
+
+		SOUNDMANAGER->play("NECO13", 1.0f);
 	}
 	break;
 
@@ -461,7 +467,7 @@ void neko::changeState(tagNekoState::ENUM state)
 		hitbox->init(30, vector2D(_centerPos.x + 80, _centerPos.y + 50), vector2D(50, 60), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
 
-		
+		SOUNDMANAGER->play("NECO13", 1.0f);
 	}
 	break;
 	case LEFT_SIT_ATTACK:						//왼쪽 앉아 약공
@@ -473,6 +479,7 @@ void neko::changeState(tagNekoState::ENUM state)
 		hitbox->init(30, vector2D(_centerPos.x - 80, _centerPos.y + 50), vector2D(50, 60), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
 
+		SOUNDMANAGER->play("NECO13", 1.0f);
 	}
 	break;
 
@@ -618,6 +625,8 @@ void neko::changeState(tagNekoState::ENUM state)
 		this->setAnimation("nekoRightFly");
 		_isJump = false;
 		_jumpPower = 0;
+
+		SOUNDMANAGER->play("NECO60", 1.0f);
 	}
 	break;
 	case LEFT_FLY:
@@ -625,6 +634,8 @@ void neko::changeState(tagNekoState::ENUM state)
 		this->setAnimation("nekoLeftFly");
 		_isJump = false;
 		_jumpPower = 0;
+
+		SOUNDMANAGER->play("NECO60", 1.0f);
 	}
 	break;
 
@@ -1369,6 +1380,8 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 			this->changeState(RIGHT_FALL);
 			_isJump = true;
 			_saveLastKey = END;
+
+			SOUNDMANAGER->stop("NECO60");
 		}
 	}
 	break;
@@ -1383,6 +1396,8 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 			this->changeState(LEFT_FALL);
 			_isJump = true;
 			_saveLastKey = END;
+
+			SOUNDMANAGER->stop("NECO60");
 		}
 	}
 	break;

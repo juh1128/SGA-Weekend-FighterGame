@@ -15,10 +15,10 @@ HRESULT Mauru::init(vector2D pos)
 	IMAGEMANAGER->addFrameImage("Mauru_dash_stop", "resource/yoonsam/Mauru/Mauru_dash_stop_.bmp", 650, 230, 5, 2, true);
 	IMAGEMANAGER->addFrameImage("Mauru_back_move", "resource/yoonsam/Mauru/Mauru_back_move_.bmp", 660, 560, 6, 4, true);
 	IMAGEMANAGER->addFrameImage("Mauru_back_dash", "resource/yoonsam/Mauru/Mauru_back_dash_.bmp", 520, 460, 6, 4, true);
-	IMAGEMANAGER->addFrameImage("Mauru_punch_w", "resource/yoonsam/Mauru/Mauru_punch_w_.bmp", 480, 260, 3, 2, true);
+	IMAGEMANAGER->addFrameImage("Mauru_punch_w", "resource/yoonsam/Mauru/Mauru_punch_w_.bmp", 645, 260, 3, 2, true);
 	IMAGEMANAGER->addFrameImage("Mauru_punch_s", "resource/yoonsam/Mauru/Mauru_punch_s_.bmp", 800, 600, 5, 4, true);
 	IMAGEMANAGER->addFrameImage("Mauru_move_attack", "resource/yoonsam/Mauru/Mauru_move_attack_.bmp", 1540, 580, 7, 4, true);
-	IMAGEMANAGER->addFrameImage("Mauru_kick_w", "resource/yoonsam/Mauru/Mauru_kick_w_.bmp", 520, 280, 4, 2, true);
+	IMAGEMANAGER->addFrameImage("Mauru_kick_w", "resource/yoonsam/Mauru/Mauru_kick_w_.bmp", 680, 280, 4, 2, true);
 	IMAGEMANAGER->addFrameImage("Mauru_kick_s", "resource/yoonsam/Mauru/Mauru_kick_s_.bmp", 850, 560, 5, 4, true);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_jump_Right", "Mauru_jump", 0, 8, 7, false, false);
@@ -59,16 +59,19 @@ HRESULT Mauru::init(vector2D pos)
 	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_jump_Right", "Mauru_jump",0, 8, 7, false, false);
 	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_jump_Left", "Mauru_jump", 17, 9, 7, false, false);
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_punch_w_Right", "Mauru_punch_w", 0, 2, 20, false, false);
-	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_punch_w_Left", "Mauru_punch_w", 5, 3, 20, false, false);
-	KEYANIMANAGER->setCollisionRect("Mauru_punch_w_Right", RectMake(10, 10,  90, 120));
-	KEYANIMANAGER->setCollisionRect("Mauru_punch_w_Left", RectMake(10, 10, 90, 120));
+	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_landing_Right", "Mauru_landing", 0, 9, 7, false, false);
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_punch_w_Right", "Mauru_punch_w", 0, 2, 15, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_punch_w_Left", "Mauru_punch_w", 5, 3, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("Mauru_punch_w_Right", RectMake(55, 10,  90, 120));
+	KEYANIMANAGER->setCollisionRect("Mauru_punch_w_Left", RectMake(55, 10, 90, 120));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_punch_s_Right", "Mauru_punch_s", 0, 9, 20, false, false);
 	//KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_punch_s_Left","Mauru_punch_s",)
 	KEYANIMANAGER->setCollisionRect("Mauru_punch_s_Right", RectMake(10, 10, 90, 120));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_kick_w_Right", "Mauru_kick_w", 0, 3, 20, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_kick_w_Right", "Mauru_kick_w", 0, 3, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("Mauru_kick_w_Right", RectMake(10, 10, 90, 125));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_kick_s_Right", "Mauru_kick_s", 0, 9, 20, false, false);
 
@@ -79,7 +82,7 @@ HRESULT Mauru::init(vector2D pos)
 
 
 
-
+//------------------------------------------------------------------------------------------------------------------
 
 	character::init("Mauru", pos, "Mauru_idle_Right");
 	this->changeState(MauruState::RIGHT_IDLE);
@@ -95,10 +98,10 @@ HRESULT Mauru::init(vector2D pos)
 	int command[2] = { key::RIGHT, key::RIGHT };
 	this->addCommand(command, 2, "dash");
 
-	//this->addCallback("dash", [this](tagMessage msg)
-	//{
-	//	this->Dash();
-	//});
+	this->addCallback("dash", [this](tagMessage msg)
+	{
+		this->Dash();
+	});
 
 	this->setStatus(300, 10);
 	
@@ -165,6 +168,7 @@ void Mauru::changeState(MauruState::Enum state)
 	case MauruState::RIGHT_JUMP:
 	{
 		this->setAnimation("Mauru_jump_Right");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0,MauruState::RIGHT_LANDING));
 		jump(30);
 	}
 	break; 
@@ -175,9 +179,17 @@ void Mauru::changeState(MauruState::Enum state)
 	}
 	break;
 
+	case MauruState::RIGHT_LANDING:
+	{
+		this->setAnimation("Mauru_landing_Right");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, MauruState::RIGHT_IDLE));
+	}
+	break; 
+
 	case MauruState::RIGHT_PUNCH_W :
 	{
 		this->setAnimation("Mauru_punch_w_Right");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, MauruState::RIGHT_IDLE));
 	}
 	break; 
 
@@ -196,12 +208,19 @@ void Mauru::changeState(MauruState::Enum state)
 	case MauruState::RIGHT_KICK_W:
 	{
 		this->setAnimation("Mauru_kick_w_Right");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, MauruState::RIGHT_IDLE));
 	}
 	break;
 
 	case MauruState::RIGHT_KICK_S:
 	{
 		this->setAnimation("Mauru_kick_s_Right");
+	}
+	break; 
+
+	case MauruState::RIGHT_DASH:
+	{
+		this->setAnimation("Mauru_dash_Right");
 	}
 	break; 
 
@@ -346,10 +365,7 @@ void Mauru::stateUpdate(MauruState::Enum state)
 
 		case MauruState::RIGHT_PUNCH_W:
 		{
-			if (KEYMANAGER->isOnceKeyUp(keyList[key::ATTACK]))
-			{
-				changeState(MauruState::RIGHT_IDLE);
-			}
+			
 		}
 		break;
 
@@ -361,8 +377,23 @@ void Mauru::stateUpdate(MauruState::Enum state)
 			}
 		}
 		break; 
+		
+		case MauruState::RIGHT_KICK_W:
+		{
 
+		}
+		break; 
+
+		case MauruState::RIGHT_DASH:
+		{
+			_pos.x += 10; 
+		}
 	}
+}
+
+void Mauru::Dash()
+{
+	cout << "달리는중 " << endl; 
 }
 
 //_enemy -> something  ;;; 
