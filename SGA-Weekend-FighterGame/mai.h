@@ -71,7 +71,13 @@ public:
 	void update();
 	void render();
 
-	void stateUpdate(state);
-	void changeState(state);
+
+	void skill1();
+	void skill2();
+	void skill3();
+
+	void stateUpdate(MAI::state state);
+	void changeState(MAI::state state);
+
 };
 

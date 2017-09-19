@@ -25,7 +25,8 @@ namespace kimState
 		A,
 		B,
 		C,
-		D
+		D,
+		HIT
 	};
 }
 namespace LEVER
@@ -62,4 +63,5 @@ public:
 
 	void leftDouble(void);
 	void rightDouble(void);
+	void hit(void);
 };

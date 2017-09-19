@@ -3,9 +3,6 @@
 #include "playGround.h"
 
 
-//=====================================
-//버그노트// changeState 실행과 동시에 깨짐
-//=====================================
 HRESULT mai::init(vector2D pos)
 {
 	//이미지와 애니메이션 셋업
@@ -60,9 +57,9 @@ void mai::update()
 void mai::render()	
 {
 	character::render();
-	TCHAR str[128];
-	sprintf(str, TEXT("status:%d"), _state);
-	TextOut(getMemDC(), 0, 100, str, strlen(str));
+	//TCHAR str[128];
+	//sprintf(str, TEXT("status:%d"), _pos.x);
+	//TextOut(getMemDC(), 0, 100, str, strlen(str));
 
 }
 
@@ -178,12 +175,56 @@ void mai::stateUpdate(state)
 	case MAI::RIGHT_DAMAGED:
 		break;
 	case MAI::LEFT_JUMP_LEFT_MOVE:
+	{
+		if (_pos.y >= GROUND_LINE)
+		{
+			_pos.y = GROUND_LINE;
+			setAnimation("maiLeftIdle");
+			_state = LEFT_STOP;
+		}
+		_gravity += GRAVITYACCEL;
+		_pos.y -= JUMPPOWER - _gravity;
+		_pos.x -= MOVESPEED;
+	}
 		break;
 	case MAI::RIGHT_JUMP_LFET_MOVE:
+	{
+		if (_pos.y >= GROUND_LINE)
+		{
+			_pos.y = GROUND_LINE;
+			setAnimation("maiRightIdle");
+			_state = RIGHT_STOP;
+		}
+		_gravity += GRAVITYACCEL;
+		_pos.y -= JUMPPOWER - _gravity;
+		_pos.x -= MOVESPEED;
+	}
 		break;
 	case MAI::LEFT_JUMP_RIGHT_MOVE:
+	{
+		if (_pos.y >= GROUND_LINE)
+		{
+			_pos.y = GROUND_LINE;
+			setAnimation("maiLeftIdle");
+			_state = LEFT_STOP;
+		}
+		_gravity += GRAVITYACCEL;
+		_pos.y -= JUMPPOWER - _gravity;
+		_pos.x += MOVESPEED;
+	}
 		break;
 	case MAI::RIGHT_JUMP_RIGHT_MOVE:
+	{
+		if (_pos.y >= GROUND_LINE)
+		{
+			_pos.y = GROUND_LINE;
+			setAnimation("maiRightIdle");
+			_state = RIGHT_STOP;
+		}
+		_gravity += GRAVITYACCEL;
+		_pos.y -= JUMPPOWER - _gravity;
+		_pos.x += MOVESPEED;
+	}
 		break;
 	case MAI::STATE_END:
 		break;
