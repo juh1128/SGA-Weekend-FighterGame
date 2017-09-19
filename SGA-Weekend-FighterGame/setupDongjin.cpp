@@ -68,96 +68,113 @@ void playGround::setupDongjin()
 	IMAGEMANAGER->addFrameImage("ioriYagamiSkillEffect5", "resource/Dongjin/스킬3임팩트.bmp", 0, 0, 16332, 1280, 19, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSkillEffect6", "resource/Dongjin/스킬3임팩트.bmp", 0, 0, 16332, 1280, 19, 1, true, RGB(255, 0, 255));
 
+	//맞는모션
+	IMAGEMANAGER->addFrameImage("ioriYagamiHit", "resource/Dongjin/오른쪽상단기맞음.bmp", 0, 0, 1452, 400, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiHit2", "resource/Dongjin/왼쪽상단기맞음.bmp", 0, 0, 1452, 400, 5, 1, true, RGB(255, 0, 255));
+
+	//죽는당
+	IMAGEMANAGER->addFrameImage("ioriYagamiDie", "resource/Dongjin/오른쪽상죽음.bmp", 0, 0, 1793, 400, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiDie2", "resource/Dongjin/왼쪽상죽음.bmp", 0, 0, 1793, 400, 4, 1, true, RGB(255, 0, 255));
+
+
 	//예시
 	//KEYANIMANAGER->addCoordinateFrameAnimation("테스트_이동_오른쪽", "테스트_이동", 0, 9, 15, false, true);
 	//KEYANIMANAGER->setCollisionRect("테스트_이동_오른쪽", RectMakeCenter(20, 10, 30, 67));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_멈춤", "ioriYagamiStop", 0, 8, 10, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_멈춤", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_멈춤", RectMakeCenter(150, 200, 300, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_멈춤", "ioriYagamiStop2", 0, 8, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_멈춤", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_멈춤", RectMakeCenter(150, 200, 300, 400));
+
+
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_이동", "ioriYagamiMove", 0, 9, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_이동", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_이동", RectMakeCenter(120, 200, 250, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_이동", "ioriYagamiMove2", 0, 9, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_이동", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_이동", RectMakeCenter(120, 200, 250, 400));
+
+
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_뒤_이동", "ioriYagamiBackMove", 0, 8, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_뒤_이동", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_뒤_이동", RectMakeCenter(120, 200, 250, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_뒤_이동", "ioriYagamiBackMove2", 0, 8, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_뒤_이동", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_뒤_이동", RectMakeCenter(120, 200, 250, 400));
+
+
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉음", "ioriYagamiSit", 0, 6, 10, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉음", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉음", RectMakeCenter(130, 250, 280, 300));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_앉음", "ioriYagamiSit2", 0, 6, 10, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_앉음", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_앉음", RectMakeCenter(130, 250, 280, 300));
+
+
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_점프", "ioriYagamiJump", 0, 6, 10, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_점프", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_점프", RectMakeCenter(150, 180, 200, 350));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_점프", "ioriYagamiJump2", 0, 6, 10, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_점프", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_점프", RectMakeCenter(150, 180, 200, 350));
+
+
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_약손", "ioriYagamiAttackA", 0, 2, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_약손", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_약손", RectMakeCenter(200, 200, 390, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_약발", "ioriYagamiAttackB", 0, 6, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_약발", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_약발", RectMakeCenter(175, 200, 350, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_강손", "ioriYagamiAttackC", 8, 0, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_강손", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_강손", RectMakeCenter(200, 200, 400, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_강발", "ioriYagamiAttackD", 8, 0, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_강발", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_강발", RectMakeCenter(200, 200, 400, 400));
+
+
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_약손", "ioriYagamiAttackA2", 0, 2, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_약손", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_약손", RectMakeCenter(200, 200, 390, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_약발", "ioriYagamiAttackB2", 0, 6, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_약발", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_약발", RectMakeCenter(175, 200, 350, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_강손", "ioriYagamiAttackC2", 8, 0, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_강손", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_강손", RectMakeCenter(200, 200, 400, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_강발", "ioriYagamiAttackD2", 8, 0, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_강발", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_강발", RectMakeCenter(200, 200, 400, 400));
+
+
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉은_약손", "ioriYagamiSitAttackA", 4, 0, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_약손", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_약손", RectMakeCenter(200, 125, 400, 250));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉은_약발", "ioriYagamiSitAttackB", 0, 5, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_약발", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_약발", RectMakeCenter(225, 120, 425, 250));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉은_강손", "ioriYagamiSitAttackC", 0, 8, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_강손", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉은_강손", "ioriYagamiSitAttackC", 8, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_강손", RectMakeCenter(170, 200, 335, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_앉은_강발", "ioriYagamiSitAttackD", 5, 0, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_강발", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_앉은_강발", RectMakeCenter(230, 150, 435, 310));
+
+
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_앉은_약손", "ioriYagamiSitAttackA2", 4, 0, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_앉은_약손", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_앉은_약손", RectMakeCenter(200, 125, 400, 250));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_완쪽_앉은_약발", "ioriYagamiSitAttackB2", 0, 5, 15, false, true);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_앉은_약발", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_앉은_약발", "ioriYagamiSitAttackB2", 0, 5, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_앉은_약발", RectMakeCenter(225, 120, 425, 250));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_앉은_강손", "ioriYagamiSitAttackC2", 0, 8, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_앉은_강손", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_앉은_강손", RectMakeCenter(170, 200, 335, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_앉은_강발", "ioriYagamiSitAttackD2", 5, 0, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_앉은_강발", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_앉은_강발", RectMakeCenter(230, 150, 435, 310));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_스킬", "ioriYagamiSkill", 17, 0, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_스킬", RectMakeCenter(150, 200, 200, 400));
-
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_스킬2", "ioriYagamiSkill3", 7, 0, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_스킬2", RectMakeCenter(150, 200, 200, 400));
-
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_스킬3", "ioriYagamiSkill5", 16, 0, 15, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_스킬3", RectMakeCenter(150, 200, 200, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_대쉬", "ioriYagamiDash", 0, 9, 15, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_대쉬", RectMakeCenter(150, 200, 200, 400));
@@ -165,27 +182,67 @@ void playGround::setupDongjin()
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_대쉬", "ioriYagamiDash2", 0, 9, 15, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_대쉬", RectMakeCenter(150, 200, 200, 400));
 
+
+
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_점프_약손", "ioriYagamiJumpAttackA", 0, 1, 5, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_점프_약손", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_점프_약손", RectMakeCenter(190, 170, 400, 310));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_점프_약발", "ioriYagamiJumpAttackB", 1, 0, 5, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_점프_약발", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_점프_약발", "ioriYagamiJumpAttackB", 1, 0, 10, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_점프_약발", RectMakeCenter(250, 170, 485, 310));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_점프_강손", "ioriYagamiJumpAttackC", 3, 0, 10, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_점프_강손", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_점프_강손", "ioriYagamiJumpAttackC", 3, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_점프_강손", RectMakeCenter(175, 200, 350, 400));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_점프_강발", "ioriYagamiJumpAttackD", 4, 0, 10, false, false);
-	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_점프_강발", RectMakeCenter(150, 200, 200, 400));
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_점프_강발", "ioriYagamiJumpAttackD", 4, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_점프_강발", RectMakeCenter(225, 200, 400, 400));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_점프_약손", "ioriYagamiJumpAttackA2", 0, 1, 5, false, false);
+
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_점프_약손", "ioriYagamiJumpAttackA2", 0, 2, 5, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_점프_약손", RectMakeCenter(150, 200, 200, 400));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_점프_약발", "ioriYagamiJumpAttackB2", 1, 0, 5, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_점프_약발", "ioriYagamiJumpAttackB2", 0, 2, 5, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_점프_약발", RectMakeCenter(150, 200, 200, 400));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_점프_강손", "ioriYagamiJumpAttackC2", 3, 0, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_점프_강손", "ioriYagamiJumpAttackC2", 0, 3, 10, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_점프_강손", RectMakeCenter(150, 200, 200, 400));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_점프_강발", "ioriYagamiJumpAttackD2", 4, 0, 10, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_점프_강발", "ioriYagamiJumpAttackD2", 0, 4, 10, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_점프_강발", RectMakeCenter(150, 200, 200, 400));
+
+
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_스킬", "ioriYagamiSkill", 17, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_스킬", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_스킬", "ioriYagamiSkill2", 0, 17, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_스킬", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_스킬2", "ioriYagamiSkill3", 7, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_스킬2", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_스킬2", "ioriYagamiSkill4", 7, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_스킬2", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_스킬3", "ioriYagamiSkill5", 16, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_스킬3", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_스킬3", "ioriYagamiSkill6", 16, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_스킬3", RectMakeCenter(150, 200, 200, 400));
+
+
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_맞음", "ioriYagamiHit", 4, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_맞음", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_맞음", "ioriYagamiHit2", 0, 4, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_맞음", RectMakeCenter(150, 200, 200, 400));
+
+
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_죽음", "ioriYagamiDie", 3, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_죽음", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_죽음", "ioriYagamiDie2", 0, 3, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_죽음", RectMakeCenter(150, 200, 200, 400));
 }

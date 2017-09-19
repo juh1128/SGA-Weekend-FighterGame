@@ -1,5 +1,6 @@
 #pragma once
 #include "character.h"
+#include "effectFire.h"
 
 
 namespace tagIoriState
@@ -19,7 +20,9 @@ namespace tagIoriState
 		JUMP_ATTAK, JUMP_KICK,
 		JUMP_STRONG_ATTAK, JUMP_STRONG_KICK,
 		SKILL1, SKILL2,
-		SKILL3
+		SKILL3,
+		RIGHT_HIT, LEFT_HIT,
+		RIGHT_DIE, LEFT_DIE
 	};
 }
 
@@ -39,9 +42,10 @@ private:
 	float _startX;
 	float _startY;
 
-	bool _isEnemyRight;
+	bool _isEnemyDirection;
 
 	playGround* _playGround;
+	effectFire* _effect;
 
 	bool _isJumping;
 
@@ -54,8 +58,14 @@ public:
 	void update();
 	void render();
 
-	
+	void skill();
+	void skill2();
+	void skill3();
 	void stateUpdate(tagIoriState::Enum _state);
 	void changeState(tagIoriState::Enum _state);
+
+	void hit(tagMessage msg);
+	void die(tagMessage msg);
+
 };
 

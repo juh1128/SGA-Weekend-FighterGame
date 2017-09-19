@@ -288,6 +288,12 @@
     <ClInclude Include="athena.h">
       <Filter>playGround\memberFolder\siyeong</Filter>
     </ClInclude>
+    <ClInclude Include="athenaeffect.h">
+      <Filter>playGround\memberFolder\siyeong</Filter>
+    </ClInclude>
+    <ClInclude Include="iorieffect.h">
+      <Filter>playGround\memberFolder\dongjin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -460,6 +466,12 @@
     </ClCompile>
     <ClCompile Include="athena.cpp">
       <Filter>playGround\memberFolder\siyeong</Filter>
+    </ClCompile>
+    <ClCompile Include="athenaeffect.cpp">
+      <Filter>playGround\memberFolder\siyeong</Filter>
+    </ClCompile>
+    <ClCompile Include="iorieffect.cpp">
+      <Filter>playGround\memberFolder\dongjin</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

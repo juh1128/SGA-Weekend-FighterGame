@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="animation.h" />
     <ClInclude Include="athena.h" />
+    <ClInclude Include="athenaeffect.h" />
     <ClInclude Include="attackHitbox.h" />
     <ClInclude Include="callbackTest.h" />
     <ClInclude Include="cameraManager.h" />
@@ -91,6 +92,7 @@
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
+    <ClInclude Include="iorieffect.h" />
     <ClInclude Include="ioriYagami.h" />
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
@@ -129,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="athena.cpp" />
+    <ClCompile Include="athenaeffect.cpp" />
     <ClCompile Include="attackHitbox.cpp" />
     <ClCompile Include="callbackTest.cpp" />
     <ClCompile Include="cameraManager.cpp" />
@@ -140,6 +143,7 @@
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
+    <ClCompile Include="iorieffect.cpp" />
     <ClCompile Include="ioriYagami.cpp" />
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
