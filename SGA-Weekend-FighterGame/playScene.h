@@ -4,9 +4,19 @@
 class character;
 class progressBar;
 
+namespace playSceneState
+{
+	enum Enum
+	{
+		PLAY, END
+	};
+}
+
 class playScene : public sceneBase
 {
 private:
+	playSceneState::Enum _state;
+
 	//¹è°æ
 	image*				_background;
 	animation*			_backgroundAnimation;

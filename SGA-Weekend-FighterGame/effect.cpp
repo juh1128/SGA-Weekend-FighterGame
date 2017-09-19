@@ -8,6 +8,8 @@ effect::effect()
 	_isRunning(false),
 	_x(0), _y(0)
 {
+	_scale.x = 1.0f;
+	_scale.y = 1.0f;
 }
 
 
@@ -53,16 +55,15 @@ void effect::render(void)
 
 	vector2D renderPos = CAMERAMANAGER->getRelativeVector2D(PointMake(_x,_y));
 
-	float radW = (_effectAnimation->getFrameWidth() * _scale.x) / 2;
-	float radH = (_effectAnimation->getFrameHeight() * _scale.y) / 2;
-
 	if (_scale.x == 1.0f && _scale.y == 1.0f)
 	{
-		_effectImage->aniRender(getMemDC(), renderPos.x - radW, renderPos.y - radH, _effectAnimation);
+		_effectImage->aniRender(getMemDC(), renderPos.x, renderPos.y, _effectAnimation);
 	}
 	else
 	{
-		_effectImage->scaleAniRender(getMemDC(), renderPos.x - radW, renderPos.y - radH, _effectAnimation, radW*2, radH*2);
+		float width = (_effectAnimation->getFrameWidth() * _scale.x);
+		float height = (_effectAnimation->getFrameHeight() * _scale.y);
+		_effectImage->scaleAniRender(getMemDC(), renderPos.x, renderPos.y, _effectAnimation, width, height);
 	}
 }
 
@@ -71,8 +72,8 @@ void effect::startEffect(int x, int y)
 {
 	if (!_effectImage || !_effectAnimation) return;
 
-	_x = x - (_effectAnimation->getFrameWidth() / 2);
-	_y = y - (_effectAnimation->getFrameHeight() / 2);
+	_x = x - (_effectAnimation->getFrameWidth()* _scale.x) / 2;
+	_y = y - (_effectAnimation->getFrameHeight()* _scale.y) / 2;
 
 	_isRunning = true;
 	_effectAnimation->start();
