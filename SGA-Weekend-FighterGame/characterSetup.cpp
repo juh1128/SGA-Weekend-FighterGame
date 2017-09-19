@@ -41,8 +41,8 @@ character* getCharacter(int id, vector2D pos)
 			((neko*)newCharacter)->init(vector2D(pos.x, 500));
 		break;
 		case characterName::sol:
-			newCharacter = new testCharacter;
-			((testCharacter*)newCharacter)->init(pos);
+			newCharacter = new solBadGuy;
+			((solBadGuy*)newCharacter)->init(pos);
 		break;
 		case characterName::athena:
 			newCharacter = new athena;

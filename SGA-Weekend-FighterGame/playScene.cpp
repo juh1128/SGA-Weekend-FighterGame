@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "playScene.h"
+#include "selectScene.h"
 #include "progressBar.h"
 #include "character.h"
 
@@ -11,6 +12,7 @@ HRESULT	playScene::init()
 	// - 인터페이스
 	IMAGEMANAGER->addImage("HP바_백", "resource/yuhoon/ui/hpBarBack.bmp", 53, 5, true);
 	IMAGEMANAGER->addImage("HP바_프론트", "resource/yuhoon/ui/hpBarFront.bmp", 53, 5, true);
+	IMAGEMANAGER->addImage("KO", "resource/yuhoon/KO.bmp", 507, 219, true);
 
 	//초기 오브젝트 생성
 	_background = IMAGEMANAGER->addFrameImage("맵", "resource/yuhoon/background2.bmp", 914, 3072, 1, 8, true);
@@ -38,6 +40,13 @@ HRESULT	playScene::init()
 
 	//플레이어 0, 플레이어 1 셋팅
 	characterSetup();
+
+	_state = playSceneState::PLAY;
+
+	//게임오버 메시지 콜백
+	this->addCallback("gameover", [this](tagMessage msg) {
+		this->gameOver();
+	});
 
 
 	return S_OK;
@@ -99,7 +108,15 @@ void playScene::update()
 		_cameraTarget->_pos = _cameraTarget->_pos + dir.normalize()*5.0f;
 	}
 
-	CAMERAMANAGER->updateCamera();
+
+	if (_state == playSceneState::END)
+	{
+		_gameResetTimer -= TIMEMANAGER->getElapsedTime();
+		if (_gameResetTimer <= 0)
+		{
+			SCENEMANAGER->changeScene(new selectScene);
+		}
+	}
 
 }
 void playScene::render()		
@@ -111,4 +128,16 @@ void playScene::render()
 
 	_progressBar[0]->render();
 	_progressBar[1]->render();
+
+	if (_state == playSceneState::END)
+	{
+		vector2D renderPos = vector2D(WINSIZEX / 2 - 253, WINSIZEY / 2 - 110);
+		IMAGEMANAGER->findImage("KO")->render(getMemDC(), renderPos.x, renderPos.y);
+	}
+}
+
+void playScene::gameOver()
+{
+	_state = playSceneState::END;
+	_gameResetTimer = 5.0f;
 }
