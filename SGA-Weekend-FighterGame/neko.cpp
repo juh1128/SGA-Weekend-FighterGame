@@ -22,7 +22,10 @@ HRESULT neko::init(vector2D pos)
 	EFFECTMANAGER->addEffect("skillEffect", "resource/soonwoo/neko/skillEffect.bmp", 480, 80, 80, 80, 10, 10, vector2D(5.0, 5.0));
 	//사운드 로드
 	SOUNDMANAGER->addSound("sitKick", "resource/soonwoo/neko/sitKick.ogg", false, false);
-
+	SOUNDMANAGER->addSound("nekoDead", "resource/soonwoo/neko/nekoDead.ogg", false, false);
+	SOUNDMANAGER->addSound("start", "resource/soonwoo/neko/start.ogg", false, false);
+	SOUNDMANAGER->addSound("skill", "resource/soonwoo/neko/skill.ogg", false, false);
+	SOUNDMANAGER->addSound("NECO05", "resource/soonwoo/neko/NECO05.ogg", false, false);
 	//키애니메니져 설정
 
 	//======================STOP======================
@@ -282,6 +285,9 @@ HRESULT neko::init(vector2D pos)
 	});
 
 
+	//사운드 재생
+	SOUNDMANAGER->play("start", 1.0f);
+
 	return S_OK;
 }
 
@@ -305,7 +311,7 @@ void neko::update()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F2))
 	{
-		EFFECTMANAGER->play("blockEffect", WINSIZEX/2 , WINSIZEY/2);
+		SOUNDMANAGER->play("NECO05",1.0f);
 	}
 
 }
@@ -589,6 +595,7 @@ void neko::changeState(tagNekoState::ENUM state)
 		_effect = effect;
 
 		EFFECTMANAGER->play("skillEffect", _pos.x , _centerPos.y);
+		SOUNDMANAGER->play("skill", 1.0f);
 	}
 	break;
 
@@ -602,6 +609,7 @@ void neko::changeState(tagNekoState::ENUM state)
 		_effect = effect;
 
 		EFFECTMANAGER->play("skillEffect", _pos.x - 20, _centerPos.y);
+		SOUNDMANAGER->play("skill", 1.0f);
 	}
 	break;
 
@@ -691,6 +699,8 @@ void neko::changeState(tagNekoState::ENUM state)
 		this->setJump();						//점프!
 		_jumpPower = 13.0;
 		this->setAnimation("nekoRightDing");
+
+		SOUNDMANAGER->play("nekoDead", 1.0f);
 	}
 	break;
 	case LEFT_DING:
@@ -698,6 +708,8 @@ void neko::changeState(tagNekoState::ENUM state)
 		this->setJump();						//점프!
 		_jumpPower = 13.0;
 		this->setAnimation("nekoLeftDing");
+
+		SOUNDMANAGER->play("nekoDead", 1.0f);
 	}
 	break;
 
@@ -1300,14 +1312,17 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 
 	case RIGHT_BEAM:
 	{
-		//공격랙트 생성 
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(1, vector2D(_centerPos.x + 600, _centerPos.y - 150), vector2D(1200, 200), _enemy, 0.1f);
-		WORLD->addObject(hitbox);
-
-
+		
 		if (_effect != NULL)
 		{
+			if (_effect->_frameX < 12)
+			{
+				//공격랙트 생성 
+				attackHitbox* hitbox = new attackHitbox;
+				hitbox->init(1, vector2D(_centerPos.x + 600, _centerPos.y - 150), vector2D(1200, 200), _enemy, 0.1f);
+				WORLD->addObject(hitbox);
+			}
+
 			if (_effect->_frameX >= _effect->_image->getMaxFrameX())
 			{
 				_effect->setDestroy();
@@ -1321,13 +1336,16 @@ void neko::stateUpdate(tagNekoState::ENUM state)
 
 	case LEFT_BEAM:
 	{
-		//공격랙트 생성 
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(1, vector2D(_centerPos.x - 600, _centerPos.y - 150), vector2D(1200, 200), _enemy, 0.1f);
-		WORLD->addObject(hitbox);
 
 		if (_effect != NULL)
 		{
+			if (_effect->_frameX < 12)
+			{
+				//공격랙트 생성 
+				attackHitbox* hitbox = new attackHitbox;
+				hitbox->init(1, vector2D(_centerPos.x - 600, _centerPos.y - 150), vector2D(1200, 200), _enemy, 0.1f);
+				WORLD->addObject(hitbox);
+			}
 			if (_effect->_frameX >= _effect->_image->getMaxFrameX())
 			{
 				_effect->setDestroy();
