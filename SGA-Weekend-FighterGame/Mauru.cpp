@@ -16,10 +16,10 @@ HRESULT Mauru::init(vector2D pos)
 	IMAGEMANAGER->addFrameImage("Mauru_back_move", "resource/yoonsam/Mauru/Mauru_back_move_.bmp", 660, 560, 6, 4, true);
 	IMAGEMANAGER->addFrameImage("Mauru_back_dash", "resource/yoonsam/Mauru/Mauru_back_dash_.bmp", 520, 460, 6, 4, true);
 	IMAGEMANAGER->addFrameImage("Mauru_punch_w", "resource/yoonsam/Mauru/Mauru_punch_w_.bmp", 645, 260, 3, 2, true);
-	IMAGEMANAGER->addFrameImage("Mauru_punch_s", "resource/yoonsam/Mauru/Mauru_punch_s_.bmp", 800, 600, 5, 4, true);
+	IMAGEMANAGER->addFrameImage("Mauru_punch_s", "resource/yoonsam/Mauru/Mauru_punch_s_.bmp", 1050, 660, 5, 4, true);
 	IMAGEMANAGER->addFrameImage("Mauru_move_attack", "resource/yoonsam/Mauru/Mauru_move_attack_.bmp", 1540, 580, 7, 4, true);
 	IMAGEMANAGER->addFrameImage("Mauru_kick_w", "resource/yoonsam/Mauru/Mauru_kick_w_.bmp", 680, 280, 4, 2, true);
-	IMAGEMANAGER->addFrameImage("Mauru_kick_s", "resource/yoonsam/Mauru/Mauru_kick_s_.bmp", 850, 560, 5, 4, true);
+	IMAGEMANAGER->addFrameImage("Mauru_kick_s", "resource/yoonsam/Mauru/Mauru_kick_s_.bmp", 1000, 560, 5, 4, true);
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_jump_Right", "Mauru_jump", 0, 8, 7, false, false);
 	//KEYANIMANAGER->setCollisionRect("Mauru_jump_Right", RectMakeCenter(10, 10, 80, 110));
@@ -68,7 +68,7 @@ HRESULT Mauru::init(vector2D pos)
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_punch_s_Right", "Mauru_punch_s", 0, 9, 20, false, false);
 	//KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_punch_s_Left","Mauru_punch_s",)
-	KEYANIMANAGER->setCollisionRect("Mauru_punch_s_Right", RectMake(10, 10, 90, 120));
+	KEYANIMANAGER->setCollisionRect("Mauru_punch_s_Right", RectMake(55, 10, 90, 137));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("Mauru_kick_w_Right", "Mauru_kick_w", 0, 3, 15, false, false);
 	KEYANIMANAGER->setCollisionRect("Mauru_kick_w_Right", RectMake(10, 10, 90, 125));
@@ -215,6 +215,7 @@ void Mauru::changeState(MauruState::Enum state)
 	case MauruState::RIGHT_KICK_S:
 	{
 		this->setAnimation("Mauru_kick_s_Right");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, MauruState::RIGHT_IDLE));
 	}
 	break; 
 
