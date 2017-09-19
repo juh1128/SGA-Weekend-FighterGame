@@ -90,6 +90,7 @@ public:
 	//캐릭터 스탯 설정
 	void setStatus(int maxHp, int damage)
 	{
+		maxHp = 1000; //너희가 뭘 넣든 캐릭터 체력은 전부 1000이 된다!!
 		_nowHp = maxHp;
 		_maxHp = maxHp;
 		_damage = damage;
