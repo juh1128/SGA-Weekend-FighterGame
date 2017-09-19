@@ -31,6 +31,8 @@ private:
 	//Ä«¸Þ¶ó
 	gameObject*			_cameraTarget;
 
+	float				_gameResetTimer;
+
 public:
 	playScene(int player1, int player2) 
 	{ 
@@ -47,4 +49,5 @@ public:
 	virtual void	render();
 
 	void characterSetup();
+	void gameOver();
 };
