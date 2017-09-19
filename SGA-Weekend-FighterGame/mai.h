@@ -24,9 +24,12 @@ namespace MAI
 		LEFT_BACK_DASH,RIGHT_BACK_DASH,							//뒤로대쉬
 		LEFT_KNOCK_DOWN,RIGHT_KNOCK_DOWN,						//쓰러짐
 		LEFT_KNOCK_DOWN_BACK_MOVE,RIGHT_KNOCK_DOWN_BACK_MOVE,	//쓰러진상태에서뒤로이동
+		LEFT_KNOCK_DOWN_FRONT_MOVE,RIGHT_KNOCK_DOWN_FRONT_MOVE,
 		LEFT_DAMAGED,RIGHT_DAMAGED,								//피해입음
 		LEFT_JUMP_LEFT_MOVE,RIGHT_JUMP_LFET_MOVE,				//점프상태에서 왼쪽으로 이동
 		LEFT_JUMP_RIGHT_MOVE,RIGHT_JUMP_RIGHT_MOVE,				//점프상태에서 오른쪽으로 이동
+		LEFT_DEAD,RIGHT_DEAD,									//죽음
+		LEFT_WIN,RIGHT_WIN,										//승리
 		STATE_END												//매무리
 
 	};
@@ -40,7 +43,10 @@ namespace MAI
 using namespace MAI;
 using namespace key;
 
-#define MOVESPEED 5
+#define MOVESPEED 5			//이동속도
+#define LASTKEY_TIME 0.2f	//키를가지고있는 시간
+#define JUMPPOWER 5			//점프파워
+#define GRAVITYACCEL 0.3f	//중력가속도
 
 class playGround;
 
@@ -59,7 +65,12 @@ private:
 
 	bool _isCharPos; //false == 왼쪽바라봄 true == 오른쪽바라봄
 
+	POINT _center;
+
 	Enum _lastKey;
+
+	float _lastKeyTime; //키를 가지고있는 시간
+	float _gravity; //중력
 
 
 public:
@@ -71,7 +82,11 @@ public:
 	void update();
 	void render();
 
-	void stateUpdate(state);
-	void changeState(state);
+	void skill1();
+	void skill2();
+	void skill3();
+
+	void stateUpdate(MAI::state _state);
+	void changeState(MAI::state _state);
 };
 

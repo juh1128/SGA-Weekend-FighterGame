@@ -1,14 +1,14 @@
 #pragma once
 #include "character.h"
 
-namespace tagSolBadGuy
+namespace solBadGuyState
 {
 	enum Enum
 	{
 		//일반 움직임
 		RIGHT_STOP, LEFT_STOP,
 		RIGHT_MOVE, LEFT_MOVE,
-		//RIGHT_BACK_MOVE, LEFT_BACK_MOVE,
+		RIGHT_BACKMOVE, LEFT_BACKMOVE,
 		RIGHT_RUN, LEFT_RUN,
 		RIGHT_SIT, LEFT_SIT,
 		RIGHT_JUMP, LEFT_JUMP,
@@ -28,6 +28,10 @@ namespace tagSolBadGuy
 		RIGHT_SKILL2, LEFT_SKILL2,
 		RIGHT_SKILL2_1, LEFT_SKILL2_1,
 		RIGHT_SPECIALSKILL, LEFT_SPECIALSKILL,
+		//막기, 맞기, 다이
+		RIGHT_BLOCK, LEFT_BLOCK,
+		RIGHT_HITED, LEFT_HITED,
+		RIGHT_DIE, LEFT_DIE
 	};
 }
 
@@ -36,7 +40,7 @@ class playGround;
 class solBadGuy : public character
 {
 private:
-	tagSolBadGuy::Enum _state;
+	solBadGuyState::Enum _state;
 
 public:
 	solBadGuy() {}
@@ -47,17 +51,22 @@ public:
 	void update();
 	void render();
 
-	void stateUpdate(tagSolBadGuy::Enum _state);
-	void changeState(tagSolBadGuy::Enum _state);
+	void stateUpdate(solBadGuyState::Enum state);
+	void changeState(solBadGuyState::Enum state);
 
 	void setupResource();
 
 	void skill1();
+
 	void skill2();
+
 	void skill3();
 
+
 	void hited();
+
 	void block();
+
 	void die();
 
 };

@@ -1,26 +1,27 @@
 #include "stdafx.h"
+#include "playGround.h"
 #include "solbadGuy.h"
 #include "attackHitbox.h"
 
-using namespace tagSolBadGuy;
+//using namespace tagSolBadGuy;
+
 
 HRESULT solBadGuy::init(vector2D pos)
 {
+
 	setupResource();
 
+	
 	//테스트 애니메이션은 setupYuhoon에서 만든다. (게임 시작 시 최초 1번만 만들어놓고 씀)
-	//character::init("위프", pos, "whip_attack_right");
-	//this->changeState(tagWhip::RIGHT_STOP);
+	character::init("솔배드", pos, "솔배드_이동_오른쪽");
+	this->changeState(solBadGuyState::RIGHT_MOVE);
 
 	this->setScale(4.0f, 4.0f);
-
-
-	_state = tagSolBadGuy::RIGHT_STOP;
 
 	//콜백 함수 등록
 	this->addCallback("changeState", [this](tagMessage msg)
 	{
-		this->changeState((tagSolBadGuy::Enum)msg.data);
+		this->changeState((solBadGuyState::Enum)msg.data);
 	});
 
 	//커맨드 등록
@@ -48,9 +49,24 @@ HRESULT solBadGuy::init(vector2D pos)
 	//캐릭터 초기 능력치 설정
 	this->setStatus(100, 10);
 
+	//캐릭터 피격 시 콜백 등록
+	this->addCallback("hited", [this](tagMessage msg)
+	{
+		this->hited();
+	});
+	this->addCallback("block", [this](tagMessage msg)
+	{
+		this->block();
+	});
+	this->addCallback("die", [this](tagMessage msg)
+	{
+		this->die();
+	});
+
 
 	return S_OK;
 }
+
 void solBadGuy::release()
 {
 	character::release();
@@ -60,236 +76,174 @@ void solBadGuy::update()
 {
 	character::update();
 
-	//상태 별 업데이트 처리
 	stateUpdate(_state);
 }
+
 void solBadGuy::render()
 {
 	character::render();
 }
-void solBadGuy::changeState(tagSolBadGuy::Enum state)
+void solBadGuy::changeState(solBadGuyState::Enum state)
 {
-	//상태 변경 시 처리해줄 것들이 있으면 여기서
-
-
-	///일반 움직임
-	//	RIGHT_STOP, LEFT_STOP,
-	//	RIGHT_MOVE, LEFT_MOVE,
-	//	//RIGHT_BACK_MOVE, LEFT_BACK_MOVE,
-	//	RIGHT_RUN, LEFT_RUN,
-	//	RIGHT_SIT, LEFT_SIT,
-	//	RIGHT_JUMP, LEFT_JUMP,
-	//	RIGHT_MOVEJUMP, LEFT_MOVEJUMP,
-	///일반 공격
-	//	//RIGHT_WEAKHAND, LEFT_WEAKHAND,
-	//	//RIGHT_WEAKFOOT, LEFT_WEAKFOOT,
-	//	//RIGHT_STRONGHAND, LEFT_STRONGHAND,
-	//	//RIGHT_STRONGFOOT, LEFT_STRONGFOOT,
-	//	//RIGHT_SITWEAKHAND, LEFT_SITWEAKHAND,
-	//	//RIGHT_SITWEAKFOOT, LEFT_SITWEAKFOOT,
-	//	//RIGHT_SITSTRONGHAND, LEFT_SITSTRONGHAND,
-	//	//RIGHT_SITSTRONGFOOT, LEFT_SITSTRONGFOOT,
-	//	//RIGHT_JUMPHAND, LEFT_JUMPFOOT,
-	///스킬, 필살기
-	//	RIGHT_SKILL1, LEFT_SKILL1,
-	//	RIGHT_SKILL2, LEFT_SKILL2,
-	//	RIGHT_SPECIALSKILL, LEFT_SPECIALSKILL,
 
 	switch (state)
 	{
 		///기본 동작
-	case RIGHT_STOP:
-	{			this->setAnimation("solBadGuy_stop_right");		}
+	case solBadGuyState::RIGHT_STOP:
+	{			this->setAnimation("솔배드_이동_오른쪽");		}
 	break;
 	//이동
-	case RIGHT_MOVE:
-	{			this->setAnimation("solBadGuy_move_right");		}
+	case solBadGuyState::RIGHT_MOVE:
+	{			this->setAnimation("솔배드_이동_오른쪽");		}
 	break;
-
-	//앉기
-	case RIGHT_SIT:
-	{			this->setAnimation("solBadGuy_sit_right");		}
+	//뒤로 이동
+	case solBadGuyState::RIGHT_BACKMOVE:
+	{
+		this->setAnimation("솔배드_이동_왼쪽");
+	}
 	break;
 	//점프
-	case RIGHT_JUMP:
+	case solBadGuyState::RIGHT_JUMP:
 	{
-		this->setAnimation("solBadGuy_jump_right");
+		this->setAnimation("솔배드_점프_오른쪽");
 		jump(32);
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, solBadGuyState::RIGHT_STOP));
 	}
 	break;
 	//달리기
-	case RIGHT_RUN:
-	{			this->setAnimation("solBadGuy_run_right");		}
+	case solBadGuyState::RIGHT_RUN:
+	{			this->setAnimation("솔배드_달리기_오른쪽");		}
 	break;
 
 	//무브점프
-	case RIGHT_MOVEJUMP:
-	{			this->setAnimation("solBadGuy_moveJump_right");		}
+	case solBadGuyState::RIGHT_MOVEJUMP:
+	{			this->setAnimation("솔배드_점프이동_오른쪽");		}
 	break;
 
 	//일반공격
-	case RIGHT_WEAKHAND:
+	case solBadGuyState::RIGHT_WEAKHAND:
 	{
-		this->setAnimation("solBadGuy_attack_right");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
+		this->setAnimation("솔배드_공격_오른쪽");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, solBadGuyState::RIGHT_STOP));
 
 		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x + 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
+		hitbox->init(30, vector2D(_pos.x + 250, _pos.y), vector2D(100, _pos.y), _enemy, 1.0f);
 		WORLD->addObject(hitbox);
 	}
 	break;
-	case RIGHT_WEAKFOOT:
+	case solBadGuyState::RIGHT_WEAKFOOT:
 	{
-		this->setAnimation("solBadGuy_kick_right");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
+		this->setAnimation("솔배드_발차기_오른쪽");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, solBadGuyState::RIGHT_STOP));
 		attackHitbox* hitbox = new attackHitbox;
 		hitbox->init(30, vector2D(_pos.x + 150, _pos.y), vector2D(150, 100), _enemy, 0.5f);
 		WORLD->addObject(hitbox);
 	}
 	break;
-	case RIGHT_STRONGHAND:
-	{
-		this->setAnimation("solBadGuy_strongAttack_right");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x + 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
-		WORLD->addObject(hitbox);
-	}
-	break;
-
-	case RIGHT_STRONGFOOT:
-	{
-		this->setAnimation("solBadGuy_strongKick_right");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x + 200, _pos.y - 100), vector2D(100, 100), _enemy, 0.5f);
-		WORLD->addObject(hitbox);
-	}
-	break;
-	case RIGHT_SITWEAKHAND:
-	{
-		this->setAnimation("solBadGuy_sitAttack_right");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_SIT));
-
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x, _pos.y), vector2D(100, 100), _enemy, 0.5f);
-		WORLD->addObject(hitbox);
-
-	}
-	break;
-	case RIGHT_SITWEAKFOOT:
-	{
-		this->setAnimation("solBadGuy_sitKick_right");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_SIT));
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x, _pos.y), vector2D(100, 100), _enemy, 0.5f);
-		WORLD->addObject(hitbox);
-	}
-	break;
-	case RIGHT_SITSTRONGHAND:
-	{
-		this->setAnimation("solBadGuy_sitStrongAttack_right");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_SIT));
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x, _pos.y), vector2D(100, 100), _enemy, 0.5f);
-		WORLD->addObject(hitbox);
-	}
-	break;
-	case RIGHT_SITSTRONGFOOT:
-	{
-		this->setAnimation("solBadGuy_sitStrongKick_right");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_SIT));
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x, _pos.y), vector2D(100, 100), _enemy, 0.5f);
-		WORLD->addObject(hitbox);
-	}
-	break;
-	case RIGHT_SKILL1:
-	{
-		this->setAnimation("위프_스킬1_오른쪽");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x + 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
-		WORLD->addObject(hitbox);
-	}
-	break;
-	case RIGHT_SKILL2:
-	{
-		this->setAnimation("위프_스킬2_오른쪽");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_SKILL2_1));
-	}
-	break;
-	case RIGHT_SKILL2_1:
-	{
-		_pos.x += 500;
-		_pos.y -= 200;
-		this->setAnimation("위프_스킬2_오른쪽2");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x, _pos.y + 350), vector2D(200, 150), _enemy, 0.5f);
-		WORLD->addObject(hitbox);
-	}
-	break;
-	case RIGHT_SPECIALSKILL:
-	{
-		this->setAnimation("위프_필살기_오른쪽");
-		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
-		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_pos.x, _pos.y + 100), vector2D(100, 200), _enemy, 0.5f);
-		WORLD->addObject(hitbox);
-	}
+	//case solBadGuyState::RIGHT_SKILL1:
+	//{
+	//	this->setAnimation("위프_스킬1_오른쪽");
+	//	this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, solBadGuyState::RIGHT_STOP));
+	//	attackHitbox* hitbox = new attackHitbox;
+	//	hitbox->init(30, vector2D(_pos.x + 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
+	//	WORLD->addObject(hitbox);
+	//}
+	//break;
+	//case solBadGuyState::RIGHT_SKILL2:
+	//{
+	//	this->setAnimation("위프_스킬2_오른쪽");
+	//	this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, solBadGuyState::RIGHT_SKILL2_1));
+	//}
+	//break;
+	//case solBadGuyState::RIGHT_SKILL2_1:
+	//{
+	//	_pos.x += 500;
+	//	_pos.y -= 200;
+	//	this->setAnimation("위프_스킬2_오른쪽2");
+	//	this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, solBadGuyState::RIGHT_STOP));
+	//	attackHitbox* hitbox = new attackHitbox;
+	//	hitbox->init(30, vector2D(_pos.x, _pos.y + 350), vector2D(200, 150), _enemy, 0.5f);
+	//	WORLD->addObject(hitbox);
+	//}
+	//break;
+	//case solBadGuyState::RIGHT_SPECIALSKILL:
+	//{
+	//	this->setAnimation("위프_필살기_오른쪽");
+	//	this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, solBadGuyState::RIGHT_STOP));
+	//	attackHitbox* hitbox = new attackHitbox;
+	//	hitbox->init(30, vector2D(_pos.x, _pos.y + 100), vector2D(100, 200), _enemy, 0.5f);
+	//	WORLD->addObject(hitbox);
+	//}
+	//break;
+	//case solBadGuyState::RIGHT_BLOCK:
+	//{
+	//	this->setAnimation("위프_막기_오른쪽");
+	//}
+	//break;
+	//case solBadGuyState::RIGHT_HITED:
+	//{
+	//	this->setAnimation("위프_맞기_오른쪽");
+	//}
+	//break;
+	//case solBadGuyState::RIGHT_DIE:
+	//{
+	//	this->setAnimation("위프_다이_오른쪽");
+	//}
+	//break;
+	//}
 	break;
 	}
-
 	_state = state;
 }
 
-void solBadGuy::stateUpdate(tagSolBadGuy::Enum state)
+void solBadGuy::stateUpdate(solBadGuyState::Enum state)
 {
 
 	switch (state)
 	{
-	case RIGHT_STOP:
+	case solBadGuyState::RIGHT_STOP:
 	{
 
 		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
 		{
-			this->changeState(RIGHT_MOVE);
+			this->changeState(solBadGuyState::RIGHT_MOVE);
 		}
 		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
 		{
-			this->changeState(LEFT_MOVE);
+			this->changeState(solBadGuyState::RIGHT_BACKMOVE);
 		}
 		if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
 		{
-			changeState(RIGHT_SIT);
+			changeState(solBadGuyState::RIGHT_SIT);
 
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
 		{
-			this->changeState(RIGHT_JUMP);
+			this->changeState(solBadGuyState::RIGHT_JUMP);
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
 		{
-			this->changeState(RIGHT_WEAKHAND);
+			this->changeState(solBadGuyState::RIGHT_WEAKHAND);
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
 		{
-			this->changeState(RIGHT_WEAKFOOT);
+			this->changeState(solBadGuyState::RIGHT_WEAKFOOT);
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
 		{
-			this->changeState(RIGHT_STRONGHAND);
+			this->changeState(solBadGuyState::RIGHT_STRONGHAND);
 		}
 
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
 		{
-			this->changeState(RIGHT_STRONGFOOT);
+			this->changeState(solBadGuyState::RIGHT_STRONGFOOT);
 		}
+
+
+
 	}
 	break;
-	case RIGHT_SIT:
+	case solBadGuyState::RIGHT_SIT:
 	{
 		//if (KEYMANAGER->isOnceKeyUp(keyList[key::DOWN]) )
 		//{
@@ -299,33 +253,33 @@ void solBadGuy::stateUpdate(tagSolBadGuy::Enum state)
 
 		if (!KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
 		{
-			changeState(RIGHT_STOP);
+			changeState(solBadGuyState::RIGHT_STOP);
 		}
 
 
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
 		{
-			this->changeState(RIGHT_SITWEAKHAND);
+			this->changeState(solBadGuyState::RIGHT_SITWEAKHAND);
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
 		{
-			this->changeState(RIGHT_SITWEAKFOOT);
+			this->changeState(solBadGuyState::RIGHT_SITWEAKFOOT);
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
 		{
-			this->changeState(RIGHT_SITSTRONGHAND);
+			this->changeState(solBadGuyState::RIGHT_SITSTRONGHAND);
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
 		{
-			this->changeState(RIGHT_SITSTRONGFOOT);
+			this->changeState(solBadGuyState::RIGHT_SITSTRONGFOOT);
 		}
 
 	}
-	case RIGHT_MOVE:
+	case solBadGuyState::RIGHT_MOVE:
 	{
 		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]) || KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
 		{
-			this->changeState(RIGHT_STOP);
+			this->changeState(solBadGuyState::RIGHT_STOP);
 		}
 
 		if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
@@ -334,38 +288,38 @@ void solBadGuy::stateUpdate(tagSolBadGuy::Enum state)
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))
 		{
-			this->changeState(LEFT_MOVE);
+			this->changeState(solBadGuyState::LEFT_MOVE);
 		}
 
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
 		{
-			this->changeState(RIGHT_JUMP);
+			this->changeState(solBadGuyState::RIGHT_JUMP);
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
 		{
-			this->changeState(RIGHT_WEAKHAND);
+			this->changeState(solBadGuyState::RIGHT_WEAKHAND);
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
 		{
-			this->changeState(RIGHT_WEAKFOOT);
+			this->changeState(solBadGuyState::RIGHT_WEAKFOOT);
 
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
 		{
-			this->changeState(RIGHT_STRONGHAND);
+			this->changeState(solBadGuyState::RIGHT_STRONGHAND);
 		}
 
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
 		{
-			this->changeState(RIGHT_STRONGFOOT);
+			this->changeState(solBadGuyState::RIGHT_STRONGFOOT);
 		}
 	}
 	break;
-	case LEFT_MOVE:
+	case solBadGuyState::RIGHT_BACKMOVE:
 	{
 		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]) || KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
 		{
-			changeState(RIGHT_STOP);
+			changeState(solBadGuyState::RIGHT_STOP);
 		}
 		if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
 		{
@@ -373,20 +327,20 @@ void solBadGuy::stateUpdate(tagSolBadGuy::Enum state)
 		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::RIGHT]))
 		{
-			this->changeState(RIGHT_MOVE);
+			this->changeState(solBadGuyState::RIGHT_MOVE);
 		}
 	}
-	case RIGHT_RUN:
+	case solBadGuyState::RIGHT_RUN:
 	{
 
 	}
 	break;
-	case RIGHT_JUMP:
+	case solBadGuyState::RIGHT_JUMP:
 	{
 
 	}
 	break;
-	case RIGHT_MOVEJUMP:
+	case solBadGuyState::RIGHT_MOVEJUMP:
 	{
 
 	}
@@ -398,21 +352,72 @@ void solBadGuy::stateUpdate(tagSolBadGuy::Enum state)
 
 void solBadGuy::skill1()
 {
-	this->changeState(RIGHT_SKILL1);
+	this->changeState(solBadGuyState::RIGHT_SKILL1);
 }
 void solBadGuy::skill2()
 {
-	this->changeState(RIGHT_SKILL2);
+	this->changeState(solBadGuyState::RIGHT_SKILL2);
 }
 void solBadGuy::skill3()
 {
-	this->changeState(RIGHT_SPECIALSKILL);
+	this->changeState(solBadGuyState::RIGHT_SPECIALSKILL);
 }
 
+void solBadGuy::hited()
+{
+	//->changeState(RIGHT_HTIED);
+}
+void solBadGuy::block()
+{
+	//this->changeState(RIGHT_BLOCK);
+}
+void solBadGuy::die()
+{
+	//this->changeState(RIGHT_DIE);
+}
 
 void solBadGuy::setupResource()
 {
+	IMAGEMANAGER->addFrameImage("솔배드_이동", "resource/taesung/solBadGuy/move.bmp", 621, 172, 9, 2, true);
 
+	IMAGEMANAGER->addFrameImage("솔배드_달리기", "resource/taesung/solBadGuy/dash.bmp", 624, 126, 8, 2, true);
 
+	IMAGEMANAGER->addFrameImage("솔배드_공격", "resource/taesung/solBadGuy/hand_attack.bmp", 435, 156, 5, 2, true);
 
+	IMAGEMANAGER->addFrameImage("솔배드_발차기", "resource/taesung/solBadGuy/kick_attack.bmp", 377, 164, 5, 2, true);
+
+	IMAGEMANAGER->addFrameImage("솔배드_점프", "resource/taesung/solBadGuy/jump.bmp", 207, 83, 3, 2, true);
+
+	IMAGEMANAGER->addFrameImage("솔배드_점프공격", "resource/taesung/solBadGuy/jump_attack.bmp", 449, 136, 5, 2, true);
+
+	//애니메이션 로드
+	KEYANIMANAGER->addCoordinateFrameAnimation("솔배드_이동_오른쪽", "솔배드_이동", 0, 9, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("솔배드_이동_오른쪽", RectMake(20, 10, 25, 67));
+	KEYANIMANAGER->addCoordinateFrameAnimation("솔배드_이동_왼쪽", "솔배드_이동", 10, 18, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("솔배드_이동_왼쪽", RectMakeCenter(20, 10, 25, 67));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("솔배드_달리기_오른쪽", "솔배드_달리기", 0, 7, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("솔배드_달리기_오른쪽", RectMake(20, 10, 30, 67));
+	KEYANIMANAGER->addCoordinateFrameAnimation("솔배드_달리기_왼쪽", "솔배드_달리기", 8, 15, 15, false, true);
+	KEYANIMANAGER->setCollisionRect("솔배드_달리기_왼쪽", RectMake(20, 10, 30, 67));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("솔배드_발차기_오른쪽", "솔배드_발차기", 0, 4, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("솔배드_발차기_오른쪽", RectMake(20, 10, 30, 67));
+	KEYANIMANAGER->addCoordinateFrameAnimation("솔배드_발차기_왼쪽", "솔배드_발차기", 5, 9, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("솔배드_발차기_왼쪽", RectMake(20, 10, 30, 67));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("솔배드_점프_오른쪽", "솔배드_점프", 3, 5, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("솔배드_점프_오른쪽", RectMake(20, 10, 30, 67));
+	KEYANIMANAGER->addCoordinateFrameAnimation("솔배드_점프_왼쪽", "솔배드_점프", 0, 2, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("솔배드_점프_왼쪽", RectMake(20, 10, 30, 67));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("솔배드_점프공격_오른쪽", "솔배드_점프공격", 0, 4, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("솔배드_점프공격_오른쪽", RectMake(20, 10, 30, 67));
+	KEYANIMANAGER->addCoordinateFrameAnimation("솔배드_점프공격_왼쪽", "솔배드_점프공격", 5, 9, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("솔배드_점프공격_왼쪽", RectMake(20, 10, 30, 67));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("솔배드_공격_오른쪽", "솔배드_공격", 0, 4, 12, false, false);
+	KEYANIMANAGER->setCollisionRect("솔배드_공격_오른쪽", RectMake(20, 10, 30, 67));
+	KEYANIMANAGER->addCoordinateFrameAnimation("솔배드_공격_왼쪽", "솔배드_공격", 5, 9, 12, false, false);
+	KEYANIMANAGER->setCollisionRect("솔배드_공격_왼쪽", RectMake(20, 10, 30, 67));
 }
