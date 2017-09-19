@@ -107,8 +107,8 @@ void playScene::render()
 	RECT rc = CAMERAMANAGER->getRenderRect();
 	_background->scaleAniRender(getMemDC(), -rc.left, -rc.top, _backgroundAnimation, 1800, 768);
 
+	sceneBase::render();
+
 	_progressBar[0]->render();
 	_progressBar[1]->render();
-
-	sceneBase::render();
 }

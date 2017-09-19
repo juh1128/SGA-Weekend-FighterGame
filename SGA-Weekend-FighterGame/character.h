@@ -34,6 +34,10 @@ private:
 	bool			_isJump;
 	float			_gravitySpeed;
 
+	//죽음
+	bool				_isDie;
+
+
 protected:
 	key::Enum					keyList[key::END];		//단축키 리스트
 	gameObject*					_enemy;					//상대편
@@ -95,6 +99,8 @@ public:
 	bool isJump() { return _isJump; }
 	//적이 내 캐릭터의 어느 방향에 있는지 반환
 	DIRECTION::Enum getDirectionEnemy();
+	//죽었나?
+	bool isDie() { return _isDie; }
 
 
 	//겟셋

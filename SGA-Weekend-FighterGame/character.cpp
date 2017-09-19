@@ -20,6 +20,8 @@ HRESULT character::init(string characterName, vector2D pos, string animationKeyN
 		this->attacked(msg.data, msg.ptData);	
 	});
 
+	_isDie = false;
+
 
 	return S_OK;
 }
@@ -241,6 +243,7 @@ void character::attacked(int damage, vector2D hitedPos)
 	if (_nowHp <= 0)
 	{
 		this->sendMessage("die", 0, direction);
+		_isDie = true;
 	}
 	else
 	{
@@ -256,18 +259,22 @@ void character::collisionCheckToEnemy()
 	{
 		if (_enemy->isActiveObject())
 		{
-			RECT temp;
-			if (IntersectRect(&temp, &rc, &_enemy->getCollisionRect()))
+			//살아있을 때만 충돌체크
+			if (!((character*)_enemy)->isDie())
 			{
-				vector2D dirEenemyToMe = _pos - _enemy->_pos;
-				//적이 내 왼쪽에 있는지? 오른쪽에 있는지?
-				DIRECTION::Enum dir = (dirEenemyToMe.x > 0) ? DIRECTION::LEFT : DIRECTION::RIGHT;
+				RECT temp;
+				if (IntersectRect(&temp, &rc, &_enemy->getCollisionRect()))
+				{
+					vector2D dirEenemyToMe = _pos - _enemy->_pos;
+					//적이 내 왼쪽에 있는지? 오른쪽에 있는지?
+					DIRECTION::Enum dir = (dirEenemyToMe.x > 0) ? DIRECTION::LEFT : DIRECTION::RIGHT;
 
-				//적을 밀어낸다.
-				int width = temp.right - temp.left;
-				_enemy->_pos.x += dir*(width*0.5f);
-				//나도 뒤로 밀림
-				_pos.x -= dir*width;
+					//적을 밀어낸다.
+					int width = temp.right - temp.left;
+					_enemy->_pos.x += dir*(width*0.5f);
+					//나도 뒤로 밀림
+					_pos.x -= dir*width;
+				}
 			}
 		}
 	}
