@@ -18,6 +18,9 @@ HRESULT neko::init(vector2D pos)
 
 	//이펙트 로드
 
+	//사운드 로드
+	
+
 	//키애니메니져 설정
 
 	//======================STOP======================
@@ -295,6 +298,7 @@ void neko::update()
 	this->stateUpdate(_state);
 
 	this->enemyPos();
+
 }
 
 void neko::render()
@@ -439,6 +443,8 @@ void neko::changeState(tagNekoState::ENUM state)
 		attackHitbox* hitbox = new attackHitbox;
 		hitbox->init(30, vector2D(_centerPos.x + 80, _centerPos.y + 50), vector2D(50, 60), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
+
+		
 	}
 	break;
 	case LEFT_SIT_ATTACK:						//왼쪽 앉아 약공
@@ -449,6 +455,8 @@ void neko::changeState(tagNekoState::ENUM state)
 		attackHitbox* hitbox = new attackHitbox;
 		hitbox->init(30, vector2D(_centerPos.x - 80, _centerPos.y + 50), vector2D(50, 60), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
+
+		
 	}
 	break;
 
