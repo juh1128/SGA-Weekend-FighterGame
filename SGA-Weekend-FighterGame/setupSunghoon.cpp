@@ -30,9 +30,6 @@ void playGround::setupSunghoon()
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("maiRightIdle", "maiIdle", 0, 11, 6, false,true);
 
-	//이동
-	//KEYANIMANAGER->addCoordinateFrameAnimation("maiLeftMove")
-
 	//뒤로가기
 	int arrLeftBackMove[] = { 0,1,2,3,4,5 };
 	int arrRightBackMove[] = { 6,7,8,9,10,11 };

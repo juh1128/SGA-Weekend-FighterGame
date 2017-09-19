@@ -1,0 +1,15 @@
+diff a/SGA-Weekend-FighterGame/mai.h b/SGA-Weekend-FighterGame/mai.h	(rejected hunks)
+@@ -59,13 +59,8 @@
+ 
+ 	bool _isCharPos; //false == ���ʹٶ� true == �����ʹٶ�
+ 
+-	POINT _center;
+-
+ 	Enum _lastKey;
+ 
+-	float _lastKeyTime; //Ű�� �������ִ� �ð�
+-	float _gravity; //�߷�
+-
+ 
+ public:
+ 	mai() {}

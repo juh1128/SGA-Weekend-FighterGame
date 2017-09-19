@@ -1,0 +1,10 @@
+diff a/SGA-Weekend-FighterGame/mai.cpp b/SGA-Weekend-FighterGame/mai.cpp	(rejected hunks)
+@@ -403,8 +403,6 @@
+ 		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
+ 		{
+ 			//�������� �̵�Ű�� ��
+-			//Ű�� ������ ���� �ð� �ʱ�ȭ
+-			_lastKeyTime = LASTKEY_TIME;
+ 			_lastKey = LEFT;
+ 			setAnimation("maiLeftIdle");
+ 			_state = LEFT_STOP;
