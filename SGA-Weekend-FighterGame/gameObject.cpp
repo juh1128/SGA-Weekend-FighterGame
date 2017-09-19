@@ -129,9 +129,15 @@ void gameObject::render(void)
 {
 	image* renderImage = (_animation->getImage()) ? _animation->getImage() : _image;
 	if (renderImage)
-	{
-		//게임 오브젝트의 현재 RECT
-		RECT renderRC = getRect();	
+	{	
+		//카메라 렌더링 영역
+		RECT cameraRC = CAMERAMANAGER->getRenderRect();
+		//상대좌표 구하기
+		POINT renderPos = { _pos.x - cameraRC.left, _pos.y - cameraRC.top };
+
+		//상대좌표를 기준으로 만든 렌더링 렉트
+		vector2D size = getSize();
+		RECT renderRC = RectMakeCenter(renderPos.x, renderPos.y, size.x, size.y);
 
 		if (_alpha < 0) _alpha = 0.0f;
 		if (_alpha > 1.0f) _alpha = 1.0f;
@@ -220,10 +226,18 @@ void gameObject::addBaseCallback()
 
 void gameObject::setAnimation(string animationKeyName)
 {
+	RECT oldRC = this->getCollisionRect();
+
 	auto anim = KEYANIMANAGER->findAnimation(animationKeyName);
 	*_animation = *anim;
 	_animation->start();
 
 	_size.x = _animation->getFrameWidth();
 	_size.y = _animation->getFrameHeight();
+
+	RECT newRC = this->getCollisionRect();
+
+	//애니메이션 사이즈에 따라서 y위치 보정
+	float gapY = oldRC.bottom - newRC.bottom;
+	_pos.y += gapY;
 }

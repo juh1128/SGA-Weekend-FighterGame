@@ -35,7 +35,8 @@ namespace tagNekoState
 		RIGHT_BACK_DASH, LEFT_BACK_DASH,		//백대쉬 상태
 		RIGHT_HIT, LEFT_HIT,					//쳐맞는 상태 
 		RIGHT_DING, LEFT_DING,					//뒤져가는 상태					
-		RIGHT_DIE, LEFT_DIE						//뒤지는 상태
+		RIGHT_DIE, LEFT_DIE,					//뒤지는 상태
+		RIGHT_BEAM, LEFT_BEAM					//빔쏘는 상태
 	};
 }
 
@@ -92,6 +93,7 @@ public:
 	void nekoFire();
 	void nekoRightFly();
 	void nekoLeftFly();
+	void nekoBeam();
 
 	void hit(tagMessage msg);
 	void die(tagMessage msg);
