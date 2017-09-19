@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "playScene.h"
+#include "selectScene.h"
 #include "progressBar.h"
 #include "character.h"
 
@@ -41,6 +42,11 @@ HRESULT	playScene::init()
 	characterSetup();
 
 	_state = playSceneState::PLAY;
+
+	//게임오버 메시지 콜백
+	this->addCallback("gameover", [this](tagMessage msg) {
+		this->gameOver();
+	});
 
 
 	return S_OK;
@@ -102,7 +108,15 @@ void playScene::update()
 		_cameraTarget->_pos = _cameraTarget->_pos + dir.normalize()*5.0f;
 	}
 
-	CAMERAMANAGER->updateCamera();
+
+	if (_state == playSceneState::END)
+	{
+		_gameResetTimer -= TIMEMANAGER->getElapsedTime();
+		if (_gameResetTimer <= 0)
+		{
+			SCENEMANAGER->changeScene(new selectScene);
+		}
+	}
 
 }
 void playScene::render()		
@@ -114,4 +128,16 @@ void playScene::render()
 
 	_progressBar[0]->render();
 	_progressBar[1]->render();
+
+	if (_state == playSceneState::END)
+	{
+		vector2D renderPos = vector2D(WINSIZEX / 2 - 253, WINSIZEY / 2 - 110);
+		IMAGEMANAGER->findImage("KO")->render(getMemDC(), renderPos.x, renderPos.y);
+	}
+}
+
+void playScene::gameOver()
+{
+	_state = playSceneState::END;
+	_gameResetTimer = 5.0f;
 }

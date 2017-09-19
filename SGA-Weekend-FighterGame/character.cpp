@@ -244,6 +244,7 @@ void character::attacked(int damage, vector2D hitedPos)
 	{
 		this->sendMessage("die", 0, direction);
 		_isDie = true;
+		SCENEMANAGER->getNowScene()->sendMessage("gameover", 2.5f);
 	}
 	else
 	{
