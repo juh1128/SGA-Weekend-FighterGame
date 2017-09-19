@@ -2,8 +2,6 @@
 #include "neko.h"
 #include "attackHitbox.h"
 
-
-
 //s
 HRESULT neko::init(vector2D pos)
 {
