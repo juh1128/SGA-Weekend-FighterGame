@@ -19,6 +19,7 @@ namespace athenaState
 		RIGHT_BACK_DASH,
 		RIGHT_BACK_STEP,
 		RIGHT_SKILL_BALL,
+		RIGHT_DIE,
 		RIGHT_HIT,
 		LEFT_STOP,
 		LEFT_MOVE,
@@ -33,7 +34,8 @@ namespace athenaState
 		LEFT_DASH,
 		LEFT_BACK_DASH,
 		LEFT_SKILL_BALL,
-		LEFT_HIT
+		LEFT_HIT,
+		LEFT_DIE
 
 	};
 }
@@ -61,5 +63,6 @@ public:
 	void dash();
 	void skill();
 	void hit(tagMessage msg);
+	void die(tagMessage msg);
 };
 
