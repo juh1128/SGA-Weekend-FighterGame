@@ -4,9 +4,19 @@
 class character;
 class progressBar;
 
+namespace playSceneState
+{
+	enum Enum
+	{
+		PLAY, END
+	};
+}
+
 class playScene : public sceneBase
 {
 private:
+	playSceneState::Enum _state;
+
 	//배경
 	image*				_background;
 	animation*			_backgroundAnimation;
@@ -20,6 +30,8 @@ private:
 
 	//카메라
 	gameObject*			_cameraTarget;
+
+	float				_gameResetTimer;
 
 public:
 	playScene(int player1, int player2) 
@@ -37,4 +49,5 @@ public:
 	virtual void	render();
 
 	void characterSetup();
+	void gameOver();
 };

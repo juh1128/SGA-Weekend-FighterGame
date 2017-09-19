@@ -226,10 +226,18 @@ void gameObject::addBaseCallback()
 
 void gameObject::setAnimation(string animationKeyName)
 {
+	RECT oldRC = this->getCollisionRect();
+
 	auto anim = KEYANIMANAGER->findAnimation(animationKeyName);
 	*_animation = *anim;
 	_animation->start();
 
 	_size.x = _animation->getFrameWidth();
 	_size.y = _animation->getFrameHeight();
+
+	RECT newRC = this->getCollisionRect();
+
+	//애니메이션 사이즈에 따라서 y위치 보정
+	float gapY = oldRC.bottom - newRC.bottom;
+	_pos.y += gapY;
 }
