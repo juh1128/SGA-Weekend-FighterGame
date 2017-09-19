@@ -2,6 +2,8 @@
 #include "character.h"
 #include "athenaeffect.h"
 
+class attackHitbox;
+
 namespace athenaState
 {
 	enum Enum
@@ -47,6 +49,7 @@ private:
 
 	bool _isEnemyDirection;
 	athenaeffect* _effect;
+	attackHitbox* _hitBox;
 public:
 	athena() {}
 	virtual ~athena() {}

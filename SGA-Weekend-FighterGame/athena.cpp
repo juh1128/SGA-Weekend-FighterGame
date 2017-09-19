@@ -122,7 +122,7 @@ HRESULT athena::init(vector2D pos)
 	KEYANIMANAGER->setCollisionRect("athenaLeftSkill", RectMake(82, 14, 128-82, 203-14));
 
 	int rightHit[] = { 0,1,2,3 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaRightHit", "athenaHit", rightHit, 4, 60, false);
+	KEYANIMANAGER->addArrayFrameAnimation("athenaRightHit", "athenaHit", rightHit, 4, 20, false);
 	KEYANIMANAGER->setCollisionRect("athenaRightHit", RectMake(54, 15, 120, 203 - 15));
 
 	int leftHit[] = { 0,1,2,3 };
@@ -145,6 +145,7 @@ HRESULT athena::init(vector2D pos)
 	_state = athenaState::LEFT_STOP;
 
 	this->setScale(2.0f, 2.0f);
+	
 
 	this->addCallback("changeState", [this](tagMessage msg)
 	{
@@ -209,10 +210,14 @@ void athena::update()
 	{
 		_effect->_fire.x += 5;
 		attackHitbox* hitbox = new attackHitbox;
-		hitbox->init(30, vector2D(_effect->_fire.x + 120, _effect->_fire.y - 70), vector2D(180, 100), _enemy, 0.1f);
+		hitbox->init(30, vector2D(_effect->_fire.x + 182, _effect->_fire.y + 250), vector2D(130, 100), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
+		_hitBox = hitbox;
+		
+		RECT hitRect = _hitBox->getCollisionRect();
+		RECT temp;
 
-		if (getDistance(_effect->_fire.x, _effect->_fire.y, _enemy->_pos.x, _enemy->_pos.y) < 100)
+		if (IntersectRect(&temp, &hitRect, &_enemy->getCollisionRect()))
 		{
 			_effect->_frameX += 2;
 			_effect->_isFrame = true;
@@ -273,7 +278,7 @@ void athena::changeState(athenaState::Enum state)					//상태가 변하는 순간 한번�
 	case athenaState::RIGHT_BACK_DASH:
 		this->setAnimation("athenaRightBackDash");
 		jump(12);
-		//this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::RIGHT_STOP));
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::RIGHT_STOP));
 		break;
 
 	case athenaState::LEFT_DASH:				//왼쪽 대쉬
@@ -391,7 +396,7 @@ void athena::changeState(athenaState::Enum state)					//상태가 변하는 순간 한번�
 		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, athenaState::RIGHT_STOP));
 
 		athenaeffect* effect = new athenaeffect;
-		effect->init("ball", vector2D(_pos.x + 30, _pos.y - 130));
+		effect->init("ball", vector2D(_pos.x + 30, _pos.y - 350));
 		WORLD->addObject(effect);
 		_effect = effect;
 	}
@@ -738,17 +743,17 @@ void athena::hit(tagMessage msg)
 	tagMessage massege = msg;
 	if (massege.data == DIRECTION::LEFT)
 	{
-		if (_state != athenaState::LEFT_HIT)
-		{
+	//	if (_state != athenaState::LEFT_HIT)
+		//{
 			changeState(athenaState::LEFT_HIT);
-		}
+		//}
 	}
 	else if (massege.data == DIRECTION::RIGHT)
 	{
-		if (_state != athenaState::RIGHT_HIT)
-		{
+	//	if (_state != athenaState::RIGHT_HIT)
+		//{
 			changeState(athenaState::RIGHT_HIT);
-		}
+		//}
 	}
 }
 
