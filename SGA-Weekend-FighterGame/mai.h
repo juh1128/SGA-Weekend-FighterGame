@@ -86,7 +86,7 @@ public:
 	void skill2();
 	void skill3();
 
-	void stateUpdate(state);
-	void changeState(state);
+	void stateUpdate(MAI::state state);
+	void changeState(MAI::state state);
 };
 
