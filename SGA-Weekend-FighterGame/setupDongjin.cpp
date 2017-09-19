@@ -44,12 +44,12 @@ void playGround::setupDongjin()
 	//앉기공격 모션
 	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackA", "resource/Dongjin/오른쪽앉은약손.bmp", 0, 0, 2021, 254, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackB", "resource/Dongjin/오른쪽앉은약발.bmp", 0, 0, 2598, 254, 6, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackC", "resource/Dongjin/오른쪽앉기강손.bmp", 0, 0, 3069, 400, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackC", "resource/Dongjin/오른쪽앉기강손.bmp", 0, 0, 3675, 479, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackD", "resource/Dongjin/오른쪽앉기강발.bmp", 0, 0, 2771, 316, 6, 1, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackA2", "resource/Dongjin/왼쪽앉은약손.bmp", 0, 0, 2021, 254, 5, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackB2", "resource/Dongjin/왼쪽앉은약발.bmp", 0, 0, 2598, 254, 6, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackC2", "resource/Dongjin/왼쪽앉기강손.bmp", 0, 0, 3069, 400, 9, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackC2", "resource/Dongjin/왼쪽앉기강손.bmp", 0, 0, 3675, 479, 9, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSitAttackD2", "resource/Dongjin/왼쪽앉기강발.bmp", 0, 0, 2771, 316, 6, 1, true, RGB(255, 0, 255));
 
 	//스킬 
@@ -67,6 +67,15 @@ void playGround::setupDongjin()
 	IMAGEMANAGER->addFrameImage("ioriYagamiSkillEffect4", "resource/Dongjin/오른쪽스킬2임팩트.bmp", 0, 0, 1283, 206, 6, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSkillEffect5", "resource/Dongjin/스킬3임팩트.bmp", 0, 0, 16332, 1280, 19, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ioriYagamiSkillEffect6", "resource/Dongjin/스킬3임팩트.bmp", 0, 0, 16332, 1280, 19, 1, true, RGB(255, 0, 255));
+
+	//맞는모션
+	IMAGEMANAGER->addFrameImage("ioriYagamiHit", "resource/Dongjin/오른쪽상단기맞음.bmp", 0, 0, 1452, 400, 5, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiHit2", "resource/Dongjin/왼쪽상단기맞음.bmp", 0, 0, 1452, 400, 5, 1, true, RGB(255, 0, 255));
+
+	//죽는당
+	IMAGEMANAGER->addFrameImage("ioriYagamiDie", "resource/Dongjin/오른쪽상죽음.bmp", 0, 0, 1793, 400, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiDie2", "resource/Dongjin/왼쪽상죽음.bmp", 0, 0, 1793, 400, 4, 1, true, RGB(255, 0, 255));
+
 
 	//예시
 	//KEYANIMANAGER->addCoordinateFrameAnimation("테스트_이동_오른쪽", "테스트_이동", 0, 9, 15, false, true);
@@ -206,7 +215,7 @@ void playGround::setupDongjin()
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_스킬", "ioriYagamiSkill", 17, 0, 15, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_스킬", RectMakeCenter(150, 200, 200, 400));
 
-	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽쪽_스킬", "ioriYagamiSkill2", 17, 0, 15, false, false);
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_스킬", "ioriYagamiSkill2", 0, 17, 15, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_스킬", RectMakeCenter(150, 200, 200, 400));
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_스킬2", "ioriYagamiSkill3", 7, 0, 15, false, false);
@@ -220,4 +229,20 @@ void playGround::setupDongjin()
 
 	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_스킬3", "ioriYagamiSkill6", 16, 0, 15, false, false);
 	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_스킬3", RectMakeCenter(150, 200, 200, 400));
+
+
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_맞음", "ioriYagamiHit", 4, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_맞음", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_맞음", "ioriYagamiHit2", 0, 4, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_맞음", RectMakeCenter(150, 200, 200, 400));
+
+
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_오른쪽_죽음", "ioriYagamiDie", 3, 0, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_오른쪽_죽음", RectMakeCenter(150, 200, 200, 400));
+
+	KEYANIMANAGER->addCoordinateFrameAnimation("이오리_왼쪽_죽음", "ioriYagamiDie2", 0, 3, 15, false, false);
+	KEYANIMANAGER->setCollisionRect("이오리_왼쪽_죽음", RectMakeCenter(150, 200, 200, 400));
 }

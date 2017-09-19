@@ -13,7 +13,7 @@ namespace DIRECTION
 {
 	enum Enum
 	{
-		LEFT = -1, RIGHT = 1
+		LEFT, RIGHT
 	};
 }
 
@@ -80,7 +80,7 @@ public:
 	void jump(float jumpPower)
 	{
 		_gravitySpeed = -jumpPower;
-		_pos.y -= jumpPower;
+		_pos.y -= 1;
 	}
 
 	//캐릭터 스탯 설정
@@ -93,16 +93,11 @@ public:
 
 	//점프 상태인지?
 	bool isJump() { return _isJump; }
-	//적이 내 캐릭터의 어느 방향에 있는지 반환
-	DIRECTION::Enum getDirectionEnemy();
 
 
 	//겟셋
 	int getNowHp() { return _nowHp; }
 	int getMaxHp() { return _maxHp; }
-
-	//이동 함수
-	void move(float moveSpeed, DIRECTION::Enum dir);
 
 private:
 	void attacked(int damage, vector2D hitedPos);

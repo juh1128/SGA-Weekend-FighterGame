@@ -54,9 +54,6 @@ void attackHitbox::render()
 {
 	if (_isDebugMode)
 	{
-		//카메라 렌더링 영역
-		RECT cameraRC = CAMERAMANAGER->getRenderRect();
-
 		HPEN redPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 		HPEN oldPen;
 		HBRUSH oldBrush;
@@ -66,7 +63,6 @@ void attackHitbox::render()
 		oldBrush = (HBRUSH)SelectObject(memDC, GetStockObject(NULL_BRUSH));
 
 		RECT rc = this->getRect();
-		MoveRect(&rc, -cameraRC.left, -cameraRC.top);
 		Rectangle(getMemDC(), rc.left, rc.top, rc.right, rc.bottom);
 
 		SelectObject(memDC, oldBrush);

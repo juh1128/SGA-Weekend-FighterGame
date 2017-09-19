@@ -15,6 +15,21 @@ HRESULT playGround::init(void)
 {
 	gameNode::init(true);
 
+	//각 팀원별 리소스 로딩
+	//setupGuenhwa();
+	//setupDongjin();
+	//setupHyunjin();
+	//setupSiyeong();
+	//setupSoonyu();
+	//setupYuhoon();
+	//setupHyeongjoon();
+	//setupSunghoon();
+	//setupTaesung();
+	//setupYongje();
+	//setupYoonsam();
+	//setupHalim();
+	//setupYoungjae();
+
 	//초기 시작 씬 생성
 	SCENEMANAGER->pushScene(new selectScene);
 
@@ -41,11 +56,13 @@ void playGround::update(void)
 void playGround::render(void)
 {
 	HDC backDC = getMemDC();
+	RECT renderRC = CAMERAMANAGER->getRenderRect();
 
 	PatBlt(backDC, 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 
 	SCENEMANAGER->render();
 
 	//=================== 손 대 지 마 ===================
-	this->getBackBuffer()->render(getHDC(), 0, 0);
+	this->getBackBuffer()->render(getHDC(), -renderRC.left, -renderRC.top);
+
 }

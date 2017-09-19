@@ -355,11 +355,6 @@ void image::setTransColor(BOOL trans, COLORREF transColor)
 
 void image::render(HDC hdc)
 {
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(_imageInfo->x, _imageInfo->y, _imageInfo->width, _imageInfo->height);
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
-
 	if (_trans)
 	{
 		//특정 칼라 날려주는 함수
@@ -385,11 +380,6 @@ void image::render(HDC hdc)
 //이미지 렌더함수(dc영역, 뿌릴좌표X, 뿌릴좌표Y)
 void image::render(HDC hdc, int destX, int destY)
 {
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(destX, destY, _imageInfo->width, _imageInfo->height);
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
-
 	if (_trans)
 	{
 		//화면에 뿌릴때 특정 생상을 걸러내준다
@@ -415,11 +405,6 @@ void image::render(HDC hdc, int destX, int destY)
 
 void image::render(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight)
 {
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(destX, destY, sourWidth, sourHeight);
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
-
 	if (_trans)
 	{
 		//화면에 뿌릴때 특정 생상을 걸러내준다
@@ -449,11 +434,6 @@ void image::render(HDC hdc, int destX, int destY, int sourX, int sourY, int sour
 
 void image::scaleRender(HDC hdc, int destX, int destY, int scaledWidth, int scaledHeight)
 {
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(destX, destY, scaledWidth, scaledHeight);
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
-
 	if (_trans)
 	{
 		GdiTransparentBlt(hdc,	destX,	destY, scaledWidth, scaledHeight,	
@@ -536,11 +516,6 @@ void image::alphaRender(HDC hdc, BYTE alpha)
 {
 	_blendFunc.SourceConstantAlpha = alpha;
 
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake((int)_imageInfo->x, (int)_imageInfo->y, _imageInfo->width, _imageInfo->height);
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
-
 	if (_trans)
 	{
 		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
@@ -562,11 +537,6 @@ void image::alphaRender(HDC hdc, BYTE alpha)
 void image::alphaRender(HDC hdc, int destX, int destY, BYTE alpha)
 {
 	_blendFunc.SourceConstantAlpha = alpha;
-
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(destX, destY, _imageInfo->width, _imageInfo->height);
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
 
 	if (_trans)
 	{
@@ -590,11 +560,6 @@ void image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int
 {
 	_blendFunc.SourceConstantAlpha = alpha;
 
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(destX, destY, sourWidth, sourHeight);
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
-
 	if (_trans)
 	{
 		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
@@ -616,11 +581,6 @@ void image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int
 
 void image::frameRender(HDC hdc, int destX, int destY)
 {
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight);
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
-
 	if (_trans)
 	{
 		//화면에 뿌릴때 특정 생상을 걸러내준다
@@ -652,11 +612,6 @@ void image::frameRender(HDC hdc, int destX, int destY)
 
 void image::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY)
 {
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight);
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
-
 	_imageInfo->currentFrameX = currentFrameX;
 	_imageInfo->currentFrameY = currentFrameY;
 
@@ -695,11 +650,6 @@ void image::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int cu
 
 void image::scaleAniRender(HDC hdc, int destX, int destY, animation* ani, int scaledWidth, int scaledHeight)
 {
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(destX, destY, scaledWidth, scaledHeight);
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
-
 	_imageInfo->currentFrameX = ani->getFrameX();
 	_imageInfo->currentFrameY = ani->getFrameY();
 
@@ -724,11 +674,6 @@ void image::scaleAniRender(HDC hdc, int destX, int destY, animation* ani, int sc
 
 void image::alphaAniRender(HDC hdc, int destX, int destY, animation* ani, float alpha)
 {
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(destX, destY, ani->getFrameWidth(), ani->getFrameHeight());
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
-
 	_imageInfo->currentFrameX = ani->getFrameX();
 	_imageInfo->currentFrameY = ani->getFrameY();
 
@@ -777,11 +722,6 @@ void image::alphaAniRender(HDC hdc, int destX, int destY, animation* ani, float 
 void image::alphaScaleAniRender(HDC hdc, int destX, int destY, 
 	animation* ani, int scaledWidth, int scaledHeight, float alpha)
 {
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(destX, destY, scaledWidth, scaledHeight);
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
-
 	_imageInfo->currentFrameX = ani->getFrameX();
 	_imageInfo->currentFrameY = ani->getFrameY();
 
@@ -830,11 +770,6 @@ void image::alphaScaleAniRender(HDC hdc, int destX, int destY,
 
 void image::aniRender(HDC hdc, int destX, int destY, animation* ani)
 {
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(destX, destY, ani->getFrameWidth(), ani->getFrameHeight());
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
-
 	_imageInfo->currentFrameX = ani->getFrameX();
 	_imageInfo->currentFrameY = ani->getFrameY();
 	render(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight());
@@ -848,11 +783,6 @@ void image::alphaScaleFrameRender(HDC hdc, int destX, int destY, int frameX, int
 {
 	_imageInfo->currentFrameX = frameX;
 	_imageInfo->currentFrameY = frameY;
-
-	//만약 렌더링 영역이 화면 밖이라면 그리지 않는다.
-	RECT renderRC = RectMake(destX, destY, scaledWidth, scaledHeight);
-	if (renderRC.right < 0 || renderRC.left > WINSIZEX || renderRC.top > WINSIZEY || renderRC.bottom < 0)
-		return;
 
 	if (_trans)
 	{

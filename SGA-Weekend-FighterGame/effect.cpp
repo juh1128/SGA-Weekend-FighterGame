@@ -51,9 +51,7 @@ void effect::render(void)
 {
 	if (!_isRunning) return;
 
-	vector2D renderPos = CAMERAMANAGER->getRelativeVector2D(PointMake(_x,_y));
-
-	_effectImage->aniRender(getMemDC(), renderPos.x, renderPos.y, _effectAnimation);
+	_effectImage->aniRender(getMemDC(), _x, _y, _effectAnimation);
 }
 
 

@@ -103,9 +103,9 @@ void testCharacter::changeState(testCharacterState::Enum state)
 			this->setAnimation("테스트_공격_왼쪽");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, testCharacterState::LEFT_MOVE));
 
-			//attackHitbox* hitbox = new attackHitbox;
-			//hitbox->init(30, vector2D(_pos.x - 70, _pos.y), vector2D(100, 220), _enemy, 0.5f);
-			//WORLD->addObject(hitbox);
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x - 70, _pos.y), vector2D(100, 220), _enemy, 0.5f);
+			WORLD->addObject(hitbox);
 		}
 		break;
 
@@ -148,12 +148,7 @@ void testCharacter::stateUpdate(testCharacterState::Enum state)
 	{
 		case testCharacterState::RIGHT_ATTACK:
 		{
-			if (this->_animation->getFrameX() == 4)
-			{
-				attackHitbox* hitbox = new attackHitbox;
-				hitbox->init(30, vector2D(_pos.x - 70, _pos.y), vector2D(100, 220), _enemy, 0.25f);
-				WORLD->addObject(hitbox);
-			}
+
 		}
 		break;
 
@@ -179,7 +174,7 @@ void testCharacter::stateUpdate(testCharacterState::Enum state)
 		{
 			if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
 			{
-				move(10, DIRECTION::RIGHT);
+				_pos.x += 10;
 			}
 			if (KEYMANAGER->isStayKeyDown(keyList[key::ATTACK]))
 			{
@@ -201,7 +196,7 @@ void testCharacter::stateUpdate(testCharacterState::Enum state)
 		{
 			if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
 			{
-				move(10, DIRECTION::LEFT);
+				_pos.x -= 10;
 			}
 			if (KEYMANAGER->isStayKeyDown(keyList[key::ATTACK]))
 			{

@@ -1,5 +1,6 @@
 #pragma once
 #include "character.h"
+#include "athenaeffect.h"
 
 namespace athenaState
 {
@@ -15,7 +16,10 @@ namespace athenaState
 		RIGHT_JUMP,
 		RIGHT_MOVE_JUMP,
 		RIGHT_DASH,
+		RIGHT_BACK_DASH,
 		RIGHT_BACK_STEP,
+		RIGHT_SKILL_BALL,
+		RIGHT_HIT,
 		LEFT_STOP,
 		LEFT_MOVE,
 		LEFT_SIT,
@@ -26,7 +30,10 @@ namespace athenaState
 		LEFT_JUMP,
 		LEFT_MOVE_JUMP,
 		LEFT_BACK_STEP,
-		LEFT_DASH
+		LEFT_DASH,
+		LEFT_BACK_DASH,
+		LEFT_SKILL_BALL,
+		LEFT_HIT
 
 	};
 }
@@ -37,7 +44,7 @@ private:
 	athenaState::Enum _state;
 
 	bool _isEnemyDirection;
-
+	athenaeffect* _effect;
 public:
 	athena() {}
 	virtual ~athena() {}
@@ -51,5 +58,8 @@ public:
 	void changeState(athenaState::Enum state);
 
 	void enemyDirectiion();
+	void dash();
+	void skill();
+	void hit(tagMessage msg);
 };
 
