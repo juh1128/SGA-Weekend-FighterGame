@@ -82,7 +82,7 @@ void effectManager::render()
 
 void effectManager::addEffect(string effectName, const char* imageName, 
 	int imageWidth, int imageHeight, 
-	int frameW, int frameH, int fps, int buffer)
+	int frameW, int frameH, int fps, int buffer, vector2D scale)
 {
 	image* img;
 	arrEffects vEffectBuffer;
@@ -94,6 +94,7 @@ void effectManager::addEffect(string effectName, const char* imageName,
 	{
 		vEffectBuffer.push_back(new effect);
 		vEffectBuffer[i]->init(img, frameW, frameH, fps);
+		vEffectBuffer[i]->setScale(scale.x, scale.y);
 	}
 
 	mArrEffect.insert(pair<string, arrEffects>(effectName, vEffectBuffer));

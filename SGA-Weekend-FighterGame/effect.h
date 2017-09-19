@@ -8,6 +8,8 @@ class effect : public gameNode
 protected:
 	int _x;
 	int _y;
+	
+	vector2D _scale;
 
 	image* _effectImage;			//이펙트 이미지
 	animation* _effectAnimation;	//이펙트 애니메이션
@@ -24,6 +26,11 @@ public:
 	virtual void killEffect(void);
 
 	BOOL getIsRunning(void) { return _isRunning; }
+
+	void setScale(float x, float y) 
+	{
+		_scale.x = x; _scale.y = y; 
+	}
 
 
 
