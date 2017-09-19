@@ -13,11 +13,20 @@ namespace kimState
 		JUMP,
 		JUMP_FRONT,
 		JUMP_BACK,
+		JUMP_DASH_FRONT,
+		JUMP_DASH_BACK,
 		SIT,
 		GUARD,
 		SIT_GUARD,
+		DASH_START,
 		DASH,
-		BACK_DASH
+		DASH_STOP,
+		BACK_DASH,
+		A,
+		B,
+		C,
+		D,
+		HIT
 	};
 }
 namespace LEVER
@@ -54,4 +63,5 @@ public:
 
 	void leftDouble(void);
 	void rightDouble(void);
+	void hit(void);
 };
