@@ -17,7 +17,7 @@ HRESULT neko::init(vector2D pos)
 	IMAGEMANAGER->addFrameImage("nekoLeftBeamEffect", "resource/soonwoo/neko/nekoLeftBeam.bmp", 19200, 600, 16, 1, true, RGB(255, 0, 255));
 
 	//이펙트 로드
-
+	EFFECTMANAGER->addEffect("blockEffect", "resource/soonwoo/neko/blockEffect.bmp", 448, 64, 64, 64, 3, 10);
 	//사운드 로드
 	
 
@@ -160,7 +160,7 @@ HRESULT neko::init(vector2D pos)
 	//normmal defense
 	int rightDefense[]{ 48 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoRightDefense", "neko1_right", rightDefense, 1, 15, false);
-	KEYANIMANAGER->setCollisionRect("nekoRightAttack", RectMake(118, 179, 24, 42));
+	KEYANIMANAGER->setCollisionRect("nekoRightDefense", RectMake(118, 179, 24, 42));
 
 	int leftDefense[]{ 48 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftDefense", "neko1_left", leftDefense, 1, 15, false);
@@ -300,6 +300,11 @@ void neko::update()
 	this->stateUpdate(_state);
 
 	this->enemyPos();
+
+	if (KEYMANAGER->isOnceKeyDown(VK_F2))
+	{
+		EFFECTMANAGER->play("blockEffect", WINSIZEX/2 , WINSIZEY/2);
+	}
 
 }
 
@@ -511,17 +516,23 @@ void neko::changeState(tagNekoState::ENUM state)
 	case RIGHT_DEFENSE:						//오른쪽 막기 
 	{
 		this->setAnimation("nekoRightDefense");	//오른쪽 막기 프레임으로 변환 
+
+		EFFECTMANAGER->play("blockEffect", _pos.x + 10, _pos.y);
 	}
 	break;
 	case LEFT_DEFENSE:							//왼쪽 막기
 	{
 		this->setAnimation("nekoLeftDefense");	//왼쪽 막기 프레임으로 변환 
+
+		EFFECTMANAGER->play("blockEffect", _pos.x + 20, _pos.y);
 	}
 	break;
 
 	case RIGHT_SIT_DEFENSE:					//오른쪽 앉아 막기
 	{
 		this->setAnimation("nekoRightSitDefense");	//오른쪽 앉아 막기 프레임으로 변환 
+
+	
 	}
 	break;
 	case LEFT_SIT_DEFENSE:						//왼쪽 앉아 막기
