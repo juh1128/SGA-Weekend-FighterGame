@@ -34,6 +34,10 @@ private:
 	bool			_isJump;
 	float			_gravitySpeed;
 
+	//죽음
+	bool				_isDie;
+
+
 protected:
 	key::Enum					keyList[key::END];		//단축키 리스트
 	gameObject*					_enemy;					//상대편
@@ -86,6 +90,7 @@ public:
 	//캐릭터 스탯 설정
 	void setStatus(int maxHp, int damage)
 	{
+		maxHp = 1000; //너희가 뭘 넣든 캐릭터 체력은 전부 1000이 된다!!
 		_nowHp = maxHp;
 		_maxHp = maxHp;
 		_damage = damage;
@@ -95,6 +100,8 @@ public:
 	bool isJump() { return _isJump; }
 	//적이 내 캐릭터의 어느 방향에 있는지 반환
 	DIRECTION::Enum getDirectionEnemy();
+	//죽었나?
+	bool isDie() { return _isDie; }
 
 
 	//겟셋

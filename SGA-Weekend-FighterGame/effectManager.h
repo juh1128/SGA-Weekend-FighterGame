@@ -32,7 +32,7 @@ public:
 
 	void addEffect(string effectName, const char* imageName, 
 		int imageWidth, int imageHeight, 
-		int frameW, int frameH, int fps, int buffer);
+		int frameW, int frameH, int fps, int buffer, vector2D scale = vector2D(1,1));
 
 	void play(string effectName, int x, int y);
 };
