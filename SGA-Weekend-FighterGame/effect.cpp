@@ -53,7 +53,17 @@ void effect::render(void)
 
 	vector2D renderPos = CAMERAMANAGER->getRelativeVector2D(PointMake(_x,_y));
 
-	_effectImage->aniRender(getMemDC(), renderPos.x, renderPos.y, _effectAnimation);
+	float radW = (_effectAnimation->getFrameWidth() * _scale.x) / 2;
+	float radH = (_effectAnimation->getFrameHeight() * _scale.y) / 2;
+
+	if (_scale.x == 1.0f && _scale.y == 1.0f)
+	{
+		_effectImage->aniRender(getMemDC(), renderPos.x - radW, renderPos.y - radH, _effectAnimation);
+	}
+	else
+	{
+		_effectImage->scaleAniRender(getMemDC(), renderPos.x - radW, renderPos.y - radH, _effectAnimation, radW*2, radH*2);
+	}
 }
 
 
