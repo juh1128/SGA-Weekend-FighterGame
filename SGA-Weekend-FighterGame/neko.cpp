@@ -25,7 +25,7 @@ HRESULT neko::init(vector2D pos)
 	SOUNDMANAGER->addSound("nekoDead", "resource/soonwoo/neko/nekoDead.ogg", false, false);
 	SOUNDMANAGER->addSound("start", "resource/soonwoo/neko/start.ogg", false, false);
 	SOUNDMANAGER->addSound("skill", "resource/soonwoo/neko/skill.ogg", false, false);
-	SOUNDMANAGER->addSound("NECO05", "resource/soonwoo/neko/skill.ogg", false, false);
+	SOUNDMANAGER->addSound("NECO05", "resource/soonwoo/neko/NECO05.ogg", false, false);
 	//키애니메니져 설정
 
 	//======================STOP======================
