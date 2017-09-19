@@ -45,6 +45,7 @@ private:
 
 	bool _isEnemyDirection;  //상대방이 오른쪽에 있을떄 true
 
+
 public:
 	whip() {}
 	virtual ~whip() {}
@@ -71,6 +72,5 @@ public:
 
 	void hit(tagMessage msg);
 	void block();
-	void die();
-
+	void die(tagMessage msg);
 };

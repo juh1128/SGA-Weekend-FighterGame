@@ -71,7 +71,8 @@ HRESULT whip::init(vector2D pos)
 	_isEnemyDirection = true;//적이 오른쪽에 있을 때
 
 	//캐릭터 초기 능력치 설정
-	this->setStatus(100, 10);
+	this->setStatus(1000, 50);
+
 
 	//캐릭터 피격 시 콜백 등록
 	this->addCallback("hited", [this](tagMessage msg)
@@ -84,7 +85,7 @@ HRESULT whip::init(vector2D pos)
 	});
 	this->addCallback("die", [this](tagMessage msg)
 	{
-		this->die();
+		this->die(msg);
 	});
 
 
@@ -112,29 +113,7 @@ void whip::changeState(tagWhip::Enum state)
 	//상태 변경 시 처리해줄 것들이 있으면 여기서
 
 	
-	///일반 움직임
-	//	RIGHT_STOP, LEFT_STOP,
-	//	RIGHT_MOVE, LEFT_MOVE,
-	//	//RIGHT_BACK_MOVE, LEFT_BACK_MOVE,
-	//	RIGHT_RUN, LEFT_RUN,
-	//	RIGHT_SIT, LEFT_SIT,
-	//	RIGHT_JUMP, LEFT_JUMP,
-	//	RIGHT_MOVEJUMP, LEFT_MOVEJUMP,
-	///일반 공격
-	//	//RIGHT_WEAKHAND, LEFT_WEAKHAND,
-	//	//RIGHT_WEAKFOOT, LEFT_WEAKFOOT,
-	//	//RIGHT_STRONGHAND, LEFT_STRONGHAND,
-	//	//RIGHT_STRONGFOOT, LEFT_STRONGFOOT,
-	//	//RIGHT_SITWEAKHAND, LEFT_SITWEAKHAND,
-	//	//RIGHT_SITWEAKFOOT, LEFT_SITWEAKFOOT,
-	//	//RIGHT_SITSTRONGHAND, LEFT_SITSTRONGHAND,
-	//	//RIGHT_SITSTRONGFOOT, LEFT_SITSTRONGFOOT,
-	//	//RIGHT_JUMPHAND, LEFT_JUMPFOOT,
-	///스킬, 필살기
-	//	RIGHT_SKILL1, LEFT_SKILL1,
-	//	RIGHT_SKILL2, LEFT_SKILL2,
-	//	RIGHT_SPECIALSKILL, LEFT_SPECIALSKILL,
-	
+
 	switch (state)
 	{
 		///기본 동작
@@ -180,7 +159,7 @@ void whip::changeState(tagWhip::Enum state)
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
 			
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x+350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
+			hitbox->init(100, vector2D(_pos.x+350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
 			WORLD->addObject(hitbox);
 		}
 		break;
@@ -189,7 +168,7 @@ void whip::changeState(tagWhip::Enum state)
 			this->setAnimation("whip_kick_right");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x+150, _pos.y), vector2D(150, 100), _enemy, 0.5f);
+			hitbox->init(100, vector2D(_pos.x+150, _pos.y), vector2D(150, 100), _enemy, 0.5f);
 			WORLD->addObject(hitbox);
 		}
 		break;
@@ -198,7 +177,7 @@ void whip::changeState(tagWhip::Enum state)
 			this->setAnimation("whip_strongAttack_right");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x + 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
+			hitbox->init(200, vector2D(_pos.x + 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
 			WORLD->addObject(hitbox);
 		}
 		break;
@@ -208,7 +187,7 @@ void whip::changeState(tagWhip::Enum state)
 			this->setAnimation("whip_strongKick_right");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x+200, _pos.y-100), vector2D(100, 100), _enemy, 0.5f);
+			hitbox->init(200, vector2D(_pos.x+200, _pos.y-100), vector2D(100, 100), _enemy, 0.5f);
 			WORLD->addObject(hitbox);
 		}
 		break;
@@ -255,7 +234,7 @@ void whip::changeState(tagWhip::Enum state)
 			this->setAnimation("위프_스킬1_오른쪽");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x + 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
+			hitbox->init(250, vector2D(_pos.x + 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
 			WORLD->addObject(hitbox);
 		}
 		break;
@@ -272,17 +251,22 @@ void whip::changeState(tagWhip::Enum state)
 			this->setAnimation("위프_스킬2_오른쪽2");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x, _pos.y + 350), vector2D(200, 150), _enemy, 0.5f);
+			hitbox->init(250, vector2D(_pos.x, _pos.y + 350), vector2D(200, 150), _enemy, 0.5f);
 			WORLD->addObject(hitbox);
 		}
 		break;
 		case RIGHT_SPECIALSKILL:
 		{
 			this->setAnimation("위프_필살기_오른쪽");
+
+
+				attackHitbox* hitbox = new attackHitbox;
+				hitbox->init(350, vector2D(_pos.x+300, _pos.y + 100), vector2D(300, 300), _enemy, 2.0f);
+				WORLD->addObject(hitbox);
+			
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
-			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x, _pos.y+100), vector2D(100, 200), _enemy, 0.5f);
-			WORLD->addObject(hitbox);
+			
+
 		}
 		break;
 		case RIGHT_BLOCK:
@@ -346,7 +330,7 @@ void whip::changeState(tagWhip::Enum state)
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
 
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x - 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
+			hitbox->init(100, vector2D(_pos.x - 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
 			WORLD->addObject(hitbox);
 		}
 		break;
@@ -355,7 +339,7 @@ void whip::changeState(tagWhip::Enum state)
 			this->setAnimation("whip_kick_left");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x - 150, _pos.y), vector2D(150, 100), _enemy, 0.5f);
+			hitbox->init(100, vector2D(_pos.x - 150, _pos.y), vector2D(150, 100), _enemy, 0.5f);
 			WORLD->addObject(hitbox);
 		}
 		break;
@@ -364,7 +348,7 @@ void whip::changeState(tagWhip::Enum state)
 			this->setAnimation("whip_strongAttack_left");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x - 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
+			hitbox->init(200, vector2D(_pos.x - 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
 			WORLD->addObject(hitbox);
 		}
 		break;
@@ -374,7 +358,7 @@ void whip::changeState(tagWhip::Enum state)
 			this->setAnimation("whip_strongKick_left");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x - 200, _pos.y - 100), vector2D(100, 100), _enemy, 0.5f);
+			hitbox->init(200, vector2D(_pos.x - 200, _pos.y - 100), vector2D(100, 100), _enemy, 0.5f);
 			WORLD->addObject(hitbox);
 		}
 		break;
@@ -421,7 +405,7 @@ void whip::changeState(tagWhip::Enum state)
 			this->setAnimation("위프_스킬1_왼쪽");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x - 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
+			hitbox->init(250, vector2D(_pos.x - 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
 			WORLD->addObject(hitbox);
 		}
 		break;
@@ -438,7 +422,7 @@ void whip::changeState(tagWhip::Enum state)
 			this->setAnimation("위프_스킬2_왼쪽2");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x, _pos.y + 350), vector2D(200, 150), _enemy, 0.5f);
+			hitbox->init(250, vector2D(_pos.x, _pos.y + 350), vector2D(200, 150), _enemy, 0.5f);
 			WORLD->addObject(hitbox);
 		}
 		break;
@@ -447,7 +431,7 @@ void whip::changeState(tagWhip::Enum state)
 			this->setAnimation("위프_필살기_왼쪽");
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
 			attackHitbox* hitbox = new attackHitbox;
-			hitbox->init(30, vector2D(_pos.x, _pos.y + 100), vector2D(100, 200), _enemy, 0.5f);
+			hitbox->init(350, vector2D(_pos.x - 300, _pos.y + 100), vector2D(300, 300), _enemy, 2.0f);
 			WORLD->addObject(hitbox);
 		}
 		break;
@@ -904,13 +888,32 @@ void whip::hit(tagMessage msg)
 		changeState(LEFT_HITED);
 	}
 }
+
 void whip::block()
 {
-	//this->changeState(RIGHT_BLOCK);
+	if (_state == RIGHT_BACKMOVE)
+	{
+		this->changeState(RIGHT_BLOCK);
+
+	}
+	else if (_state == LEFT_BACKMOVE)
+	{
+		this->changeState(LEFT_BLOCK);
+	}
+
+
 }
-void whip::die()
+void whip::die(tagMessage msg)
 {
-	//this->changeState(RIGHT_DIE);
+	tagMessage message = msg;
+	if (message.data == DIRECTION::RIGHT)
+	{
+		this->changeState(RIGHT_DIE);
+	}
+	else if (message.data == DIRECTION::LEFT)
+	{
+		this->changeState(LEFT_DIE);
+	}
 }
 
 void whip::enemyDirectiion()
@@ -1115,8 +1118,8 @@ void whip::setupResource()
 
 		
 		KEYANIMANAGER->addCoordinateFrameAnimation("위프_필살기_오른쪽", "위프_필살기", 0, 48, 20, false, false);
-		KEYANIMANAGER->setCollisionRect("위프_필살기_오른쪽",   RectMakeCenter(160, 120, 35, 150));
+		KEYANIMANAGER->setCollisionRect("위프_필살기_오른쪽",   RectMakeCenter(120, 140, 35, 100));
 		KEYANIMANAGER->addCoordinateFrameAnimation("위프_필살기_왼쪽", "위프_필살기", 95, 49, 5, false, false);
-		KEYANIMANAGER->setCollisionRect("위프_필살기_왼쪽",   RectMakeCenter(160, 120, 35, 150));
+		KEYANIMANAGER->setCollisionRect("위프_필살기_왼쪽",   RectMakeCenter(120, 140, 35, 100));
 	
 }
