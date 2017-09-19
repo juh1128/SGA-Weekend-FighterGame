@@ -25,7 +25,8 @@ namespace kimState
 		A,
 		B,
 		C,
-		D
+		D,
+		HIT
 	};
 }
 namespace LEVER

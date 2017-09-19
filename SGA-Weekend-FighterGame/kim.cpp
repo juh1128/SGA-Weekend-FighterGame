@@ -16,6 +16,7 @@ HRESULT kim::init(vector2D pos)
 	IMAGEMANAGER->addFrameImage("kimB", "resource/yongje/원B(4480,796,9,2).bmp", 4480, 796, 9, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("kimC", "resource/yongje/원C(7040,811,11,2).bmp", 7040, 811, 11, 2, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("kimD", "resource/yongje/원D(9600,996,18,2).bmp", 9600, 996, 18, 2, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("kimHit", "resource/yongje/상단피격(711,796,2,2).bmp", 711, 796, 2, 2, true, RGB(255, 0, 255));
 
 
 
@@ -125,6 +126,15 @@ HRESULT kim::init(vector2D pos)
 	KEYANIMANAGER->addCoordinateFrameAnimation("kimDRight", "kimD", 35, 18, 30, false, false);
 	KEYANIMANAGER->setCollisionRect("kimDRight", RectMakeCenter(IMAGEMANAGER->findImage("kimD")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimD")->getFrameHeight() / 2,
 		110, 370));
+
+	int arr07[8] = { 0,0,0,1,1,0,0,0 };
+	KEYANIMANAGER->addArrayFrameAnimation("kimHitLeft", "kimHit", arr07, sizeof(arr07) / sizeof(arr07[0]), 30, false);
+	KEYANIMANAGER->setCollisionRect("kimHitLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimHit")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimHit")->getFrameHeight() / 2,
+		110, 370));
+	int arr08[8] = { 3,3,3,2,2,3,3,3 };
+	KEYANIMANAGER->addArrayFrameAnimation("kimHitRight", "kimHit", arr08, sizeof(arr08) / sizeof(arr08[0]), 30, false);
+	KEYANIMANAGER->setCollisionRect("kimHitRight", RectMakeCenter(IMAGEMANAGER->findImage("kimHit")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimHit")->getFrameHeight() / 2,
+		110, 370));
 	//------------------------------------------------------
 
 	character::init("kim", pos, "kimIdleRight");
@@ -179,8 +189,6 @@ void kim::update()
 void kim::render()
 {
 	character::render();
-	EllipseMakeCenter(getMemDC(), _pos.x, _pos.y, 40, 40);
-	EllipseMakeCenter(getMemDC(), _pos.x, _pos.y, 10, 10);
 }
 
 
@@ -357,6 +365,11 @@ void kim::changeState(kimState::Enum state)
 		hitbox = new attackHitbox;
 		hitbox->init(100, vector2D(_pos.x + plusRight * 200, _pos.y - 70), vector2D(150, 300), _enemy, 0.5f);
 		WORLD->addObject(hitbox);
+		break;
+	case kimState::HIT:
+		if (_isLeft) this->setAnimation("kimHitLeft");
+		else this->setAnimation("kimHitRight");
+		this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, kimState::IDLE));
 		break;
 	}
 
@@ -584,6 +597,8 @@ void kim::stateUpdate(kimState::Enum state)
 	case kimState::D:
 		if (_isLeft) _pos.x -= 4;
 		else _pos.x += 4;
+		break;
+	case kimState::HIT:
 		break;
 	}
 

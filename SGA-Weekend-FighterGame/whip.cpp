@@ -30,6 +30,15 @@ HRESULT whip::init(vector2D pos)
 	int command3[5] = { key::LEFT, key::DOWN, key::RIGHT, key::DOWN, key::ATTACK };
 	this->addCommand(command3, 5, "skill3");
 
+
+	int command4[4] = { key::RIGHT, key::DOWN, key::LEFT, key::ATTACK };
+	this->addCommand(command4, 4, "lSkill1");
+	int command5[4] = { key::RIGHT, key::DOWN, key::LEFT, key::KICK };
+	this->addCommand(command5, 4, "lSkill2");
+	int command6[5] = { key::RIGHT, key::DOWN, key::LEFT, key::DOWN, key::ATTACK };
+	this->addCommand(command6, 5, "lSkill3");
+
+
 	//커맨드 메시지에 따른 콜백함수 등록
 	this->addCallback("skill1", [this](tagMessage msg)
 	{
@@ -44,13 +53,30 @@ HRESULT whip::init(vector2D pos)
 		this->skill3();
 	});
 
+	this->addCallback("lSkill1", [this](tagMessage msg)
+	{
+		this->lSkill1();
+	});
+	this->addCallback("lSkill2", [this](tagMessage msg)
+	{
+		this->lSkill2();
+	});
+	this->addCallback("lSkill3", [this](tagMessage msg)
+	{
+		this->lSkill3();
+	});
+
+
+
+	_isEnemyDirection = true;//적이 오른쪽에 있을 때
+
 	//캐릭터 초기 능력치 설정
 	this->setStatus(100, 10);
 
 	//캐릭터 피격 시 콜백 등록
 	this->addCallback("hited", [this](tagMessage msg)
 	{
-		this->hited();
+		this->hit(msg);
 	});
 	this->addCallback("block", [this](tagMessage msg)
 	{
@@ -75,6 +101,7 @@ void whip::update()
 
 	//상태 별 업데이트 처리
 	stateUpdate(_state);
+	this->enemyDirectiion();
 }
 void whip::render()
 {
@@ -132,7 +159,7 @@ void whip::changeState(tagWhip::Enum state)
 		case RIGHT_JUMP:
 		{		
 			this->setAnimation("whip_jump_right");
-			jump(32);
+			jump(50);
 			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));		
 		}
 		break;
@@ -265,7 +292,8 @@ void whip::changeState(tagWhip::Enum state)
 		break;
 		case RIGHT_HITED:
 		{
-			this->setAnimation("위프_맞기_오른쪽");
+			this->setAnimation("위프_맞기_왼쪽");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, RIGHT_STOP));
 		}
 		break;
 		case RIGHT_DIE:
@@ -273,11 +301,180 @@ void whip::changeState(tagWhip::Enum state)
 			this->setAnimation("위프_다이_오른쪽");
 		}
 		break;
+
+		//왼쪽
+		///기본 동작
+		case LEFT_STOP:
+		{			this->setAnimation("whip_stop_left");		}
+		break;
+		//이동
+		case LEFT_MOVE:
+		{			this->setAnimation("whip_move_left");		}
+		break;
+		//뒤로 이동
+		case LEFT_BACKMOVE:
+		{
+			this->setAnimation("whip_backMove_left");
+		}
+		break;
+		//앉기
+		case LEFT_SIT:
+		{			this->setAnimation("whip_sit_left");		}
+		break;
+		//점프
+		case LEFT_JUMP:
+		{
+			this->setAnimation("whip_jump_left");
+			jump(32);
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
+		}
+		break;
+		//달리기
+		case LEFT_RUN:
+		{			this->setAnimation("whip_run_left");		}
+		break;
+
+		//무브점프
+		case LEFT_MOVEJUMP:
+		{			this->setAnimation("whip_moveJump_left");		}
+		break;
+
+		//일반공격
+		case LEFT_WEAKHAND:
+		{
+			this->setAnimation("whip_attack_left");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
+
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x - 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
+			WORLD->addObject(hitbox);
+		}
+		break;
+		case LEFT_WEAKFOOT:
+		{
+			this->setAnimation("whip_kick_left");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x - 150, _pos.y), vector2D(150, 100), _enemy, 0.5f);
+			WORLD->addObject(hitbox);
+		}
+		break;
+		case LEFT_STRONGHAND:
+		{
+			this->setAnimation("whip_strongAttack_left");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x - 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
+			WORLD->addObject(hitbox);
+		}
+		break;
+
+		case LEFT_STRONGFOOT:
+		{
+			this->setAnimation("whip_strongKick_left");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x - 200, _pos.y - 100), vector2D(100, 100), _enemy, 0.5f);
+			WORLD->addObject(hitbox);
+		}
+		break;
+		case LEFT_SITWEAKHAND:
+		{
+			this->setAnimation("whip_sitAttack_left");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SIT));
+
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x, _pos.y), vector2D(100, 100), _enemy, 0.5f);
+			WORLD->addObject(hitbox);
+
+		}
+		break;
+		case LEFT_SITWEAKFOOT:
+		{
+			this->setAnimation("whip_sitKick_left");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SIT));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x, _pos.y), vector2D(100, 100), _enemy, 0.5f);
+			WORLD->addObject(hitbox);
+		}
+		break;
+		case LEFT_SITSTRONGHAND:
+		{
+			this->setAnimation("whip_sitStrongAttack_left");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SIT));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x, _pos.y), vector2D(100, 100), _enemy, 0.5f);
+			WORLD->addObject(hitbox);
+		}
+		break;
+		case LEFT_SITSTRONGFOOT:
+		{
+			this->setAnimation("whip_sitStrongKick_left");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SIT));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x, _pos.y), vector2D(100, 100), _enemy, 0.5f);
+			WORLD->addObject(hitbox);
+		}
+		break;
+		case LEFT_SKILL1:
+		{
+			this->setAnimation("위프_스킬1_왼쪽");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x - 350, _pos.y), vector2D(450, _pos.y), _enemy, 1.0f);
+			WORLD->addObject(hitbox);
+		}
+		break;
+		case LEFT_SKILL2:
+		{
+			this->setAnimation("위프_스킬2_왼쪽");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SKILL2_1));
+		}
+		break;
+		case LEFT_SKILL2_1:
+		{
+			_pos.x -= 500;
+			_pos.y -= 200;
+			this->setAnimation("위프_스킬2_왼쪽2");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x, _pos.y + 350), vector2D(200, 150), _enemy, 0.5f);
+			WORLD->addObject(hitbox);
+		}
+		break;
+		case LEFT_SPECIALSKILL:
+		{
+			this->setAnimation("위프_필살기_왼쪽");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
+			attackHitbox* hitbox = new attackHitbox;
+			hitbox->init(30, vector2D(_pos.x, _pos.y + 100), vector2D(100, 200), _enemy, 0.5f);
+			WORLD->addObject(hitbox);
+		}
+		break;
+		case LEFT_BLOCK:
+		{
+			this->setAnimation("위프_막기_왼쪽");
+		}
+		break;
+		case LEFT_HITED:
+		{
+			this->setAnimation("위프_맞기_오른쪽");
+			this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_STOP));
+		}
+		break;
+		case LEFT_DIE:
+		{
+			this->setAnimation("위프_다이_왼쪽");
+		}
+		break;
 	}
 
 	_state = state;
 }
 
+
+
+///------------------------------------------------- 상태 --------------------------------------------------
 void whip::stateUpdate(tagWhip::Enum state)
 {
 
@@ -317,7 +514,11 @@ void whip::stateUpdate(tagWhip::Enum state)
 				this->changeState(RIGHT_STRONGFOOT);
 			}
 
-			
+			//적이 오른쪽에 있지 않을 때 == 내가 오른쪽에 있을 때. 
+			if (!_isEnemyDirection)
+			{
+				this->changeState(LEFT_STOP);
+			}
 
 		}
 		break;
@@ -328,13 +529,6 @@ void whip::stateUpdate(tagWhip::Enum state)
 			//	this->changeState(RIGHT_STOP);
 			//}
 			//
-
-			if (!KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
-			{
-				changeState(RIGHT_STOP);
-			}
-
-
 			if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
 			{
 				this->changeState(RIGHT_SITWEAKHAND);
@@ -352,6 +546,24 @@ void whip::stateUpdate(tagWhip::Enum state)
 				this->changeState(RIGHT_SITSTRONGFOOT);
 			}
 
+			if (!KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+			{
+				changeState(RIGHT_STOP);
+			}
+
+			if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+			{
+				changeState(RIGHT_BACKMOVE);
+			}
+
+			if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+			{
+				changeState(RIGHT_MOVE);
+			}
+
+
+
+
 		}
 		case RIGHT_MOVE:	
 		{
@@ -366,7 +578,7 @@ void whip::stateUpdate(tagWhip::Enum state)
 			}
 			if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))
 			{
-				this->changeState(LEFT_MOVE);
+				this->changeState(RIGHT_BACKMOVE);
 			}
 
 			if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
@@ -390,6 +602,23 @@ void whip::stateUpdate(tagWhip::Enum state)
 			if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
 			{
 				this->changeState(RIGHT_STRONGFOOT);
+			}
+
+			if (_isEnemyDirection)											//상대방이 오른쪽에 있다면
+			{
+				if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))			//키에서 손때면
+				{
+					this->changeState(RIGHT_STOP);				//오른쪽 정지상태
+				}
+			}
+
+			else if (!_isEnemyDirection)								//상대방이 왼쪽에 있다면
+			{
+				if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))		//키에서 손때면
+				{
+					this->changeState(LEFT_STOP);			//왼쪽 정지상태로 변환 
+				}
+
 			}
 		}
 		break;
@@ -423,6 +652,188 @@ void whip::stateUpdate(tagWhip::Enum state)
 			
 		}
 		break;
+
+
+		///왼쪽
+		case LEFT_STOP:
+		{
+
+			if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+			{
+				this->changeState(LEFT_MOVE);
+			}
+			if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+			{
+				this->changeState(LEFT_BACKMOVE);
+			}
+			if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+			{
+				changeState(LEFT_SIT);
+
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+			{
+				this->changeState(LEFT_JUMP);
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
+			{
+				this->changeState(LEFT_WEAKHAND);
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
+			{
+				this->changeState(LEFT_WEAKFOOT);
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
+			{
+				this->changeState(LEFT_STRONGHAND);
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
+			{
+				this->changeState(LEFT_STRONGFOOT);
+			}
+			if (_isEnemyDirection)
+			{
+				this->changeState(RIGHT_STOP);
+			}
+
+
+
+
+
+		}
+		break;
+		case LEFT_SIT:
+		{
+			//if (KEYMANAGER->isOnceKeyUp(keyList[key::DOWN]) )
+			//{
+			//	this->changeState(LEFT_STOP);
+			//}
+			//
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
+			{
+				this->changeState(LEFT_SITWEAKHAND);
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
+			{
+				this->changeState(LEFT_SITWEAKFOOT);
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
+			{
+				this->changeState(LEFT_SITSTRONGHAND);
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
+			{
+				this->changeState(LEFT_SITSTRONGFOOT);
+			}
+
+			if (!KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
+			{
+				changeState(LEFT_STOP);
+			}
+
+			if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+			{
+				changeState(LEFT_BACKMOVE);
+			}
+
+			if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+			{
+				changeState(LEFT_MOVE);
+			}
+
+
+
+
+		}
+		case LEFT_MOVE:
+		{
+			if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]) || KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
+			{
+				this->changeState(LEFT_STOP);
+			}
+
+			if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
+			{
+				_pos.x += 10;
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))
+			{
+				this->changeState(LEFT_BACKMOVE);
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
+			{
+				this->changeState(LEFT_JUMP);
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
+			{
+				this->changeState(LEFT_WEAKHAND);
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::KICK]))
+			{
+				this->changeState(LEFT_WEAKFOOT);
+
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_ATTACK]))
+			{
+				this->changeState(LEFT_STRONGHAND);
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::STRONG_KICK]))
+			{
+				this->changeState(LEFT_STRONGFOOT);
+			}
+
+			if (_isEnemyDirection)											//상대방이 오른쪽에 있다면
+			{
+				if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))			//키에서 손때면
+				{
+					this->changeState(RIGHT_STOP);				//오른쪽 정지상태
+				}
+			}
+
+			else if (!_isEnemyDirection)								//상대방이 왼쪽에 있다면
+			{
+				if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))		//키에서 손때면
+				{
+					this->changeState(LEFT_STOP);			//왼쪽 정지상태로 변환 
+				}
+
+			}
+
+		}
+		break;
+		case LEFT_BACKMOVE:
+		{
+			if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]) || KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
+			{
+				changeState(LEFT_STOP);
+			}
+			if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
+			{
+				_pos.x -= 10;
+			}
+			if (KEYMANAGER->isOnceKeyDown(keyList[key::RIGHT]))
+			{
+				this->changeState(LEFT_MOVE);
+			}
+		}
+		case LEFT_RUN:
+		{
+
+		}
+		break;
+		case LEFT_JUMP:
+		{
+
+		}
+		break;
+		case LEFT_MOVEJUMP:
+		{
+
+		}
+		break;
 	}
 
 
@@ -430,20 +841,68 @@ void whip::stateUpdate(tagWhip::Enum state)
 
 void whip::skill1()
 {
-	this->changeState(RIGHT_SKILL1);
+	if (_isEnemyDirection)
+	{
+		this->changeState(RIGHT_SKILL1);
+	}
+	
 }
 void whip::skill2()
 {
-	this->changeState(RIGHT_SKILL2);
+	if (_isEnemyDirection)
+	{
+		this->changeState(RIGHT_SKILL2);
+	}
 }
 void whip::skill3()
 {
-	this->changeState(RIGHT_SPECIALSKILL);
+	if (_isEnemyDirection)
+	{
+		this->changeState(RIGHT_SPECIALSKILL);
+	}
 }
 
-void whip::hited()
+void whip::lSkill1()
 {
-	//->changeState(RIGHT_HTIED);
+	if (!_isEnemyDirection)
+	{
+		this->changeState(LEFT_SKILL1);
+	}
+
+}
+void whip::lSkill2()
+{
+	if (!_isEnemyDirection)
+	{
+		this->changeState(LEFT_SKILL2);
+	}
+}
+void whip::lSkill3()
+{
+	if (!_isEnemyDirection)
+	{
+		this->changeState(LEFT_SPECIALSKILL);
+	}
+}
+
+
+
+
+
+
+
+
+void whip::hit(tagMessage msg)
+{
+	tagMessage massege = msg;
+	if (massege.data == DIRECTION::LEFT)
+	{
+		changeState(RIGHT_HITED);
+	}
+	else if (massege.data == DIRECTION::RIGHT)
+	{
+		changeState(LEFT_HITED);
+	}
 }
 void whip::block()
 {
@@ -454,18 +913,25 @@ void whip::die()
 	//this->changeState(RIGHT_DIE);
 }
 
-
+void whip::enemyDirectiion()
+{
+	
+	//내 위치가 적의 오른쪽으로 변경되면 사용하는 조건
+	if (_pos.x > _enemy->_pos.x&&_isEnemyDirection)
+	{
+		_isEnemyDirection = false;
+	}
+	else if (_pos.x < _enemy->_pos.x && !_isEnemyDirection)
+	{
+		_isEnemyDirection = true;
+	}
+}
 
 
 
 
 void whip::setupResource()
 {
-		IMAGEMANAGER->addFrameImage("테스트_이동", "resource/yuhoon/testCharacter/move.bmp", 625, 168,
-		10, 2, true);
-		KEYANIMANAGER->addCoordinateFrameAnimation("테스트_이동_오른쪽", "테스트_이동", 0, 9, 15, false, true);
-		KEYANIMANAGER->setCollisionRect("테스트_이동_오른쪽", RectMake(19, 9, 30, 65));
-
 
 		//리소스 로드
 		//일반움직임
@@ -530,10 +996,10 @@ void whip::setupResource()
 		KEYANIMANAGER->addCoordinateFrameAnimation("위프_막기_왼쪽", "위프_막기", 0, 0, 1, true, true);
 
 		int rightHited[] = { 0 };
-		KEYANIMANAGER->addArrayFrameAnimation("위프_맞기_오른쪽", "위프_맞기", rightHited, 1, 10, true);
+		KEYANIMANAGER->addArrayFrameAnimation("위프_맞기_오른쪽", "위프_맞기", rightHited, 1, 3, true);
 		KEYANIMANAGER->addCoordinateFrameAnimation("위프맞기_오른쪽", "위프_맞기", 0, 0, 1, true, true);
 		int leftHited[] = { 1 };
-		KEYANIMANAGER->addArrayFrameAnimation("위프_맞기_왼쪽", "위프_맞기", leftHited, 1, 10, true);
+		KEYANIMANAGER->addArrayFrameAnimation("위프_맞기_왼쪽", "위프_맞기", leftHited, 1, 3, true);
 		KEYANIMANAGER->addCoordinateFrameAnimation("위프_맞기_왼쪽", "위프_맞기", 0, 0, 1, true, true);
 
 		int rightDie[] = { 0 };
@@ -634,7 +1100,7 @@ void whip::setupResource()
 		////스킬 
 		KEYANIMANAGER->addCoordinateFrameAnimation("위프_스킬1_오른쪽", "위프_스킬1", 0, 32, 20, false, false);
 		KEYANIMANAGER->setCollisionRect("위프_스킬1_오른쪽", RectMakeCenter(160, 120, 35, 105));
-		KEYANIMANAGER->addCoordinateFrameAnimation("위프_스킬1_왼쪽", "위프_스킬1", 65, 33, 5, false, false);
+		KEYANIMANAGER->addCoordinateFrameAnimation("위프_스킬1_왼쪽", "위프_스킬1", 65, 33, 20, false, false);
 		KEYANIMANAGER->setCollisionRect("위프_스킬1_왼쪽",  RectMakeCenter(160, 120, 35, 105));
 		
 		KEYANIMANAGER->addCoordinateFrameAnimation("위프_스킬2_오른쪽", "위프_스킬2", 0, 13, 20, false, false);
@@ -642,8 +1108,11 @@ void whip::setupResource()
 		KEYANIMANAGER->addCoordinateFrameAnimation("위프_스킬2_오른쪽2", "위프_스킬2", 14, 19, 20, false, false);
 		KEYANIMANAGER->setCollisionRect("위프_스킬2_오른쪽2", RectMakeCenter(160, 120, 35, 105));
 
-		KEYANIMANAGER->addCoordinateFrameAnimation("위프_스킬2_왼쪽", "위프_스킬2", 39, 20, 20, false, false);
-		KEYANIMANAGER->setCollisionRect("위프_스킬2_왼쪽", RectMakeCenter(160, 120, 35, 105));
+		KEYANIMANAGER->addCoordinateFrameAnimation("위프_스킬2_왼쪽", "위프_스킬2", 39, 26, 20, false, false);
+		KEYANIMANAGER->setCollisionRect("위프_스킬2_왼쪽", RectMakeCenter(200, 120, 35, 105));
+		KEYANIMANAGER->addCoordinateFrameAnimation("위프_스킬2_왼쪽2", "위프_스킬2", 25, 20, 20, false, false);
+		KEYANIMANAGER->setCollisionRect("위프_스킬2_왼쪽2", RectMakeCenter(200, 120, 35, 105));
+
 		
 		KEYANIMANAGER->addCoordinateFrameAnimation("위프_필살기_오른쪽", "위프_필살기", 0, 48, 20, false, false);
 		KEYANIMANAGER->setCollisionRect("위프_필살기_오른쪽",   RectMakeCenter(160, 120, 35, 150));
