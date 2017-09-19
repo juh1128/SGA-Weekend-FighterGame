@@ -86,15 +86,15 @@ HRESULT athena::init(vector2D pos)
 	KEYANIMANAGER->setCollisionRect("athenaRightHandAttack", RectMake(71, 27, 116-71, 203 - 27));
 
 	int rightFootAttack[] = { 13,14 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaRightFootAttack", "athenaAction", rightFootAttack, 2, 5, true);
+	KEYANIMANAGER->addArrayFrameAnimation("athenaRightFootAttack", "athenaAction", rightFootAttack, 2, 10, true);
 	KEYANIMANAGER->setCollisionRect("athenaRightFootAttack", RectMake(44, 15, 101-44, 203-15));
 
 	int rightHandCount[] = { 16,17,18,19,20 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaRightHandCount", "athenaAction", rightHandCount, 5, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation("athenaRightHandCount", "athenaAction", rightHandCount, 5, 15, true);
 	KEYANIMANAGER->setCollisionRect("athenaRightHandCount", RectMake(71, 26, 124-71, 203-26));
 
 	int rightFootCount[] = { 24,25,26,27,28,29,30 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaRightFootCount", "athenaAction", rightFootCount, 7, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation("athenaRightFootCount", "athenaAction", rightFootCount, 7, 15, true);
 	KEYANIMANAGER->setCollisionRect("athenaRightFootCount", RectMake(26, 26, 75, 203-26));
 
 	int leftHandAttack[] = { 8,9,10,11,12 };
@@ -102,11 +102,11 @@ HRESULT athena::init(vector2D pos)
 	KEYANIMANAGER->setCollisionRect("athenaLeftHandAttack", RectMake(66, 27, 108-66, 203-27));
 
 	int leftFootAttack[] = { 13,14 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftFootAttack", "athenaAction2", rightFootAttack, 2, 5, true);
+	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftFootAttack", "athenaAction2", rightFootAttack, 2, 10, true);
 	KEYANIMANAGER->setCollisionRect("athenaLeftFootAttack", RectMake(75, 15, 137-75, 203-15));
 
 	int leftHandCount[] = { 16,17,18,19,20 };
-	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftHandCount", "athenaAction2", rightHandCount, 5, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation("athenaLeftHandCount", "athenaAction2", rightHandCount, 5, 15, true);
 	KEYANIMANAGER->setCollisionRect("athenaLeftHandCount", RectMake(51, 26, 119-51, 203-26));
 
 	int leftFootCount[] = { 24,25,26,27,28,29,30 };
