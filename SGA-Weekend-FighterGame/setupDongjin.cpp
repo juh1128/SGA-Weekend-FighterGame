@@ -73,8 +73,8 @@ void playGround::setupDongjin()
 	IMAGEMANAGER->addFrameImage("ioriYagamiHit2", "resource/Dongjin/왼쪽상단기맞음.bmp", 0, 0, 1452, 400, 5, 1, true, RGB(255, 0, 255));
 
 	//죽는당
-	IMAGEMANAGER->addFrameImage("ioriYagamiDie", "resource/Dongjin/오른쪽상죽음.bmp", 0, 0, 1793, 400, 4, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("ioriYagamiDie2", "resource/Dongjin/왼쪽상죽음.bmp", 0, 0, 1793, 400, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiDie", "resource/Dongjin/오른쪽죽음.bmp", 0, 0, 1793, 400, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ioriYagamiDie2", "resource/Dongjin/왼쪽죽음.bmp", 0, 0, 1793, 400, 4, 1, true, RGB(255, 0, 255));
 
 
 	//예시
