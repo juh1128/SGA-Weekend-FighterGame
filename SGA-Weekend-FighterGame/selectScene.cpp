@@ -32,7 +32,7 @@ HRESULT	selectScene::init()
 	// - 솔배드가이 9->5 (759, 267, 962, 463)
 	IMAGEMANAGER->addFrameImage("솔배드가이", "resource/taesung/solBadGuy/jump_attack.bmp", 406, 162, 5, 2, true);
 	// - 나나야 23->12 (670, 409, 759, 659)
-	IMAGEMANAGER->addFrameImage("나나야", "resource/youngjae/nanaya/Nanaya_WalkForward.bmp", 3072, 512, 12, 2, true);
+	IMAGEMANAGER->addFrameImage("나나야", "resource/youngjae/Nanaya/Nanaya_Select.bmp", 2304, 512, 9, 2, true);
 	// - 아테나 41 -> 46
 	IMAGEMANAGER->addFrameImage("아테나", "resource/siyeong/왼쪽걷기,앉기.bmp", 1440, 1260, 8, 6, true);
 	// - 김갑 667,323  0->3
@@ -75,8 +75,8 @@ HRESULT	selectScene::init()
 	_selectedAnimation[characterName::sol]->setPlayFrame(9, 5, false, false);
 
 	_selectedAnimation[characterName::nanaya] = new animation();
-	_selectedAnimation[characterName::nanaya]->init(3072, 512, 3072 / 12, 512 / 2);
-	_selectedAnimation[characterName::nanaya]->setPlayFrame(23, 12, false, false);
+	_selectedAnimation[characterName::nanaya]->init(2304, 512, 2304 / 9, 512 / 2);
+	_selectedAnimation[characterName::nanaya]->setPlayFrame(17, 9, false, false);
 
 	_selectedAnimation[characterName::athena] = new animation();
 	_selectedAnimation[characterName::athena]->init(1440, 1260, 1440 / 8, 1260 / 6);
