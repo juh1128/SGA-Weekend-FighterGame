@@ -43,23 +43,25 @@ HRESULT Nanaya::init(vector2D pos)
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_Stand", RectMake(670, 409, 759, 659));
 
 	//서있을 시 - 오른쪽
+	//int rightStand[]{ 16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31 };
+	//KEYANIMANAGER->addArrayFrameAnimation("Nanaya_Right_Stand", "Nanaya_Stand",rightStand, 16,10, true);
 	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_Stand", "Nanaya_Stand", 31, 16, 8, true, true);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_Stand", RectMake(670, 409, 759, 659));
 
 	//서있을 시 - 왼쪽 약공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_StandWeakAttack", "Nanaya_StandWeakAttack", 0, 4, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_StandWeakAttack", "Nanaya_StandWeakAttack", 0, 4, 10, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_StandWeakAttack", RectMake(670, 409, 759, 659));
 
 	//서있을 시 - 왼쪽 강공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_StandStrongAttack", "Nanaya_StandStrongAttack", 0, 18, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_StandStrongAttack", "Nanaya_StandStrongAttack", 0, 18, 10, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_StandStrongAttack", RectMake(670, 409, 759, 659));
 
 	//서있을 시 - 오른쪽 약공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_StandWeakAttack", "Nanaya_StandWeakAttack", 9, 5, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_StandWeakAttack", "Nanaya_StandWeakAttack", 9, 5, 10, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_StandWeakAttack", RectMake(670, 409, 759, 659));
 
 	//서있을 시 - 오른쪽 강공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_StandStrongAttack", "Nanaya_StandStrongAttack", 37, 19, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_StandStrongAttack", "Nanaya_StandStrongAttack", 37, 19, 10, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_StandStrongAttack", RectMake(670, 409, 759, 659));
 
 	//앞으로 걸을 때 - 왼쪽
@@ -79,95 +81,106 @@ HRESULT Nanaya::init(vector2D pos)
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_WalkBackward", RectMake(670, 409, 759, 659));
 
 	//앞으로 뛸 때 - 왼쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_DashForward", "Nanaya_DashForward", 0, 9, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_DashForward", "Nanaya_DashForward", 0, 9, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_DashForward", RectMake(670, 409, 759, 659));
 
 	//앞으로 뛸 때 - 오른쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_DashForward", "Nanaya_DashForward", 17, 10, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_DashForward", "Nanaya_DashForward", 17, 10, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_DashForward", RectMake(670, 409, 759, 659));
 
 	//뒤로 뛸 때 - 왼쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_DashBackward", "Nanaya_DashBackward", 0, 29, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_DashBackward", "Nanaya_DashBackward", 0, 29, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_DashBackward", RectMake(670, 409, 759, 659));
 
 	//뒤로 뛸 때 - 오른쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_DashBackward", "Nanaya_DashBackward", 59, 30, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_DashBackward", "Nanaya_DashBackward", 59, 30, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_DashBackward", RectMake(670, 409, 759, 659));
 
 	//앉았을 때 - 왼쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_Sit", "Nanaya_SitAndUp", 0, 4, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_Sit", "Nanaya_SitAndUp", 0, 4, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_Sit", RectMake(670, 409, 759, 329));
 
 	//앉았을 때 - 오른쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_Sit", "Nanaya_SitAndUp", 15, 19, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_Sit", "Nanaya_SitAndUp", 15, 19, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_Sit", RectMake(670, 409, 759, 329));
 
 	//앉았을 때 - 왼쪽 약공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_SitWeakAttack", "Nanaya_SitWeakAttack", 0, 5, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_SitWeakAttack", "Nanaya_SitWeakAttack", 0, 5, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_SitWeakAttack", RectMake(670, 409, 759, 329));
 
 	//앉았을 때 - 오른쪽 약공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_SitWeakAttack", "Nanaya_SitWeakAttack", 11, 6, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_SitWeakAttack", "Nanaya_SitWeakAttack", 11, 6, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_SitWeakAttack", RectMake(670, 409, 759, 329));
 
 	//앉았을 때 - 왼쪽 강공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_SitStrongAttack", "Nanaya_SitWeakAttack", 0, 10, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_SitStrongAttack", "Nanaya_SitWeakAttack", 0, 10, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_SitStrongAttack", RectMake(670, 409, 759, 329));
 
 	//앉았을 때 - 오른쪽 강공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_SitStrongAttack", "Nanaya_SitWeakAttack", 21, 11, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_SitStrongAttack", "Nanaya_SitWeakAttack", 21, 11, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_SitStrongAttack", RectMake(670, 409, 759, 329));
 
 	//일어날 때 - 왼쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_SitUp", "Nanaya_SitAndUp", 5, 9, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_SitUp", "Nanaya_SitAndUp", 5, 9, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_SitUp", RectMake(670, 409, 759, 659));
 
 	//일어날 때 - 오른쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_SitUp", "Nanaya_SitAndUp", 10, 14, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_SitUp", "Nanaya_SitAndUp", 10, 14, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_SitUp", RectMake(670, 409, 759, 659));
 
 	//앞으로 점프할 때 - 왼쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_JumpForward", "Nanaya_JumpForward", 0, 20, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_JumpForward", "Nanaya_JumpForward", 0, 20, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_JumpForward", RectMake(670, 409, 759, 659));
 
 	//앞으로 점프할 때 - 오른쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_JumpForward", "Nanaya_JumpForward", 41, 21, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_JumpForward", "Nanaya_JumpForward", 41, 21, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_JumpForward", RectMake(670, 409, 759, 659));
 
 	//제자리 점프할 때 - 왼쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_Jump", "Nanaya_Jump", 0, 24, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_Jump", "Nanaya_Jump", 0, 24, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_Jump", RectMake(670, 409, 759, 659));
 
 	//제자리 점프할 때 - 오른쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_Jump", "Nanaya_Jump", 49, 25, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_Jump", "Nanaya_Jump", 49, 25, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_Jump", RectMake(670, 409, 759, 659));
 
 	//뒤로 점프할 때 - 왼쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_JumpBackward", "Nanaya_JumpBackward", 0, 28, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_JumpBackward", "Nanaya_JumpBackward", 0, 28, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_JumpBackward", RectMake(670, 409, 759, 659));
 
 	//뒤로 점프할 때 - 오른쪽
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_JumpBackward", "Nanaya_JumpBackward", 57, 29, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Right_JumpBackward", "Nanaya_JumpBackward", 57, 29, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Right_JumpBackward", RectMake(670, 409, 759, 659));
 
 	//점프할 때 - 왼쪽약공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_JumpWeakAttack", "Nanaya_JumpWeakAttack", 0, 12, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_JumpWeakAttack", "Nanaya_JumpWeakAttack", 0, 12, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_JumpWeakAttack", RectMake(670, 409, 759, 659));
 
 	//점프할 때 - 오른쪽약공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_JumpWeakAttack", "Nanaya_JumpWeakAttack", 25, 13, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_JumpWeakAttack", "Nanaya_JumpWeakAttack", 25, 13, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_JumpWeakAttack", RectMake(670, 409, 759, 659));
 
 	//점프할 때 - 왼쪽강공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_JumpStrongAttack", "Nanaya_JumpStrongAttack", 0, 8, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_JumpStrongAttack", "Nanaya_JumpStrongAttack", 0, 8, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_JumpStrongAttack", RectMake(670, 409, 759, 659));
 
 	//점프할 때 - 오른쪽강공격
-	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_JumpStrongAttack", "Nanaya_JumpStrongAttack", 17, 9, 8, false, true);
+	KEYANIMANAGER->addCoordinateFrameAnimation("Nanaya_Left_JumpStrongAttack", "Nanaya_JumpStrongAttack", 17, 9, 8, false, false);
 	//KEYANIMANAGER->setCollisionRect("Nanaya_Left_JumpStrongAttack", RectMake(670, 409, 759, 659));
 
 	character::init("Nanaya", pos, "Nanaya_Right_Stand");
+	this->setAnimation("Nanaya_Right_Stand");
 	_state = RIGHT_STAND;
+	_isEnemyRight = true;
+
+	_jumpPower = 0;
+	_gravity = 0;
+	_savePosY = this->_pos.y;
+	_isJump = false;
+
+	this->setStatus(1000, 10);
+
+	_saveLastKey = key::END;
 
 	this->addCallback("changeState", [this](tagMessage msg)
 	{
@@ -187,6 +200,8 @@ void Nanaya::update()
 	character::update();
 
 	stateUpdate(_state);
+
+	
 }
 
 void Nanaya::render()			  
@@ -391,6 +406,8 @@ void Nanaya::changeState(NanayaState::Enum state)
 	break;
 
 	}
+
+	_state = state;
 }
 
 void Nanaya::stateUpdate(NanayaState::Enum state)
@@ -399,6 +416,10 @@ void Nanaya::stateUpdate(NanayaState::Enum state)
 	{
 	case NanayaState::LEFT_STAND:
 	{
+		if (getDirectionEnemy() == DIRECTION::RIGHT)
+		{
+			this->changeState(NanayaState::RIGHT_STAND);
+		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))
 		{
 			this->changeState(LEFT_WALKFORWARD);
@@ -433,6 +454,10 @@ void Nanaya::stateUpdate(NanayaState::Enum state)
 
 	case NanayaState::RIGHT_STAND:
 	{
+		if (getDirectionEnemy() == DIRECTION::LEFT)
+		{
+			this->changeState(NanayaState::LEFT_STAND);
+		}
 		if (KEYMANAGER->isOnceKeyDown(keyList[key::LEFT]))
 		{
 			this->changeState(RIGHT_WALKBACKWARD);
@@ -532,6 +557,21 @@ void Nanaya::stateUpdate(NanayaState::Enum state)
 		}
 	}
 	break;
+	case NanayaState::LEFT_WALKFORWARD:
+	case NanayaState::LEFT_WALKBACKWARD:
+	case NanayaState::RIGHT_WALKFORWARD:
+	case NanayaState::RIGHT_WALKBACKWARD:
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
+		{
+			if (getDirectionEnemy() == DIRECTION::LEFT) this->changeState(NanayaState::LEFT_STAND);
+			else this->changeState(NanayaState::RIGHT_STAND);
+		}
+		if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]))
+		{
+			if (getDirectionEnemy() == DIRECTION::LEFT) this->changeState(NanayaState::LEFT_STAND);
+			else this->changeState(NanayaState::RIGHT_STAND);
+		}
+		break;
 
 	}
 }
