@@ -63,4 +63,5 @@ public:
 
 	void leftDouble(void);
 	void rightDouble(void);
+	void hit(void);
 };

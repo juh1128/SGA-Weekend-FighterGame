@@ -127,12 +127,12 @@ HRESULT kim::init(vector2D pos)
 	KEYANIMANAGER->setCollisionRect("kimDRight", RectMakeCenter(IMAGEMANAGER->findImage("kimD")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimD")->getFrameHeight() / 2,
 		110, 370));
 
-	int arr07[8] = { 0,0,0,1,1,0,0,0 };
-	KEYANIMANAGER->addArrayFrameAnimation("kimHitLeft", "kimHit", arr07, sizeof(arr07) / sizeof(arr07[0]), 30, false);
+	int arr07[5] = { 0,1,1,1,0 };
+	KEYANIMANAGER->addArrayFrameAnimation("kimHitLeft", "kimHit", arr07, sizeof(arr07) / sizeof(arr07[0]), 10, false);
 	KEYANIMANAGER->setCollisionRect("kimHitLeft", RectMakeCenter(IMAGEMANAGER->findImage("kimHit")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimHit")->getFrameHeight() / 2,
 		110, 370));
-	int arr08[8] = { 3,3,3,2,2,3,3,3 };
-	KEYANIMANAGER->addArrayFrameAnimation("kimHitRight", "kimHit", arr08, sizeof(arr08) / sizeof(arr08[0]), 30, false);
+	int arr08[5] = { 3,2,2,2,3 };
+	KEYANIMANAGER->addArrayFrameAnimation("kimHitRight", "kimHit", arr08, sizeof(arr08) / sizeof(arr08[0]), 10, false);
 	KEYANIMANAGER->setCollisionRect("kimHitRight", RectMakeCenter(IMAGEMANAGER->findImage("kimHit")->getFrameWidth() / 2, IMAGEMANAGER->findImage("kimHit")->getFrameHeight() / 2,
 		110, 370));
 	//------------------------------------------------------
@@ -151,6 +151,10 @@ HRESULT kim::init(vector2D pos)
 	this->addCallback("changeState", [this](tagMessage msg)
 	{
 		this->changeState((kimState::Enum)msg.data);
+	});
+	this->addCallback("hited", [this](tagMessage msg)
+	{
+		this->hit();
 	});
 
 	//커맨드 등록
@@ -687,4 +691,8 @@ void kim::rightDouble(void)
 		else changeState(kimState::DASH_START);
 		break;
 	}
+}
+void kim::hit(void)
+{
+	if (_state != kimState::HIT) this->changeState(kimState::HIT);
 }
