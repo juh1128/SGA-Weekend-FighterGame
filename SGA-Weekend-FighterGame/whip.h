@@ -43,6 +43,8 @@ class whip : public character
 private:
 	tagWhip::Enum _state;
 
+	bool _isEnemyDirection;  //상대방이 오른쪽에 있을떄 true
+
 public:
 	whip() {}
 	virtual ~whip() {}
@@ -61,7 +63,13 @@ public:
 	void skill2();
 	void skill3();
 
-	void hited();
+	void lSkill1();
+	void lSkill2();
+	void lSkill3();
+
+	void enemyDirectiion();
+
+	void hit(tagMessage msg);
 	void block();
 	void die();
 

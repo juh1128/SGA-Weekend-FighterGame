@@ -41,6 +41,6 @@ void athenaeffect::update()
 void athenaeffect::render()
 {
 	//gameObject::render();
-
-	_image->frameRender(getMemDC(), _fire.x, _fire.y, _frameX, 0);
+	vector2D pt = CAMERAMANAGER->getRelativeVector2D(_fire);
+	_image->alphaScaleFrameRender(getMemDC(), pt.x, pt.y, _frameX, 0, 300,500,0);
 }

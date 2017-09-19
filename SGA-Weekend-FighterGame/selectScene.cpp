@@ -34,9 +34,9 @@ HRESULT	selectScene::init()
 	// - 나나야 23->12 (670, 409, 759, 659)
 	IMAGEMANAGER->addFrameImage("나나야", "resource/youngjae/Nanaya/Nanaya_Select.bmp", 2304, 512, 9, 2, true);
 	// - 아테나 41 -> 46
-	IMAGEMANAGER->addFrameImage("아테나", "resource/siyeong/왼쪽걷기,앉기.bmp", 1440, 1260, 8, 6, true);
-	// - 김갑 667,323  0->3
-	IMAGEMANAGER->addFrameImage("김", "resource/yongje/앉기(683,796,3,2).bmp", 683, 796, 3, 2, true);
+	IMAGEMANAGER->addFrameImage("아테나", "resource/siyeong/왼쪽스킬.bmp", 1440, 840, 8, 4, true);
+	// - 김갑 667,323  0->2
+	IMAGEMANAGER->addFrameImage("김", "resource/yongje/원A(2418,796,4,2).bmp", 2418, 796, 4, 2, true);
 
 
 	//초기 애니메이션 설정
@@ -45,7 +45,7 @@ HRESULT	selectScene::init()
 	_selectedAnimation[characterName::whip]->setPlayFrame(1, 8, false, false);
 
 	_selectedAnimation[characterName::kim] = new animation();
-	_selectedAnimation[characterName::kim]->init(683, 796, 683 / 3, 796 / 2);
+	_selectedAnimation[characterName::kim]->init(2418, 796, 2418 / 4, 796 / 2);
 	_selectedAnimation[characterName::kim]->setPlayFrame(0, 3, false, false);
 
 	_selectedAnimation[characterName::mauru] = new animation();
@@ -79,8 +79,8 @@ HRESULT	selectScene::init()
 	_selectedAnimation[characterName::nanaya]->setPlayFrame(17, 9, false, false);
 
 	_selectedAnimation[characterName::athena] = new animation();
-	_selectedAnimation[characterName::athena]->init(1440, 1260, 1440 / 8, 1260 / 6);
-	_selectedAnimation[characterName::athena]->setPlayFrame(41, 46, false, false);
+	_selectedAnimation[characterName::athena]->init(1440, 840, 1440 / 8, 840 / 4);
+	_selectedAnimation[characterName::athena]->setPlayFrame(0, 5, false, false);
 
 	//애니메이션 속도 설정
 	for (int i = 0; i < characterName::END; ++i)
@@ -91,7 +91,7 @@ HRESULT	selectScene::init()
 
 	//충돌 렉트 설정
 	_characterRC[characterName::whip] = { 42, 261, 200, 483 };
-	_characterRC[characterName::kim] = { 667, 323, 830, 568 };
+	_characterRC[characterName::kim] = { 650, 323, 750, 568 };
 	_characterRC[characterName::mauru] = { 210, 314, 380, 500 };
 	_characterRC[characterName::iori] = { 358, 288, 493, 526 };
 	_characterRC[characterName::terry] = { 76, 370, 238, 639 };
@@ -99,7 +99,7 @@ HRESULT	selectScene::init()
 	_characterRC[characterName::sol] = { 819, 315, 1020, 505 };
 	_characterRC[characterName::nanaya] = { 788, 532, 870, 736 };
 	_characterRC[characterName::mai] = { 1053, 471, 1185, 675 };
-	_characterRC[characterName::athena] = { 880, 439, 963, 618 };
+	_characterRC[characterName::athena] = { 800, 389, 933, 608 };
 
 
 	//초기 오브젝트 생성
@@ -218,13 +218,13 @@ void selectScene::render()
 	_title->render(getMemDC(), 200, 84);
 
 	//캐릭터 렌더링
-	IMAGEMANAGER->findImage("윕")->scaleAniRender(getMemDC(), 42, 261, _selectedAnimation[characterName::whip], 200-42+20, 483-261);
+	IMAGEMANAGER->findImage("윕")->scaleAniRender(getMemDC(), 42, 261, _selectedAnimation[characterName::whip], 200-42+40, 483-261);
 	IMAGEMANAGER->findImage("마우루")->scaleAniRender(getMemDC(), 210, 274, _selectedAnimation[characterName::mauru], 180, 250);
 	IMAGEMANAGER->findImage("이오리")->scaleAniRender(getMemDC(), 357, 267, _selectedAnimation[characterName::iori], 230, 259);
 	IMAGEMANAGER->findImage("테리")->scaleAniRender(getMemDC(), 74, 360, _selectedAnimation[characterName::terry], 270 - 74, 651 - 360);
 	IMAGEMANAGER->findImage("네코")->scaleAniRender(getMemDC(), 100, 201, _selectedAnimation[characterName::neco], 500, 500);
 	
-	IMAGEMANAGER->findImage("김")->scaleAniRender(getMemDC(), 667, 323, _selectedAnimation[characterName::kim], 830-667, 568-323);
+	IMAGEMANAGER->findImage("김")->scaleAniRender(getMemDC(), 557, 323, _selectedAnimation[characterName::kim], 300, 568-323);
 	IMAGEMANAGER->findImage("솔배드가이")->scaleAniRender(getMemDC(), 759, 267, _selectedAnimation[characterName::sol], 304, 294);
 	IMAGEMANAGER->findImage("아테나")->scaleAniRender(getMemDC(), 795, 351, _selectedAnimation[characterName::athena], 990 - 795, 648 - 351);
 	IMAGEMANAGER->findImage("나나야")->scaleAniRender(getMemDC(), 570, 309, _selectedAnimation[characterName::nanaya], 500, 500);
