@@ -11,6 +11,7 @@ HRESULT	playScene::init()
 	// - 인터페이스
 	IMAGEMANAGER->addImage("HP바_백", "resource/yuhoon/ui/hpBarBack.bmp", 53, 5, true);
 	IMAGEMANAGER->addImage("HP바_프론트", "resource/yuhoon/ui/hpBarFront.bmp", 53, 5, true);
+	IMAGEMANAGER->addImage("KO", "resource/yuhoon/KO.bmp", 507, 219, true);
 
 	//초기 오브젝트 생성
 	_background = IMAGEMANAGER->addFrameImage("맵", "resource/yuhoon/background2.bmp", 914, 3072, 1, 8, true);
@@ -38,6 +39,8 @@ HRESULT	playScene::init()
 
 	//플레이어 0, 플레이어 1 셋팅
 	characterSetup();
+
+	_state = playSceneState::PLAY;
 
 
 	return S_OK;

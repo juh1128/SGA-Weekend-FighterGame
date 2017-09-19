@@ -72,8 +72,8 @@ void effect::startEffect(int x, int y)
 {
 	if (!_effectImage || !_effectAnimation) return;
 
-	_x = x - (_effectAnimation->getFrameWidth() / 2);
-	_y = y - (_effectAnimation->getFrameHeight() / 2);
+	_x = x - (_effectAnimation->getFrameWidth()* _scale.x) / 2;
+	_y = y - (_effectAnimation->getFrameHeight()* _scale.y) / 2;
 
 	_isRunning = true;
 	_effectAnimation->start();
