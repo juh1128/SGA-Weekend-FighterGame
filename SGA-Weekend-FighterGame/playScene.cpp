@@ -54,8 +54,25 @@ HRESULT	playScene::init()
 
 void playScene::release()
 {
+	_cameraTarget->release();
 	SAFE_DELETE(_cameraTarget);
 	sceneBase::release();
+
+	//배경 해제
+	_background->release();
+	SAFE_DELETE(_background);
+	_backgroundAnimation->release();
+	SAFE_DELETE(_backgroundAnimation);
+
+	_progressBar[0]->release();
+	_progressBar[1]->release();
+	SAFE_DELETE(_progressBar[0]);
+	SAFE_DELETE(_progressBar[1]);
+
+	_player[0]->release();
+	_player[1]->release();
+	SAFE_DELETE(_player[0]);
+	SAFE_DELETE(_player[1]);
 
 	IMAGEMANAGER->resetImage();
 }
