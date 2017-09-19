@@ -17,7 +17,9 @@ HRESULT neko::init(vector2D pos)
 	IMAGEMANAGER->addFrameImage("nekoLeftBeamEffect", "resource/soonwoo/neko/nekoLeftBeam.bmp", 19200, 600, 16, 1, true, RGB(255, 0, 255));
 
 	//이펙트 로드
-	EFFECTMANAGER->addEffect("blockEffect", "resource/soonwoo/neko/blockEffect.bmp", 448, 64, 64, 64, 3, 10);
+	EFFECTMANAGER->addEffect("blockEffect", "resource/soonwoo/neko/blockEffect.bmp", 448, 64, 64, 64, 13, 10);
+	EFFECTMANAGER->addEffect("blockEffectLeft", "resource/soonwoo/neko/blockEffectLeft.bmp", 448, 64, 64, 64, 13, 10);
+	EFFECTMANAGER->addEffect("skillEffect", "resource/soonwoo/neko/skillEffect.bmp", 480, 80, 80, 80, 13, 5);
 	//사운드 로드
 	
 
@@ -582,6 +584,8 @@ void neko::changeState(tagNekoState::ENUM state)
 		effect->init("nekoRightBeamEffect", vector2D(_pos.x - 110, _centerPos.y - 450));
 		WORLD->addObject(effect);
 		_effect = effect;
+
+		EFFECTMANAGER->play("skillEffect", _pos.x, _centerPos.y + 20);
 	}
 	break;
 
