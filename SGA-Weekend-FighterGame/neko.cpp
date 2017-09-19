@@ -17,11 +17,11 @@ HRESULT neko::init(vector2D pos)
 	IMAGEMANAGER->addFrameImage("nekoLeftBeamEffect", "resource/soonwoo/neko/nekoLeftBeam.bmp", 19200, 600, 16, 1, true, RGB(255, 0, 255));
 
 	//이펙트 로드
-	EFFECTMANAGER->addEffect("blockEffect", "resource/soonwoo/neko/blockEffect.bmp", 448, 64, 64, 64, 13, 10,vector2D(3.0,3.0));
-	EFFECTMANAGER->addEffect("blockEffectLeft", "resource/soonwoo/neko/blockEffectLeft.bmp", 448, 64, 64, 64, 13, 10, vector2D(3.0, 3.0));
-	EFFECTMANAGER->addEffect("skillEffect", "resource/soonwoo/neko/skillEffect.bmp", 480, 80, 80, 80, 10, 5, vector2D(5.0, 5.0));
+	EFFECTMANAGER->addEffect("blockEffect", "resource/soonwoo/neko/blockEffect.bmp", 448, 64, 64, 64, 13, 10,vector2D(2.0,2.0));
+	EFFECTMANAGER->addEffect("blockEffectLeft", "resource/soonwoo/neko/blockEffectLeft.bmp", 448, 64, 64, 64, 13, 10, vector2D(2.0, 2.0));
+	EFFECTMANAGER->addEffect("skillEffect", "resource/soonwoo/neko/skillEffect.bmp", 480, 80, 80, 80, 10, 10, vector2D(5.0, 5.0));
 	//사운드 로드
-	
+	SOUNDMANAGER->addSound("sitKick", "resource/soonwoo/neko/sitKick.ogg", false, false);
 
 	//키애니메니져 설정
 
@@ -467,7 +467,6 @@ void neko::changeState(tagNekoState::ENUM state)
 		hitbox->init(30, vector2D(_centerPos.x - 80, _centerPos.y + 50), vector2D(50, 60), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
 
-		
 	}
 	break;
 
@@ -479,6 +478,7 @@ void neko::changeState(tagNekoState::ENUM state)
 		attackHitbox* hitbox = new attackHitbox;
 		hitbox->init(30, vector2D(_centerPos.x + 60, _centerPos.y + 30), vector2D(50, 60), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
+
 	}
 	break;
 
@@ -490,6 +490,7 @@ void neko::changeState(tagNekoState::ENUM state)
 		attackHitbox* hitbox = new attackHitbox;
 		hitbox->init(30, vector2D(_centerPos.x - 60, _centerPos.y + 30), vector2D(50, 60), _enemy, 0.1f);
 		WORLD->addObject(hitbox);
+
 	}
 	break;
 
@@ -501,6 +502,8 @@ void neko::changeState(tagNekoState::ENUM state)
 		attackHitbox* hitbox = new attackHitbox;
 		hitbox->init(30, vector2D(_centerPos.x + 90, _centerPos.y + 30), vector2D(100, 120), _enemy, 0.25f);
 		WORLD->addObject(hitbox);
+
+		SOUNDMANAGER->play("sitKick", 1.0);
 	}
 	break;
 
@@ -512,6 +515,8 @@ void neko::changeState(tagNekoState::ENUM state)
 		attackHitbox* hitbox = new attackHitbox;
 		hitbox->init(30, vector2D(_centerPos.x - 90, _centerPos.y + 30), vector2D(100, 120), _enemy, 0.25f);
 		WORLD->addObject(hitbox);
+
+		SOUNDMANAGER->play("sitKick", 1.0);
 	}
 	break;
 
@@ -519,14 +524,12 @@ void neko::changeState(tagNekoState::ENUM state)
 	{
 		this->setAnimation("nekoRightDefense");	//오른쪽 막기 프레임으로 변환 
 
-		EFFECTMANAGER->play("blockEffect", _pos.x + 10, _pos.y);
 	}
 	break;
 	case LEFT_DEFENSE:							//왼쪽 막기
 	{
 		this->setAnimation("nekoLeftDefense");	//왼쪽 막기 프레임으로 변환 
 
-		EFFECTMANAGER->play("blockEffect", _pos.x + 20, _pos.y);
 	}
 	break;
 
@@ -585,7 +588,7 @@ void neko::changeState(tagNekoState::ENUM state)
 		WORLD->addObject(effect);
 		_effect = effect;
 
-		EFFECTMANAGER->play("skillEffect", _pos.x - 30, _centerPos.y - 50);
+		EFFECTMANAGER->play("skillEffect", _pos.x , _centerPos.y);
 	}
 	break;
 
@@ -597,6 +600,8 @@ void neko::changeState(tagNekoState::ENUM state)
 		effect->init("nekoLeftBeamEffect", vector2D(_pos.x - 1070, _centerPos.y - 470));
 		WORLD->addObject(effect);
 		_effect = effect;
+
+		EFFECTMANAGER->play("skillEffect", _pos.x - 20, _centerPos.y);
 	}
 	break;
 
@@ -1604,20 +1609,23 @@ void neko::die(tagMessage msg)
 
 void neko::block()
 {
-	if (_state == LEFT_MOVE)
+	if (_state == LEFT_MOVE || _state == RIGHT_DEFENSE)
 	{
 		this->changeState(RIGHT_DEFENSE);
+		EFFECTMANAGER->play("blockEffect", _pos.x + 40, _centerPos.y);
 		//this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, LEFT_MOVE));
 	}
-	else if (_state == LEFT_SIT_MOVE)
+	else if (_state == LEFT_SIT_MOVE )
 	{
 		this->changeState(RIGHT_SIT_DEFENSE);
+		
 		//this->_animation->setEndMessage(this, tagMessage("changeState", 0.0f, LEFT_SIT_MOVE));
 	}
 
-	else if (_state == RIGHT_MOVE)
+	else if (_state == RIGHT_MOVE || _state == LEFT_DEFENSE)
 	{
 		this->changeState(LEFT_DEFENSE);
+		EFFECTMANAGER->play("blockEffectLeft", _pos.x - 40, _centerPos.y);
 		//this->_animation->setEndMessage(this, tagMessage("changeState", 0.0, RIGHT_MOVE));
 	}
 	else if (_state == RIGHT_SIT_MOVE)
