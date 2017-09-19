@@ -9,11 +9,10 @@ HRESULT whip::init(vector2D pos)
 	setupResource();
 
 	//테스트 애니메이션은 setupYuhoon에서 만든다. (게임 시작 시 최초 1번만 만들어놓고 씀)
-	character::init("위프", pos, "whip_attack_right");
+	character::init("위프", pos, "whip_stop_right");
 	//this->changeState(tagWhip::RIGHT_STOP);
 
 	this->setScale(4.0f, 4.0f);
-
 
 	_state = tagWhip::RIGHT_STOP;
 
@@ -47,6 +46,20 @@ HRESULT whip::init(vector2D pos)
 
 	//캐릭터 초기 능력치 설정
 	this->setStatus(100, 10);
+
+	//캐릭터 피격 시 콜백 등록
+	this->addCallback("hited", [this](tagMessage msg)
+	{
+		this->hited();
+	});
+	this->addCallback("block", [this](tagMessage msg)
+	{
+		this->block();
+	});
+	this->addCallback("die", [this](tagMessage msg)
+	{
+		this->die();
+	});
 
 
 	return S_OK;
@@ -105,7 +118,12 @@ void whip::changeState(tagWhip::Enum state)
 		case RIGHT_MOVE:
 		{			this->setAnimation("whip_move_right");		}
 		break;
-
+		//뒤로 이동
+		case RIGHT_BACKMOVE:
+		{
+			this->setAnimation("whip_backMove_right");
+		}
+		break;
 		//앉기
 		case RIGHT_SIT:
 		{			this->setAnimation("whip_sit_right");		}
@@ -240,6 +258,21 @@ void whip::changeState(tagWhip::Enum state)
 			WORLD->addObject(hitbox);
 		}
 		break;
+		case RIGHT_BLOCK:
+		{
+			this->setAnimation("위프_막기_오른쪽");
+		}
+		break;
+		case RIGHT_HITED:
+		{
+			this->setAnimation("위프_맞기_오른쪽");
+		}
+		break;
+		case RIGHT_DIE:
+		{
+			this->setAnimation("위프_다이_오른쪽");
+		}
+		break;
 	}
 
 	_state = state;
@@ -256,7 +289,7 @@ void whip::stateUpdate(tagWhip::Enum state)
 			if (KEYMANAGER->isStayKeyDown(keyList[key::RIGHT]))
 			{				this->changeState(RIGHT_MOVE);			}
 			if (KEYMANAGER->isStayKeyDown(keyList[key::LEFT]))
-			{				this->changeState(LEFT_MOVE);			}
+			{				this->changeState(RIGHT_BACKMOVE);			}
 			if (KEYMANAGER->isStayKeyDown(keyList[key::DOWN]))
 			{
 				changeState(RIGHT_SIT);
@@ -264,7 +297,7 @@ void whip::stateUpdate(tagWhip::Enum state)
 			}
 			if (KEYMANAGER->isOnceKeyDown(keyList[key::JUMP]))
 			{
-							this->changeState(RIGHT_JUMP);
+				this->changeState(RIGHT_JUMP);
 			}
 			if (KEYMANAGER->isOnceKeyDown(keyList[key::ATTACK]))
 			{
@@ -283,6 +316,9 @@ void whip::stateUpdate(tagWhip::Enum state)
 			{
 				this->changeState(RIGHT_STRONGFOOT);
 			}
+
+			
+
 		}
 		break;
 		case RIGHT_SIT:
@@ -357,7 +393,7 @@ void whip::stateUpdate(tagWhip::Enum state)
 			}
 		}
 		break;
-		case LEFT_MOVE:
+		case RIGHT_BACKMOVE:
 		{
 			if (KEYMANAGER->isOnceKeyUp(keyList[key::RIGHT]) || KEYMANAGER->isOnceKeyUp(keyList[key::LEFT]))
 			{
@@ -404,6 +440,23 @@ void whip::skill3()
 {
 	this->changeState(RIGHT_SPECIALSKILL);
 }
+
+void whip::hited()
+{
+	//->changeState(RIGHT_HTIED);
+}
+void whip::block()
+{
+	//this->changeState(RIGHT_BLOCK);
+}
+void whip::die()
+{
+	//this->changeState(RIGHT_DIE);
+}
+
+
+
+
 
 
 void whip::setupResource()
@@ -458,9 +511,37 @@ void whip::setupResource()
 		IMAGEMANAGER->addFrameImage("위프_필살기", "resource/hyeongjoon/whip/whip_skill/ship_specialSkill.bmp", 12120/4, 6128/4,
 			12, 8, true);
 
+		//막기, 맞기, 다이
+		IMAGEMANAGER->addFrameImage("위프_막기", "resource/hyeongjoon/whip/막기.bmp", 200,100,2,1, true);
+		IMAGEMANAGER->addFrameImage("위프_맞기", "resource/hyeongjoon/whip/맞기.bmp", 138,100, 2, 1, true);
+		IMAGEMANAGER->addFrameImage("위프_다이", "resource/hyeongjoon/whip/다이.bmp", 256, 100, 2, 1, true);
+
+
 		//예시
 		//KEYANIMANAGER->addCoordinateFrameAnimation("테스트_이동_오른쪽", "테스트_이동", 0, 9, 15, false, true);
 		//KEYANIMANAGER->setCollisionRect("테스트_이동_오른쪽", RectMakeCenter(20, 10, 30, 67));
+
+		//막기, 맞기, 다이
+		int rightBlock[] = { 0 };
+		KEYANIMANAGER->addArrayFrameAnimation("위프_막기_오른쪽", "위프_막기", rightBlock, 1, 10, true);
+		KEYANIMANAGER->addCoordinateFrameAnimation("위프_막기_오른쪽", "위프_막기", 0, 0, 1, true, true);
+		int leftBlock[] = { 1 };
+		KEYANIMANAGER->addArrayFrameAnimation("위프_막기_왼쪽", "위프_막기", leftBlock, 1, 10, true);
+		KEYANIMANAGER->addCoordinateFrameAnimation("위프_막기_왼쪽", "위프_막기", 0, 0, 1, true, true);
+
+		int rightHited[] = { 0 };
+		KEYANIMANAGER->addArrayFrameAnimation("위프_맞기_오른쪽", "위프_맞기", rightHited, 1, 10, true);
+		KEYANIMANAGER->addCoordinateFrameAnimation("위프맞기_오른쪽", "위프_맞기", 0, 0, 1, true, true);
+		int leftHited[] = { 1 };
+		KEYANIMANAGER->addArrayFrameAnimation("위프_맞기_왼쪽", "위프_맞기", leftHited, 1, 10, true);
+		KEYANIMANAGER->addCoordinateFrameAnimation("위프_맞기_왼쪽", "위프_맞기", 0, 0, 1, true, true);
+
+		int rightDie[] = { 0 };
+		KEYANIMANAGER->addArrayFrameAnimation("위프_다이_오른쪽", "위프_다이", rightDie, 1, 10, true);
+		KEYANIMANAGER->addCoordinateFrameAnimation("위프맞기_오른쪽", "위프_다이", 0, 0, 1, true, true);
+		int leftDie[] = { 1 };
+		KEYANIMANAGER->addArrayFrameAnimation("위프_다이_왼쪽", "위프_다이", leftDie, 1, 10, true);
+		KEYANIMANAGER->addCoordinateFrameAnimation("위프_다이_왼쪽", "위프_다이", 0, 0, 1, true, true);
 
 		//일반움직임
 		KEYANIMANAGER->addCoordinateFrameAnimation("whip_stop_right", "위프_정지", 0, 18, 15, true, true);
@@ -472,7 +553,12 @@ void whip::setupResource()
 		KEYANIMANAGER->setCollisionRect("whip_move_right", RectMakeCenter(35, 51, 35, 105));
 		KEYANIMANAGER->addCoordinateFrameAnimation("whip_move_left", "위프_이동", 7, 0, 15, false, true);
 		KEYANIMANAGER->setCollisionRect("whip_move_left", RectMakeCenter(35, 51, 35, 105));
-		
+
+		KEYANIMANAGER->addCoordinateFrameAnimation("whip_backMove_right", "위프_이동", 7, 0, 15, false, true);
+		KEYANIMANAGER->setCollisionRect("whip_backMove_right", RectMakeCenter(35, 51, 35, 105));
+		KEYANIMANAGER->addCoordinateFrameAnimation("whip_backMove_left", "위프_이동", 0, 7, 15, false, true);
+		KEYANIMANAGER->setCollisionRect("whip_backMove_left", RectMakeCenter(35, 51, 35, 105));
+
 		KEYANIMANAGER->addCoordinateFrameAnimation("whip_run_right", "위프_달리기", 0, 7, 15, false, true);
 		KEYANIMANAGER->setCollisionRect("whip_run_right", RectMakeCenter(35, 51, 35, 105));
 		KEYANIMANAGER->addCoordinateFrameAnimation("whip_run_left", "위프_달리기", 7, 0, 15, false, true);
@@ -560,8 +646,8 @@ void whip::setupResource()
 		KEYANIMANAGER->setCollisionRect("위프_스킬2_왼쪽", RectMakeCenter(160, 120, 35, 105));
 		
 		KEYANIMANAGER->addCoordinateFrameAnimation("위프_필살기_오른쪽", "위프_필살기", 0, 48, 20, false, false);
-		KEYANIMANAGER->setCollisionRect("위프_필살기_오른쪽",   RectMakeCenter(160, 120, 35, 105));
+		KEYANIMANAGER->setCollisionRect("위프_필살기_오른쪽",   RectMakeCenter(160, 120, 35, 150));
 		KEYANIMANAGER->addCoordinateFrameAnimation("위프_필살기_왼쪽", "위프_필살기", 95, 49, 5, false, false);
-		KEYANIMANAGER->setCollisionRect("위프_필살기_왼쪽",   RectMakeCenter(160, 120, 35, 105));
+		KEYANIMANAGER->setCollisionRect("위프_필살기_왼쪽",   RectMakeCenter(160, 120, 35, 150));
 	
 }
