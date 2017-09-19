@@ -49,10 +49,10 @@ HRESULT neko::init(vector2D pos)
 	//===================BACK DASH========================
 	int rightBackDash[]{ 34,35,36,37,38,39 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoRightBackDash", "neko1_right", rightBackDash, 6, 15, false);
-	KEYANIMANAGER->setCollisionRect("nekoRightBackDash", RectMake(100, 100, 2, 2));
+	KEYANIMANAGER->setCollisionRect("nekoRightBackDash", RectMake(118, 179, 24, 42));
 	int leftBackDash[]{ 34,35,36,37,38,39 };
 	KEYANIMANAGER->addArrayFrameAnimation("nekoLeftBackDash", "neko1_left", leftBackDash, 6, 15, false);
-	KEYANIMANAGER->setCollisionRect("nekoLeftBackDash", RectMake(200, 100, 2, 2));
+	KEYANIMANAGER->setCollisionRect("nekoLeftBackDash", RectMake(112, 179, 24, 42));
 	//=====================ChangeSIT===========================
 
 	//DOWN
